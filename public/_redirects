@@ -1,0 +1,10 @@
+# Netlify.
+#
+# Every real route is prerendered to a static file, and Netlify serves matching
+# static files before consulting this file — so /fleet, /about etc. resolve on
+# their own and need no rewrite here.
+#
+# Deliberately NOT a `/*  /index.html  200` SPA fallback: that would answer
+# every unknown URL with the homepage under a 200, which search engines treat
+# as a soft 404. Sending them to the real 404 page with a 404 status is correct.
+/*  /404.html  404

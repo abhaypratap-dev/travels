@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /404.html
+
+# Replace the domain below with your live domain before deploying.
+Sitemap: https://www.shekhawattoursandtravels.com/sitemap.xml

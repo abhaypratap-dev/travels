@@ -1,0 +1,145 @@
+export const packages = [
+  {
+    slug: 'golden-triangle-delhi-agra-jaipur',
+    title: 'Golden Triangle — Delhi · Agra · Jaipur',
+    duration: '5 Days / 4 Nights',
+    from: 'Delhi',
+    price: 18500,
+    priceNote: 'per cab (up to 4 guests), excluding hotels',
+    tag: 'Bestseller',
+    highlights: [
+      'Taj Mahal at sunrise & Agra Fort',
+      'Amber Fort, Hawa Mahal & City Palace, Jaipur',
+      'Fatehpur Sikri en route',
+      'Qutub Minar & India Gate, Delhi',
+    ],
+    summary:
+      'India\'s most travelled circuit, done unhurried. We build in a sunrise Taj slot and keep the Agra–Jaipur leg early so you reach Amber Fort before the queues.',
+    itinerary: [
+      { day: 1, title: 'Delhi arrival & city tour', detail: 'Airport pickup, Qutub Minar, India Gate, Lotus Temple, overnight Delhi.' },
+      { day: 2, title: 'Delhi → Agra', detail: 'Drive via Yamuna Expressway, Agra Fort, Mehtab Bagh sunset, overnight Agra.' },
+      { day: 3, title: 'Taj Mahal → Jaipur', detail: 'Sunrise Taj Mahal, drive to Jaipur via Fatehpur Sikri and Abhaneri stepwell.' },
+      { day: 4, title: 'Jaipur sightseeing', detail: 'Amber Fort, Jal Mahal, City Palace, Jantar Mantar, Hawa Mahal, bazaar evening.' },
+      { day: 5, title: 'Jaipur departure', detail: 'Drop at Jaipur airport / railway station or continue to Delhi.' },
+    ],
+  },
+  {
+    slug: 'royal-rajasthan-grand-tour',
+    title: 'Royal Rajasthan Grand Tour',
+    duration: '10 Days / 9 Nights',
+    from: 'Jaipur',
+    price: 42000,
+    priceNote: 'per cab (up to 4 guests), excluding hotels',
+    tag: 'Signature',
+    highlights: [
+      'Jaipur, Jodhpur, Jaisalmer, Udaipur & Pushkar',
+      'Sam sand dunes camel safari & desert camp',
+      'Mehrangarh Fort and the blue city lanes',
+      'Boat ride on Lake Pichola, Udaipur',
+    ],
+    summary:
+      'The full sweep of Rajasthan across ten days — forts, dunes, lakes and havelis — paced so no day runs more than five hours on the road.',
+    itinerary: [
+      { day: 1, title: 'Arrive Jaipur', detail: 'Pickup and evening at Chokhi Dhani or Nahargarh sunset.' },
+      { day: 2, title: 'Jaipur sightseeing', detail: 'Amber Fort, City Palace, Jantar Mantar, Hawa Mahal.' },
+      { day: 3, title: 'Jaipur → Pushkar → Jodhpur', detail: 'Brahma Temple and Pushkar Lake, onward to Jodhpur.' },
+      { day: 4, title: 'Jodhpur', detail: 'Mehrangarh Fort, Jaswant Thada, Umaid Bhawan, blue city walk.' },
+      { day: 5, title: 'Jodhpur → Jaisalmer', detail: 'Drive via Osian, arrive golden city by evening.' },
+      { day: 6, title: 'Jaisalmer & Sam dunes', detail: 'Jaisalmer Fort, Patwon Ki Haveli, camel safari and desert camp night.' },
+      { day: 7, title: 'Jaisalmer → Udaipur', detail: 'Long scenic drive via Ranakpur Jain Temple.' },
+      { day: 8, title: 'Udaipur', detail: 'City Palace, Lake Pichola boat ride, Saheliyon Ki Bari, Jagdish Temple.' },
+      { day: 9, title: 'Udaipur → Jaipur', detail: 'Return via Chittorgarh Fort or Ajmer Sharif Dargah.' },
+      { day: 10, title: 'Departure', detail: 'Drop at Jaipur airport or railway station.' },
+    ],
+  },
+  {
+    slug: 'shekhawati-haveli-heritage-trail',
+    title: 'Shekhawati Haveli Heritage Trail',
+    duration: '3 Days / 2 Nights',
+    from: 'New Delhi / Jaipur',
+    price: 11500,
+    priceNote: 'per cab (up to 4 guests), excluding hotels',
+    tag: 'Our Home Turf',
+    highlights: [
+      'Painted havelis of Nawalgarh & Mandawa',
+      'Fresco-covered chhatris and step wells',
+      'Ramgarh, Fatehpur and Mahansar villages',
+      'Local guide who grew up in these lanes',
+    ],
+    summary:
+      'The open-air art gallery of Rajasthan, and the region we know best. Our drivers are from Shekhawati — they will take you to the frescoes tour buses skip.',
+    itinerary: [
+      { day: 1, title: 'Jaipur → Nawalgarh', detail: 'Poddar Haveli Museum, Morarka Haveli, evening village walk.' },
+      { day: 2, title: 'Mandawa & Fatehpur', detail: 'Mandawa Fort, Goenka Double Haveli, Nadine Le Prince Haveli at Fatehpur.' },
+      { day: 3, title: 'Ramgarh → Sikar → return', detail: 'Ramgarh chhatris, Khatu Shyam Ji darshan, drop at Jaipur or Sikar.' },
+    ],
+  },
+  {
+    slug: 'khatu-shyam-salasar-balaji-darshan',
+    title: 'Khatu Shyam · Salasar Balaji · Rani Sati Darshan',
+    duration: '2 Days / 1 Night',
+    from: 'New Delhi / Jaipur',
+    price: 7500,
+    priceNote: 'per cab (up to 4 guests), excluding stay',
+    tag: 'Pilgrimage',
+    highlights: [
+      'Khatu Shyam Ji temple darshan',
+      'Salasar Balaji Dham',
+      'Rani Sati Dadi Temple, Jhunjhunu',
+      'Jeen Mata temple on request',
+    ],
+    summary:
+      'The Shekhawati pilgrimage circuit, run daily. We schedule around aarti timings and know which entry gates move fastest on Ekadashi and weekends.',
+    itinerary: [
+      { day: 1, title: 'Departure → Khatu Shyam Ji', detail: 'Pickup, darshan at Khatu, evening aarti, overnight Sikar.' },
+      { day: 2, title: 'Salasar → Jhunjhunu → return', detail: 'Salasar Balaji darshan, Rani Sati Temple, drop back.' },
+    ],
+  },
+  {
+    slug: 'jaipur-one-day-city-tour',
+    title: 'Jaipur One Day City Tour',
+    duration: '1 Day',
+    from: 'Jaipur',
+    price: 2800,
+    priceNote: 'per cab (up to 4 guests), 8 hrs / 80 km',
+    tag: 'Day Trip',
+    highlights: [
+      'Amber Fort & Jal Mahal',
+      'City Palace and Jantar Mantar',
+      'Hawa Mahal photo stop',
+      'Johari Bazaar shopping time',
+    ],
+    summary:
+      'Everything the Pink City is known for in a single well-sequenced day, starting at Amber Fort before 9 AM to stay ahead of the crowds.',
+    itinerary: [
+      { day: 1, title: 'Full-day Jaipur', detail: 'Amber Fort → Jal Mahal → Gaitor → City Palace → Jantar Mantar → Hawa Mahal → Birla Mandir → bazaar.' },
+    ],
+  },
+  {
+    slug: 'rajasthan-desert-circuit',
+    title: 'Desert Circuit — Bikaner · Jaisalmer · Jodhpur',
+    duration: '6 Days / 5 Nights',
+    from: 'Jaipur / Sikar',
+    price: 26500,
+    priceNote: 'per cab (up to 4 guests), excluding hotels',
+    tag: 'Adventure',
+    highlights: [
+      'Junagarh Fort and Karni Mata Temple, Bikaner',
+      'Overnight desert camp at Sam dunes',
+      'Mehrangarh Fort, Jodhpur',
+      'Longewara & Tanot on request',
+    ],
+    summary:
+      'Straight into the Thar. Dunes, forts and desert camps, with the driving done early so afternoons stay free for sightseeing.',
+    itinerary: [
+      { day: 1, title: 'To Bikaner', detail: 'Drive via Fatehpur, evening Junagarh Fort.' },
+      { day: 2, title: 'Bikaner → Jaisalmer', detail: 'Karni Mata Temple, camel breeding farm, onward to Jaisalmer.' },
+      { day: 3, title: 'Jaisalmer', detail: 'Golden Fort, havelis, Gadisar Lake, Sam dunes camp.' },
+      { day: 4, title: 'Jaisalmer → Jodhpur', detail: 'Via Pokhran and Osian temples.' },
+      { day: 5, title: 'Jodhpur', detail: 'Mehrangarh, Jaswant Thada, blue city, Toorji Ka Jhalra.' },
+      { day: 6, title: 'Return', detail: 'Drive back to Jaipur / Sikar with a Pushkar stop.' },
+    ],
+  },
+]
+
+export const getPackageBySlug = (slug) => packages.find((p) => p.slug === slug)
