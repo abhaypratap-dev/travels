@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Shekhawat Tours and Travels — car rental, tempo traveller and mini bus hire with Rajasthan tour packages.",
+  "description": "Shekhawat Tours and Travels — taxi service in Rangpuri, New Delhi. 4 seater cars, 7 seater SUVs, tempo travellers and mini buses on rent with driver.",
   "scripts": {
     "dev": "vite",
     "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.js",
@@ -22,5 +22,6 @@
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^6.0.3",
     "vite": "^8.1.5"
-  }
+  },
+  "homepage": "https://www.shekhawattoursandtravels.in"
 }

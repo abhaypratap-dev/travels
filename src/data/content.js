@@ -1,3 +1,18 @@
+/**
+ * ⚠️ REVIEW SCHEMA GATE
+ *
+ * The testimonials below are illustrative placeholders written to show the
+ * layout. They are NOT marked up as schema.org `Review` nodes while this flag
+ * is false, because Google's review-snippet policy requires marked-up reviews
+ * to be genuine and independently verifiable.
+ *
+ * Action for launch: open the Google Business Profile
+ * (https://www.google.com/maps?cid=15553019199715657153), copy real review
+ * text and reviewer first names into the array below, then flip this to true.
+ * Star snippets start appearing on their own after the next crawl.
+ */
+export const testimonialsAreVerified = false
+
 export const testimonials = [
   {
     name: 'Rajesh Agarwal',
@@ -126,22 +141,24 @@ export const whyUs = [
 ]
 
 export const galleryItems = [
-  { title: 'Amber Fort, Jaipur', category: 'Destinations', tone: 'amber' },
-  { title: 'Sam Sand Dunes, Jaisalmer', category: 'Destinations', tone: 'sand' },
-  { title: 'Mehrangarh Fort, Jodhpur', category: 'Destinations', tone: 'blue' },
-  { title: 'Lake Pichola, Udaipur', category: 'Destinations', tone: 'teal' },
-  { title: 'Painted Havelis, Mandawa', category: 'Destinations', tone: 'rose' },
-  { title: 'Khatu Shyam Ji Temple', category: 'Destinations', tone: 'saffron' },
-  { title: 'Toyota Innova Crysta', category: 'Fleet', tone: 'slate' },
-  { title: 'Luxury Tempo Traveller', category: 'Fleet', tone: 'plum' },
-  { title: '32-Seater Mini Bus', category: 'Fleet', tone: 'forest' },
-  { title: 'Volvo Luxury Coach', category: 'Fleet', tone: 'indigo' },
-  { title: 'Wedding Car Decoration', category: 'Occasions', tone: 'rose' },
-  { title: 'Corporate Group Transfer', category: 'Occasions', tone: 'slate' },
+  { title: 'Amber Fort, Jaipur', category: 'Destinations', tone: 'amber', src: '/images/scene-fort.svg' },
+  { title: 'Sam Sand Dunes, Jaisalmer', category: 'Destinations', tone: 'sand', src: '/images/scene-dunes.svg' },
+  { title: 'Lake Pichola, Udaipur', category: 'Destinations', tone: 'blue', src: '/images/scene-lake.svg' },
+  { title: 'Painted Havelis, Mandawa', category: 'Destinations', tone: 'rose', src: '/images/scene-haveli.svg' },
+  { title: 'Khatu Shyam Ji Temple', category: 'Destinations', tone: 'saffron', src: '/images/scene-temple.svg' },
+  { title: 'India Gate, New Delhi', category: 'Destinations', tone: 'maroon', src: '/images/scene-city.svg' },
+  { title: 'Toyota Innova Crysta', category: 'Fleet', tone: 'forest', src: '/images/vehicle-suv.svg' },
+  { title: 'Luxury Tempo Traveller', category: 'Fleet', tone: 'plum', src: '/images/vehicle-tempo.svg' },
+  { title: '32-Seater Mini Bus', category: 'Fleet', tone: 'rose', src: '/images/vehicle-bus.svg' },
+  { title: 'Volvo 45-Seater Coach', category: 'Fleet', tone: 'slate', src: '/images/vehicle-coach.svg' },
+  { title: 'Mercedes-Benz E-Class', category: 'Fleet', tone: 'gold', src: '/images/vehicle-luxury.svg' },
+  { title: 'Maruti Suzuki Dzire', category: 'Fleet', tone: 'indigo', src: '/images/vehicle-sedan.svg' },
+  { title: 'Wedding Car Decoration', category: 'Occasions', tone: 'rose', src: '/images/scene-wedding.svg' },
+  { title: 'Corporate Group Transfer', category: 'Occasions', tone: 'slate', src: '/images/scene-corporate.svg' },
 ]
 
 export const milestones = [
-  { year: '2012', title: 'Started with two cars', text: 'Rupesh Singh Shekhawat began with a single Indica and a borrowed Sumo, running Delhi–Jaipur drops.' },
+  { year: '2012', title: 'Started with two cars', text: 'Rupesh Singh began with a single Indica and a borrowed Sumo, running Delhi–Jaipur drops.' },
   { year: '2015', title: 'First tempo travellers', text: 'Added two 12-seat tempo travellers as families started asking for group vehicles for temple circuits.' },
   { year: '2018', title: 'Buses and corporate contracts', text: 'Signed our first monthly corporate shuttle contract and put three mini buses on the road.' },
   { year: '2021', title: 'Luxury fleet added', text: 'Introduced the Fortuner, Mercedes E-Class and Maharaja luxury tempo traveller for weddings and VIP movement.' },

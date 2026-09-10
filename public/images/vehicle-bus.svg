@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Mini Bus illustration">
+  <title>Mini Bus</title>
+  <defs>
+    <linearGradient id="sky-bus" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5c2436"/>
+      <stop offset="1" stop-color="#8a3a52"/>
+    </linearGradient>
+    <radialGradient id="glow-bus" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#f6d98a" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#f6d98a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body-bus" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf6e8"/>
+      <stop offset="1" stop-color="#e6d9c2"/>
+    </linearGradient>
+    <linearGradient id="glass-bus" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5c2436" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#8a3a52" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#sky-bus)"/>
+  <circle cx="622" cy="140" r="190" fill="url(#glow-bus)"/>
+  <circle cx="622" cy="140" r="46" fill="#f6d98a" opacity="0.9"/>
+  <rect y="372" width="800" height="128" fill="#3d1724"/>
+  <rect y="372" width="800" height="3" fill="#f6d98a" opacity="0.5"/>
+  
+  <g opacity="0.35">
+    <rect x="40" y="418" width="72" height="7" rx="3.5" fill="#f6d98a"/>
+    <rect x="172" y="418" width="72" height="7" rx="3.5" fill="#f6d98a"/>
+    <rect x="304" y="418" width="72" height="7" rx="3.5" fill="#f6d98a"/>
+    <rect x="436" y="418" width="72" height="7" rx="3.5" fill="#f6d98a"/>
+    <rect x="568" y="418" width="72" height="7" rx="3.5" fill="#f6d98a"/>
+    <rect x="700" y="418" width="72" height="7" rx="3.5" fill="#f6d98a"/>
+  </g>
+  
+  <g>
+    <ellipse cx="386" cy="384" rx="344" ry="13" fill="#000" opacity="0.28"/>
+    <path d="M56 372
+    L56 282 Q56 268 72 268
+    L700 268 Q716 268 716 282
+    L716 372 Z" fill="url(#body-bus)"/>
+    <path d="M112 268
+    L126 168 Q134 160 148 160
+    L674 160 Q688 160 696 168
+    L702 268 Z" fill="url(#body-bus)"/>
+    <g><rect x="136" y="172" width="58" height="94" rx="5" fill="url(#glass-bus)"/>
+      <rect x="204" y="172" width="58" height="94" rx="5" fill="url(#glass-bus)"/>
+      <rect x="274" y="172" width="58" height="94" rx="5" fill="url(#glass-bus)"/>
+      <rect x="344" y="172" width="58" height="94" rx="5" fill="url(#glass-bus)"/>
+      <rect x="414" y="172" width="58" height="94" rx="5" fill="url(#glass-bus)"/>
+      <rect x="484" y="172" width="58" height="94" rx="5" fill="url(#glass-bus)"/>
+      <rect x="554" y="172" width="58" height="94" rx="5" fill="url(#glass-bus)"/></g>
+    <rect x="60" y="284" width="16" height="11" rx="4" fill="#e8b93f"/>
+    <rect x="698" y="284" width="14" height="11" rx="4" fill="#e05a4a"/>
+    <rect x="66" y="360" width="640" height="4" rx="2" fill="#000" opacity="0.16"/>
+    
+    <circle cx="170" cy="372" r="38" fill="#20191a"/>
+    <circle cx="170" cy="372" r="19.76" fill="#8e8378"/>
+    <circle cx="170" cy="372" r="8.36" fill="#3a3330"/>
+    <circle cx="590" cy="372" r="38" fill="#20191a"/>
+    <circle cx="590" cy="372" r="19.76" fill="#8e8378"/>
+    <circle cx="590" cy="372" r="8.36" fill="#3a3330"/>
+  </g>
+</svg>

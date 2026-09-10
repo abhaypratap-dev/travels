@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Desert dunes illustration">
+  <title>Desert dunes</title>
+  <defs>
+    <linearGradient id="sky-dunes" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7a5626"/>
+      <stop offset="1" stop-color="#a8783a"/>
+    </linearGradient>
+    <radialGradient id="glow-dunes" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffe3a3" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#ffe3a3" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body-dunes" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf6e8"/>
+      <stop offset="1" stop-color="#e6d9c2"/>
+    </linearGradient>
+    <linearGradient id="glass-dunes" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7a5626" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#a8783a" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#sky-dunes)"/>
+  <circle cx="622" cy="140" r="190" fill="url(#glow-dunes)"/>
+  <circle cx="622" cy="140" r="46" fill="#ffe3a3" opacity="0.9"/>
+  <rect y="430" width="800" height="70" fill="#553a17"/>
+  <rect y="430" width="800" height="3" fill="#ffe3a3" opacity="0.5"/>
+  
+  <path d="M0 430 L0 330 Q160 292 300 322 Q460 356 620 314 Q720 288 800 312 L800 430 Z" fill="#000" opacity="0.2"/>
+  <path d="M0 430 L0 372 Q200 344 400 368 Q600 392 800 358 L800 430 Z" fill="#000" opacity="0.16"/>
+  
+    <path d="M0 430 Q140 288 300 330 Q420 362 520 320 Q640 270 800 318 L800 430 Z" fill="#3f2a10" opacity="0.9"/>
+    <path d="M0 430 Q180 330 360 358 Q540 386 800 348 L800 430 Z" fill="#2b1c09" opacity="0.85"/>
+    <g fill="#1d1305" opacity="0.9">
+      <path d="M556 330 q10 -26 26 -26 q6 -18 20 -12 q12 -16 22 -2 q16 -2 14 16 l-4 34 l-8 0 l2 -26 l-14 4 l-4 22 l-8 0 l2 -22 l-18 -2 l-6 24 l-8 0 l4 -26 z"/>
+      <rect x="566" y="330" width="6" height="26" rx="3"/><rect x="612" y="332" width="6" height="24" rx="3"/>
+    </g>
+  
+  <path d="M0 500 L0 452 Q180 424 380 448 Q580 472 800 440 L800 500 Z" fill="#553a17"/>
+  <path d="M0 500 L0 470 Q240 448 480 470 Q640 484 800 464 L800 500 Z" fill="#000" opacity="0.35"/>
+</svg>

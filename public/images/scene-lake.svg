@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Lake palace illustration">
+  <title>Lake palace</title>
+  <defs>
+    <linearGradient id="sky-lake" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c3355"/>
+      <stop offset="1" stop-color="#2d5183"/>
+    </linearGradient>
+    <radialGradient id="glow-lake" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#f6d98a" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#f6d98a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body-lake" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf6e8"/>
+      <stop offset="1" stop-color="#e6d9c2"/>
+    </linearGradient>
+    <linearGradient id="glass-lake" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1c3355" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#2d5183" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#sky-lake)"/>
+  <circle cx="622" cy="140" r="190" fill="url(#glow-lake)"/>
+  <circle cx="622" cy="140" r="46" fill="#f6d98a" opacity="0.9"/>
+  <rect y="430" width="800" height="70" fill="#132239"/>
+  <rect y="430" width="800" height="3" fill="#f6d98a" opacity="0.5"/>
+  
+  <path d="M0 430 L0 330 Q160 292 300 322 Q460 356 620 314 Q720 288 800 312 L800 430 Z" fill="#000" opacity="0.2"/>
+  <path d="M0 430 L0 372 Q200 344 400 368 Q600 392 800 358 L800 430 Z" fill="#000" opacity="0.16"/>
+  
+    <path d="M250 430 L250 250 L268 250 L268 226 Q290 200 312 226 L312 250 L400 250 L400 226
+             Q422 198 444 226 L444 250 L462 250 L462 430 Z" fill="#101d31" opacity="0.95"/>
+    <rect x="268" y="278" width="16" height="28" rx="8" fill="#f6d98a" opacity="0.5"/><rect x="306" y="278" width="16" height="28" rx="8" fill="#f6d98a" opacity="0.5"/><rect x="344" y="278" width="16" height="28" rx="8" fill="#f6d98a" opacity="0.5"/><rect x="382" y="278" width="16" height="28" rx="8" fill="#f6d98a" opacity="0.5"/><rect x="420" y="278" width="16" height="28" rx="8" fill="#f6d98a" opacity="0.5"/>
+    <rect y="372" width="800" height="128" fill="#12283f"/>
+    <rect x="120" y="398" width="180" height="5" rx="2.5" fill="#f6d98a" opacity="0.3"/><rect x="250" y="412" width="166" height="5" rx="2.5" fill="#f6d98a" opacity="0.25"/><rect x="380" y="426" width="152" height="5" rx="2.5" fill="#f6d98a" opacity="0.19999999999999998"/><rect x="510" y="440" width="138" height="5" rx="2.5" fill="#f6d98a" opacity="0.14999999999999997"/><rect x="640" y="454" width="124" height="5" rx="2.5" fill="#f6d98a" opacity="0.09999999999999998"/>
+  
+  <path d="M0 500 L0 452 Q180 424 380 448 Q580 472 800 440 L800 500 Z" fill="#132239"/>
+  <path d="M0 500 L0 470 Q240 448 480 470 Q640 484 800 464 L800 500 Z" fill="#000" opacity="0.35"/>
+</svg>

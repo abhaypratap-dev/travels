@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Wedding car illustration">
+  <title>Wedding car</title>
+  <defs>
+    <linearGradient id="sky-wedding" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5c2436"/>
+      <stop offset="1" stop-color="#8a3a52"/>
+    </linearGradient>
+    <radialGradient id="glow-wedding" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#f6d98a" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#f6d98a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body-wedding" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf6e8"/>
+      <stop offset="1" stop-color="#e6d9c2"/>
+    </linearGradient>
+    <linearGradient id="glass-wedding" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5c2436" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#8a3a52" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#sky-wedding)"/>
+  <circle cx="622" cy="140" r="190" fill="url(#glow-wedding)"/>
+  <circle cx="622" cy="140" r="46" fill="#f6d98a" opacity="0.9"/>
+  <rect y="430" width="800" height="70" fill="#3d1724"/>
+  <rect y="430" width="800" height="3" fill="#f6d98a" opacity="0.5"/>
+  
+  <path d="M0 430 L0 330 Q160 292 300 322 Q460 356 620 314 Q720 288 800 312 L800 430 Z" fill="#000" opacity="0.2"/>
+  <path d="M0 430 L0 372 Q200 344 400 368 Q600 392 800 358 L800 430 Z" fill="#000" opacity="0.16"/>
+  
+    
+  <g>
+    <ellipse cx="370" cy="384" rx="274" ry="13" fill="#000" opacity="0.28"/>
+    <path d="M110 372
+    L110 328 Q110 314 126 314
+    L614 314 Q630 314 630 328
+    L630 372 Z" fill="url(#body-wedding)"/>
+    <path d="M238 314
+    L278 258 Q286 250 300 250
+    L464 250 Q478 250 486 258
+    L522 314 Z" fill="url(#body-wedding)"/>
+    <g><rect x="248" y="262" width="88" height="50" rx="5" fill="url(#glass-wedding)"/>
+      <rect x="346" y="262" width="80" height="50" rx="5" fill="url(#glass-wedding)"/></g>
+    <rect x="114" y="330" width="16" height="11" rx="4" fill="#e8b93f"/>
+    <rect x="612" y="330" width="14" height="11" rx="4" fill="#e05a4a"/>
+    <rect x="120" y="360" width="500" height="4" rx="2" fill="#000" opacity="0.16"/>
+    
+    <circle cx="230" cy="372" r="32" fill="#20191a"/>
+    <circle cx="230" cy="372" r="16.64" fill="#8e8378"/>
+    <circle cx="230" cy="372" r="7.04" fill="#3a3330"/>
+    <circle cx="500" cy="372" r="32" fill="#20191a"/>
+    <circle cx="500" cy="372" r="16.64" fill="#8e8378"/>
+    <circle cx="500" cy="372" r="7.04" fill="#3a3330"/>
+  </g>
+    <circle cx="130" cy="214" r="9" fill="#f6d98a" opacity="0.85"/><circle cx="162" cy="223" r="9" fill="#f6d98a" opacity="0.85"/><circle cx="194" cy="232" r="9" fill="#f6d98a" opacity="0.85"/><circle cx="226" cy="214" r="9" fill="#f6d98a" opacity="0.85"/><circle cx="258" cy="223" r="9" fill="#f6d98a" opacity="0.85"/><circle cx="290" cy="232" r="9" fill="#f6d98a" opacity="0.85"/><circle cx="322" cy="214" r="9" fill="#f6d98a" opacity="0.85"/><circle cx="354" cy="223" r="9" fill="#f6d98a" opacity="0.85"/><circle cx="386" cy="232" r="9" fill="#f6d98a" opacity="0.85"/><circle cx="418" cy="214" r="9" fill="#f6d98a" opacity="0.85"/><circle cx="450" cy="223" r="9" fill="#f6d98a" opacity="0.85"/><circle cx="482" cy="232" r="9" fill="#f6d98a" opacity="0.85"/><circle cx="514" cy="214" r="9" fill="#f6d98a" opacity="0.85"/><circle cx="546" cy="223" r="9" fill="#f6d98a" opacity="0.85"/><circle cx="578" cy="232" r="9" fill="#f6d98a" opacity="0.85"/><circle cx="610" cy="214" r="9" fill="#f6d98a" opacity="0.85"/>
+    <circle cx="170" cy="196" r="5" fill="#fff" opacity="0.6"/><circle cx="218" cy="184" r="5" fill="#fff" opacity="0.6"/><circle cx="266" cy="196" r="5" fill="#fff" opacity="0.6"/><circle cx="314" cy="184" r="5" fill="#fff" opacity="0.6"/><circle cx="362" cy="196" r="5" fill="#fff" opacity="0.6"/><circle cx="410" cy="184" r="5" fill="#fff" opacity="0.6"/><circle cx="458" cy="196" r="5" fill="#fff" opacity="0.6"/><circle cx="506" cy="184" r="5" fill="#fff" opacity="0.6"/><circle cx="554" cy="196" r="5" fill="#fff" opacity="0.6"/><circle cx="602" cy="184" r="5" fill="#fff" opacity="0.6"/>
+  
+  <path d="M0 500 L0 452 Q180 424 380 448 Q580 472 800 440 L800 500 Z" fill="#3d1724"/>
+  <path d="M0 500 L0 470 Q240 448 480 470 Q640 484 800 464 L800 500 Z" fill="#000" opacity="0.35"/>
+</svg>

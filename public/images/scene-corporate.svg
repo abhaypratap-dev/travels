@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Corporate transfer illustration">
+  <title>Corporate transfer</title>
+  <defs>
+    <linearGradient id="sky-corporate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2b3138"/>
+      <stop offset="1" stop-color="#454f59"/>
+    </linearGradient>
+    <radialGradient id="glow-corporate" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e8b93f" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#e8b93f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body-corporate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf6e8"/>
+      <stop offset="1" stop-color="#e6d9c2"/>
+    </linearGradient>
+    <linearGradient id="glass-corporate" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b3138" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#454f59" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#sky-corporate)"/>
+  <circle cx="622" cy="140" r="190" fill="url(#glow-corporate)"/>
+  <circle cx="622" cy="140" r="46" fill="#e8b93f" opacity="0.9"/>
+  <rect y="430" width="800" height="70" fill="#1d2226"/>
+  <rect y="430" width="800" height="3" fill="#e8b93f" opacity="0.5"/>
+  
+  <path d="M0 430 L0 330 Q160 292 300 322 Q460 356 620 314 Q720 288 800 312 L800 430 Z" fill="#000" opacity="0.2"/>
+  <path d="M0 430 L0 372 Q200 344 400 368 Q600 392 800 358 L800 430 Z" fill="#000" opacity="0.16"/>
+  
+    <g opacity="0.5">
+      <rect x="110" y="180" width="62" height="192" fill="#141a20"/><rect x="190" y="214" width="62" height="158" fill="#141a20"/><rect x="270" y="248" width="62" height="124" fill="#141a20"/><rect x="520" y="180" width="62" height="192" fill="#141a20"/><rect x="600" y="214" width="62" height="158" fill="#141a20"/><rect x="680" y="248" width="62" height="124" fill="#141a20"/>
+    </g>
+    
+  <g>
+    <ellipse cx="400" cy="384" rx="284" ry="13" fill="#000" opacity="0.28"/>
+    <path d="M130 372
+    L130 294 Q130 280 146 280
+    L654 280 Q670 280 670 294
+    L670 372 Z" fill="url(#body-corporate)"/>
+    <path d="M204 280
+    L224 194 Q232 186 246 186
+    L626 186 Q640 186 648 194
+    L654 280 Z" fill="url(#body-corporate)"/>
+    <g><rect x="158" y="198" width="62" height="80" rx="5" fill="url(#glass-corporate)"/>
+      <rect x="230" y="198" width="62" height="80" rx="5" fill="url(#glass-corporate)"/>
+      <rect x="304" y="198" width="62" height="80" rx="5" fill="url(#glass-corporate)"/>
+      <rect x="378" y="198" width="62" height="80" rx="5" fill="url(#glass-corporate)"/>
+      <rect x="452" y="198" width="62" height="80" rx="5" fill="url(#glass-corporate)"/></g>
+    <rect x="134" y="296" width="16" height="11" rx="4" fill="#e8b93f"/>
+    <rect x="652" y="296" width="14" height="11" rx="4" fill="#e05a4a"/>
+    <rect x="140" y="360" width="520" height="4" rx="2" fill="#000" opacity="0.16"/>
+    
+    <circle cx="212" cy="372" r="34" fill="#20191a"/>
+    <circle cx="212" cy="372" r="17.68" fill="#8e8378"/>
+    <circle cx="212" cy="372" r="7.48" fill="#3a3330"/>
+    <circle cx="530" cy="372" r="34" fill="#20191a"/>
+    <circle cx="530" cy="372" r="17.68" fill="#8e8378"/>
+    <circle cx="530" cy="372" r="7.48" fill="#3a3330"/>
+  </g>
+  
+  <path d="M0 500 L0 452 Q180 424 380 448 Q580 472 800 440 L800 500 Z" fill="#1d2226"/>
+  <path d="M0 500 L0 470 Q240 448 480 470 Q640 484 800 464 L800 500 Z" fill="#000" opacity="0.35"/>
+</svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Painted haveli illustration">
+  <title>Painted haveli</title>
+  <defs>
+    <linearGradient id="sky-haveli" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5c2436"/>
+      <stop offset="1" stop-color="#8a3a52"/>
+    </linearGradient>
+    <radialGradient id="glow-haveli" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#f6d98a" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#f6d98a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body-haveli" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf6e8"/>
+      <stop offset="1" stop-color="#e6d9c2"/>
+    </linearGradient>
+    <linearGradient id="glass-haveli" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5c2436" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#8a3a52" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#sky-haveli)"/>
+  <circle cx="622" cy="140" r="190" fill="url(#glow-haveli)"/>
+  <circle cx="622" cy="140" r="46" fill="#f6d98a" opacity="0.9"/>
+  <rect y="430" width="800" height="70" fill="#3d1724"/>
+  <rect y="430" width="800" height="3" fill="#f6d98a" opacity="0.5"/>
+  
+  <path d="M0 430 L0 330 Q160 292 300 322 Q460 356 620 314 Q720 288 800 312 L800 430 Z" fill="#000" opacity="0.2"/>
+  <path d="M0 430 L0 372 Q200 344 400 368 Q600 392 800 358 L800 430 Z" fill="#000" opacity="0.16"/>
+  
+    <path d="M190 430 L190 210 L610 210 L610 430 Z" fill="#2e1018" opacity="0.94"/>
+    <path d="M176 214 L400 158 L624 214 Z" fill="#3d1620" opacity="0.96"/>
+    
+      <path d="M220 330 L220 272 q22 -26 44 0 L264 330 Z" fill="#f6d98a" opacity="0.42"/>
+      <path d="M300 330 L300 272 q22 -26 44 0 L344 330 Z" fill="#f6d98a" opacity="0.42"/>
+      <path d="M380 330 L380 272 q22 -26 44 0 L424 330 Z" fill="#f6d98a" opacity="0.42"/>
+      <path d="M460 330 L460 272 q22 -26 44 0 L504 330 Z" fill="#f6d98a" opacity="0.42"/>
+      <path d="M540 330 L540 272 q22 -26 44 0 L584 330 Z" fill="#f6d98a" opacity="0.42"/>
+    <rect x="352" y="188" width="96" height="22" rx="6" fill="#f6d98a" opacity="0.34"/>
+  
+  <path d="M0 500 L0 452 Q180 424 380 448 Q580 472 800 440 L800 500 Z" fill="#3d1724"/>
+  <path d="M0 500 L0 470 Q240 448 480 470 Q640 484 800 464 L800 500 Z" fill="#000" opacity="0.35"/>
+</svg>

@@ -2,6 +2,7 @@ import Seo from '../components/Seo'
 import Icon from '../components/Icon'
 import Faq, { SectionHead, faqSchema } from '../components/Faq'
 import { PageHero, CtaBand } from '../components/Common'
+import { Reveal, stagger } from '../components/Motion'
 import { site, whatsappLink } from '../data/site'
 import { services } from '../data/services'
 
@@ -47,8 +48,8 @@ export default function Services() {
   return (
     <>
       <Seo
-        title="Our Services — Outstation Taxi, Airport Transfer, Wedding & Corporate Car Rental"
-        description="Outstation taxi, IGI airport and railway transfers, wedding car and baraat bus hire, corporate rate contracts, tempo traveller and bus hire, pilgrimage yatra packages, monthly rental and local sightseeing across Delhi NCR, Rajasthan and all India."
+        title="Services — Outstation, Airport & Wedding"
+        description="Outstation taxi, IGI airport transfers, wedding car and baraat bus hire, corporate contracts and pilgrimage yatras from New Delhi. Fixed fares, 24×7."
         path="/services"
         keywords="outstation taxi service Delhi, IGI airport transfer, wedding car rental Delhi NCR, corporate car rental New Delhi, bus hire for marriage Delhi, pilgrimage tour operator, monthly car rental with driver"
         schema={[...serviceSchema, faqSchema(serviceFaqs)]}
@@ -57,7 +58,7 @@ export default function Services() {
 
       <PageHero
         eyebrow="Eight ways we can help"
-        title="Our Travel Services"
+        title="Our Travel Services in Delhi NCR"
         text="One operator for the 4 AM airport run, the ten-day family tour, the monthly office shuttle and the wedding baraat — with the same fixed-price promise on all of them."
         crumbs={[{ name: 'Services', path: '/services' }]}
       />
@@ -66,7 +67,13 @@ export default function Services() {
         <div className="container">
           <div className="srvlist">
             {services.map((s, i) => (
-              <article className={`srv${i % 2 ? ' srv--rev' : ''}`} key={s.slug} id={s.slug}>
+              <Reveal
+                as="article"
+                className={`srv${i % 2 ? ' srv--rev' : ''}`}
+                variant={i % 2 ? 'right' : 'left'}
+                key={s.slug}
+                id={s.slug}
+              >
                 <div className="srv__visual" aria-hidden="true">
                   <Icon name={s.icon} size={72} />
                 </div>
@@ -92,7 +99,7 @@ export default function Services() {
                     </a>
                   </div>
                 </div>
-              </article>
+              </Reveal>
             ))}
           </div>
         </div>

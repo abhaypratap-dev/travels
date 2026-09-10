@@ -688,9 +688,8 @@ code {
   font-family: var(--font-display); font-size: 1.02rem; font-weight: 600; color: var(--ink);
 }
 .faq__q:hover { color: var(--maroon); }
-.faq__chev { color: var(--maroon); transition: transform .22s var(--ease); }
-.faq__item.is-open .faq__chev { transform: rotate(90deg); }
-.faq__a { padding: 0 22px 20px; }
+.faq__chev { color: var(--maroon); }
+.faq__a > div { padding: 0 22px 20px; }
 .faq__a p { color: var(--muted); font-size: .94rem; }
 
 /* ── Prose ──────────────────────────────────────────────────── */
@@ -805,8 +804,8 @@ code {
 /* ── Footer ─────────────────────────────────────────────────── */
 .footer { background: var(--ink); color: #b5aaa1; padding-top: 60px; font-size: .9rem; }
 .footer__grid {
-  display: grid; grid-template-columns: 1.6fr 1fr 1.2fr 1.4fr;
-  gap: 40px; padding-bottom: 44px;
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1.3fr;
+  gap: 34px; padding-bottom: 44px;
 }
 .brand--footer { margin-bottom: 16px; }
 .brand--footer .brand__text strong { color: #fff; }

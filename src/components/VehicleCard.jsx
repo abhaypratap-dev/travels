@@ -1,5 +1,5 @@
+import { Link } from 'react-router-dom'
 import Icon from './Icon'
-import { whatsappLink } from '../data/site'
 
 const toneFor = (category) => ({
   hatchback: 'teal',
@@ -13,9 +13,16 @@ const toneFor = (category) => ({
 export default function VehicleCard({ vehicle: v }) {
   return (
     <article className="vcard" itemScope itemType="https://schema.org/Product">
-      <div className={`vcard__media tone-${toneFor(v.category)}`}>
+      <Link className={`vcard__media tone-${toneFor(v.category)}`} to={`/fleet/${v.slug}`} tabIndex={-1} aria-hidden="true">
         {v.image ? (
-          <img src={v.image} alt={`${v.name} — ${v.seats} seater on rent`} loading="lazy" width="640" height="400" itemProp="image" />
+          <img
+            src={v.image}
+            alt={`${v.name} — ${v.seats} seater ${v.ac ? 'AC' : 'non-AC'} on rent with driver`}
+            loading="lazy"
+            width="800"
+            height="500"
+            itemProp="image"
+          />
         ) : (
           <span className="vcard__placeholder" aria-hidden="true">
             <Icon name={v.category === 'bus' ? 'bus' : 'fleet'} size={64} />
@@ -23,10 +30,12 @@ export default function VehicleCard({ vehicle: v }) {
         )}
         {v.badge && <span className="vcard__badge">{v.badge}</span>}
         {!v.ac && <span className="vcard__badge vcard__badge--alt">Non-AC</span>}
-      </div>
+      </Link>
 
       <div className="vcard__body">
-        <h3 className="vcard__title" itemProp="name">{v.name}</h3>
+        <h3 className="vcard__title">
+          <Link to={`/fleet/${v.slug}`} itemProp="name">{v.name}</Link>
+        </h3>
         <p className="vcard__summary" itemProp="description">{v.summary}</p>
 
         <ul className="vcard__specs">
@@ -54,14 +63,9 @@ export default function VehicleCard({ vehicle: v }) {
           <span className="vcard__rate">₹{v.ratePerKm}<small>/km</small></span>
           <span className="vcard__rate-alt">₹{v.ratePerDay.toLocaleString('en-IN')} / day · min {v.minKm} km</span>
         </div>
-        <a
-          className="btn btn--primary btn--sm"
-          href={whatsappLink(`Hi, I want to book the ${v.name} (${v.seats} seater). Please share availability and the final rate.`)}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Book <Icon name="arrow" size={16} />
-        </a>
+        <Link className="btn btn--primary btn--sm" to={`/fleet/${v.slug}`}>
+          Details <Icon name="arrow" size={16} />
+        </Link>
       </div>
     </article>
   )

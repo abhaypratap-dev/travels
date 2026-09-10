@@ -1,11 +1,14 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import Icon from '../components/Icon'
 import VehicleCard from '../components/VehicleCard'
 import Faq, { SectionHead, faqSchema } from '../components/Faq'
 import { PageHero, CtaBand } from '../components/Common'
+import { Reveal, stagger } from '../components/Motion'
 import { site } from '../data/site'
 import { fleet, fleetCategories } from '../data/fleet'
+import { vehicleTypes } from '../data/vehicleTypes'
 
 const fleetFaqs = [
   {
@@ -47,6 +50,20 @@ export default function Fleet() {
     return list
   }, [category, seats, sort])
 
+  /** Category groups in fleet-catalogue order, each tied to its landing page. */
+  const grouped = useMemo(
+    () =>
+      fleetCategories
+        .filter((c) => c.id !== 'all')
+        .map((c) => {
+          const items = fleet.filter((v) => v.category === c.id)
+          const type = vehicleTypes.find((t) => items.some((v) => v.parentType === t.slug))
+          return { id: c.id, label: c.label, type, items }
+        })
+        .filter((g) => g.items.length > 0),
+    []
+  )
+
   const itemListSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -60,6 +77,8 @@ export default function Fleet() {
         name: v.name,
         description: v.summary,
         category: v.category,
+        image: `${site.url}${v.image}`,
+        url: `${site.url}/fleet/${v.slug}`,
         brand: { '@type': 'Brand', name: site.name },
         offers: {
           '@type': 'Offer',
@@ -75,8 +94,8 @@ export default function Fleet() {
   return (
     <>
       <Seo
-        title="Our Fleet — Cars, Tempo Travellers, Mini Buses & Luxury Coaches on Rent"
-        description="Browse 15+ vehicle types on rent with driver: Swift, Dzire, Innova Crysta, Ertiga, Scorpio, Fortuner, Mercedes E-Class, 12 & 17 seat tempo travellers, 21/32 seat mini buses and 45 seat Volvo coaches. Per-km and per-day rates listed."
+        title="Our Fleet — Cars, Tempo Travellers, Buses"
+        description="15+ vehicles on rent with driver in Delhi NCR — Dzire, Innova Crysta, Fortuner, 12 and 17 seat tempo travellers and 21 to 45 seat buses."
         path="/fleet"
         keywords="car on rent with driver Delhi, innova crysta rental Delhi, tempo traveller 12 seater price Delhi, mini bus hire Delhi NCR, 45 seater volvo bus rental, luxury car rental New Delhi, fortuner on rent"
         schema={[itemListSchema, faqSchema(fleetFaqs)]}
@@ -85,7 +104,7 @@ export default function Fleet() {
 
       <PageHero
         eyebrow="60+ vehicles ready to roll"
-        title="Our Fleet"
+        title="Our Fleet — Cars, Tempo Travellers & Buses on Rent"
         text="Hatchbacks to 45-seat luxury coaches — all with experienced drivers, valid all-India permits and rates that are fixed before you travel."
         crumbs={[{ name: 'Our Fleet', path: '/fleet' }]}
       />
@@ -134,9 +153,40 @@ export default function Fleet() {
           </p>
 
           {visible.length > 0 ? (
-            <div className="grid grid--3">
-              {visible.map((v) => <VehicleCard vehicle={v} key={v.slug} />)}
-            </div>
+            /* Grouped by category when nothing is filtered, so each group
+               heading can link through to its landing page — that is the main
+               path a crawler takes from here into the category and vehicle
+               pages. Filtered results stay a flat grid, where groups would
+               only add noise. */
+            category === 'all' && seats === 'any' ? (
+              grouped.map(({ id, label, type, items }) => (
+                <section className="fleetgroup" key={id}>
+                  <header className="fleetgroup__head">
+                    <h2 className="fleetgroup__title">{label}</h2>
+                    {type && (
+                      <Link className="fleetgroup__link" to={`/${type.slug}`}>
+                        {type.h1} — rates &amp; routes <Icon name="arrow" size={14} />
+                      </Link>
+                    )}
+                  </header>
+                  <div className="grid grid--3">
+                    {items.map((v, i) => (
+                      <Reveal variant="up" delay={stagger(i, 55)} key={v.slug}>
+                        <VehicleCard vehicle={v} />
+                      </Reveal>
+                    ))}
+                  </div>
+                </section>
+              ))
+            ) : (
+              <div className="grid grid--3">
+                {visible.map((v, i) => (
+                  <Reveal variant="up" delay={stagger(i, 55)} key={v.slug}>
+                    <VehicleCard vehicle={v} />
+                  </Reveal>
+                ))}
+              </div>
+            )
           ) : (
             <p className="empty">
               No vehicle matches that combination. Try widening the filters, or call us on{' '}

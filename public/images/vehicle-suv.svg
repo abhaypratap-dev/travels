@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="SUV / MUV illustration">
+  <title>SUV / MUV</title>
+  <defs>
+    <linearGradient id="sky-suv" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e3b30"/>
+      <stop offset="1" stop-color="#2f5a48"/>
+    </linearGradient>
+    <radialGradient id="glow-suv" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e8b93f" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#e8b93f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body-suv" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf6e8"/>
+      <stop offset="1" stop-color="#e6d9c2"/>
+    </linearGradient>
+    <linearGradient id="glass-suv" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1e3b30" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#2f5a48" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#sky-suv)"/>
+  <circle cx="622" cy="140" r="190" fill="url(#glow-suv)"/>
+  <circle cx="622" cy="140" r="46" fill="#e8b93f" opacity="0.9"/>
+  <rect y="372" width="800" height="128" fill="#15291f"/>
+  <rect y="372" width="800" height="3" fill="#e8b93f" opacity="0.5"/>
+  
+  <g opacity="0.35">
+    <rect x="40" y="418" width="72" height="7" rx="3.5" fill="#e8b93f"/>
+    <rect x="172" y="418" width="72" height="7" rx="3.5" fill="#e8b93f"/>
+    <rect x="304" y="418" width="72" height="7" rx="3.5" fill="#e8b93f"/>
+    <rect x="436" y="418" width="72" height="7" rx="3.5" fill="#e8b93f"/>
+    <rect x="568" y="418" width="72" height="7" rx="3.5" fill="#e8b93f"/>
+    <rect x="700" y="418" width="72" height="7" rx="3.5" fill="#e8b93f"/>
+  </g>
+  
+  <g>
+    <ellipse cx="335" cy="384" rx="279" ry="13" fill="#000" opacity="0.28"/>
+    <path d="M70 372
+    L70 308 Q70 294 86 294
+    L584 294 Q600 294 600 308
+    L600 372 Z" fill="url(#body-suv)"/>
+    <path d="M174 294
+    L200 220 Q208 212 222 212
+    L540 212 Q554 212 562 220
+    L572 294 Z" fill="url(#body-suv)"/>
+    <g><rect x="214" y="224" width="78" height="68" rx="5" fill="url(#glass-suv)"/>
+      <rect x="300" y="224" width="70" height="68" rx="5" fill="url(#glass-suv)"/>
+      <rect x="378" y="224" width="62" height="68" rx="5" fill="url(#glass-suv)"/></g>
+    <rect x="74" y="310" width="16" height="11" rx="4" fill="#e8b93f"/>
+    <rect x="582" y="310" width="14" height="11" rx="4" fill="#e05a4a"/>
+    <rect x="80" y="360" width="510" height="4" rx="2" fill="#000" opacity="0.16"/>
+    
+    <circle cx="196" cy="372" r="36" fill="#20191a"/>
+    <circle cx="196" cy="372" r="18.72" fill="#8e8378"/>
+    <circle cx="196" cy="372" r="7.92" fill="#3a3330"/>
+    <circle cx="476" cy="372" r="36" fill="#20191a"/>
+    <circle cx="476" cy="372" r="18.72" fill="#8e8378"/>
+    <circle cx="476" cy="372" r="7.92" fill="#3a3330"/>
+  </g>
+</svg>

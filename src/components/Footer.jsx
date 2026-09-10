@@ -1,10 +1,28 @@
 import { Link } from 'react-router-dom'
 import Icon from './Icon'
-import { site, nav } from '../data/site'
+import { site, nav, yearsActive, fullAddress } from '../data/site'
 import { services } from '../data/services'
+import { fleet } from '../data/fleet'
+import { packages } from '../data/packages'
+import { vehicleTypes } from '../data/vehicleTypes'
 
 export default function Footer() {
   const year = new Date().getFullYear()
+  const liveSocial = Object.entries(site.social).filter(([, url]) => url)
+
+  // Flatten the nav — dropdown children belong in the footer as their own
+  // links, since this is the site's main internal-linking surface.
+  const quickLinks = nav.filter((n) => !n.children)
+
+  // The vehicles people search for by name, rather than the whole catalogue —
+  // a footer listing all fifteen dilutes rather than helps.
+  const popularVehicles = [
+    'toyota-innova-crysta',
+    'force-tempo-traveller-12',
+    'mini-bus-21-seater',
+    'maruti-suzuki-swift-dzire',
+    'toyota-fortuner',
+  ].map((slug) => fleet.find((v) => v.slug === slug)).filter(Boolean)
 
   return (
     <footer className="footer">
@@ -20,31 +38,74 @@ export default function Footer() {
             </span>
           </Link>
           <p className="footer__about">
-            Family-run since {site.founded}. Sedans, SUVs, tempo travellers, mini buses and
-            luxury coaches on rent with experienced drivers — across Delhi NCR, Rajasthan
-            and all India.
+            A taxi service in Rangpuri, New Delhi, run by {site.owner.name} since {site.founded}.
+            Cars, SUVs, tempo travellers, mini buses and luxury coaches on rent with experienced
+            drivers — across Delhi NCR and all India.
           </p>
-          <div className="footer__social">
-            <a href={site.social.facebook} aria-label="Facebook" target="_blank" rel="noopener noreferrer">FB</a>
-            <a href={site.social.instagram} aria-label="Instagram" target="_blank" rel="noopener noreferrer">IG</a>
-            <a href={site.social.youtube} aria-label="YouTube" target="_blank" rel="noopener noreferrer">YT</a>
-            <a href={site.social.twitter} aria-label="X" target="_blank" rel="noopener noreferrer">X</a>
-          </div>
+
+          <a
+            className="footer__rating"
+            href={site.reviewsLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="footer__rating-score">{site.rating.value}</span>
+            <span>
+              <span className="footer__rating-stars" aria-hidden="true">
+                {Array.from({ length: 5 }).map((_, i) => <Icon key={i} name="star" size={13} />)}
+              </span>
+              <small>{site.rating.count} Google reviews</small>
+            </span>
+          </a>
+
+          {liveSocial.length > 0 && (
+            <div className="footer__social">
+              {liveSocial.map(([key, url]) => (
+                <a key={key} href={url} target="_blank" rel="noopener noreferrer" aria-label={key}>
+                  {key === 'google' ? 'G' : key.slice(0, 2).toUpperCase()}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="footer__col">
-          <h3 className="footer__title">Quick Links</h3>
+          <h3 className="footer__title">Vehicles on Rent</h3>
           <ul className="footer__list">
-            {nav.map((n) => (
-              <li key={n.to}><Link to={n.to}>{n.label}</Link></li>
+            {vehicleTypes.map((v) => (
+              <li key={v.slug}><Link to={`/${v.slug}`}>{v.h1}</Link></li>
+            ))}
+            <li><Link to="/fleet">View the full fleet</Link></li>
+          </ul>
+        </div>
+
+        <div className="footer__col">
+          <h3 className="footer__title">Popular Vehicles</h3>
+          <ul className="footer__list">
+            {popularVehicles.map((v) => (
+              <li key={v.slug}><Link to={`/fleet/${v.slug}`}>{v.name}</Link></li>
+            ))}
+          </ul>
+
+          <h3 className="footer__title footer__title--gap">Tour Packages</h3>
+          <ul className="footer__list">
+            {packages.slice(0, 4).map((p) => (
+              <li key={p.slug}><Link to={`/tour-packages/${p.slug}`}>{p.shortTitle}</Link></li>
             ))}
           </ul>
         </div>
 
         <div className="footer__col">
-          <h3 className="footer__title">Our Services</h3>
+          <h3 className="footer__title">Quick Links</h3>
           <ul className="footer__list">
-            {services.slice(0, 6).map((s) => (
+            {quickLinks.map((n) => (
+              <li key={n.to}><Link to={n.to}>{n.label}</Link></li>
+            ))}
+          </ul>
+
+          <h3 className="footer__title footer__title--gap">Our Services</h3>
+          <ul className="footer__list">
+            {services.slice(0, 4).map((s) => (
               <li key={s.slug}><Link to="/services">{s.title}</Link></li>
             ))}
           </ul>
@@ -62,7 +123,7 @@ export default function Footer() {
             </li>
             <li>
               <Icon name="pin" size={16} />
-              <span>{site.address.street}, {site.address.locality} {site.address.postalCode}</span>
+              <address>{fullAddress}</address>
             </li>
             <li>
               <Icon name="phone" size={16} />
@@ -70,14 +131,11 @@ export default function Footer() {
             </li>
             <li>
               <Icon name="mail" size={16} />
-              <span>
-                <a href={`mailto:${site.email}`}>{site.email}</a><br />
-                <a href={`mailto:${site.altEmail}`}>{site.altEmail}</a>
-              </span>
+              <a href={`mailto:${site.email}`}>{site.email}</a>
             </li>
             <li>
               <Icon name="clock" size={16} />
-              <span>{site.hours}</span>
+              <span>{site.hours}<br />Walk-in: {site.walkInHours}</span>
             </li>
           </ul>
         </div>
@@ -95,7 +153,10 @@ export default function Footer() {
       <div className="footer__bar">
         <div className="container footer__bar-inner">
           <p>© {year} {site.name}. All rights reserved.</p>
-          <p className="footer__legal">GSTIN: {site.gstin} · Designed for travellers, built on trust.</p>
+          <p className="footer__legal">
+            {site.gstin ? `GSTIN: ${site.gstin} · ` : 'GST registered — tax invoice on request · '}
+            {yearsActive} years on the road, still answering the phone ourselves.
+          </p>
         </div>
       </div>
     </footer>

@@ -14,7 +14,12 @@ export default function Faq({ items, heading = 'Frequently Asked Questions', int
         />
         <div className="faq">
           {items.map((item, i) => (
-            <div className={`faq__item${open === i ? ' is-open' : ''}`} key={item.q}>
+            <div
+              className={`faq__item${open === i ? ' is-open' : ''}`}
+              key={item.q}
+              data-reveal="up"
+              style={{ '--reveal-delay': `${Math.min(i * 55, 330)}ms` }}
+            >
               <h3>
                 <button
                   className="faq__q"
@@ -27,14 +32,17 @@ export default function Faq({ items, heading = 'Frequently Asked Questions', int
                   <Icon name="chevron" size={18} className="faq__chev" />
                 </button>
               </h3>
+              {/* Collapsed with a 0fr grid row rather than `hidden`, so the
+                  open/close can animate to the answer's natural height. The
+                  answer stays in the DOM either way, which is what we want for
+                  the FAQPage schema to match visible content. */}
               <div
                 className="faq__a"
                 id={`faq-panel-${i}`}
                 role="region"
                 aria-labelledby={`faq-btn-${i}`}
-                hidden={open !== i}
               >
-                <p>{item.a}</p>
+                <div><p>{item.a}</p></div>
               </div>
             </div>
           ))}
@@ -46,7 +54,7 @@ export default function Faq({ items, heading = 'Frequently Asked Questions', int
 
 export function SectionHead({ eyebrow, title, text, align = 'center' }) {
   return (
-    <header className={`sechead sechead--${align}`}>
+    <header className={`sechead sechead--${align}`} data-reveal="up">
       {eyebrow && <p className="sechead__eyebrow">{eyebrow}</p>}
       <h2 className="sechead__title">{title}</h2>
       {text && <p className="sechead__text">{text}</p>}

@@ -2,8 +2,9 @@ import Seo from '../components/Seo'
 import Icon from '../components/Icon'
 import Testimonials from '../components/Testimonials'
 import { SectionHead } from '../components/Faq'
-import { PageHero, CtaBand, Stats } from '../components/Common'
-import { site } from '../data/site'
+import { PageHero, CtaBand, Stats, GoogleBadge } from '../components/Common'
+import { Reveal, stagger } from '../components/Motion'
+import { site, yearsActive, fullAddress } from '../data/site'
 import { whyUs, milestones } from '../data/content'
 
 export default function About() {
@@ -24,10 +25,10 @@ export default function About() {
   return (
     <>
       <Seo
-        title="About Us — Family-Run Travel Operator in New Delhi Since 2012"
-        description="Shekhawat Tours and Travels started in 2012 with two cars. Run by Rupesh Singh Shekhawat from Rangpuri, New Delhi, we operate 60+ vehicles across Delhi NCR and Rajasthan with police-verified drivers, all-India permits and a fixed-price promise."
+        title="About Us — Taxi Service in Rangpuri, Delhi"
+        description="Shekhawat Tours and Travels is a taxi service in Rangpuri, New Delhi, run by Rupesh Singh since 2012. 60+ vehicles, verified drivers, fixed prices."
         path="/about"
-        keywords="about Shekhawat Tours and Travels, travel agency New Delhi, taxi operator Rangpuri, Rupesh Singh Shekhawat, tour operator Delhi NCR"
+        keywords="about Shekhawat Tours and Travels, travel agency New Delhi, taxi operator Rangpuri, Rupesh Singh, tour operator Delhi NCR"
         schema={aboutSchema}
         breadcrumbs={[{ name: 'About', path: '/about' }]}
       />
@@ -84,13 +85,14 @@ export default function About() {
               <div className="aboutside__card">
                 <h3>At a glance</h3>
                 <ul className="deflist">
-                  <li><span>Founded</span><strong>{site.founded}</strong></li>
+                  <li><span>Founded</span><strong>{site.founded} ({yearsActive} years)</strong></li>
                   <li><span>{site.owner.role}</span><strong>{site.owner.name}</strong></li>
-                  <li><span>Head office</span><strong>Rangpuri, {site.address.locality}</strong></li>
+                  <li><span>Head office</span><strong>{site.address.area}, {site.address.locality} {site.address.postalCode}</strong></li>
                   <li><span>Fleet size</span><strong>60+ vehicles</strong></li>
                   <li><span>Permits</span><strong>All-India tourist</strong></li>
-                  <li><span>GSTIN</span><strong>{site.gstin}</strong></li>
+                  <li><span>GST</span><strong>{site.gstin || 'Registered — invoice on request'}</strong></li>
                   <li><span>Support</span><strong>24×7, all days</strong></li>
+                  <li><span>Google rating</span><strong>{site.rating.value}★ · {site.rating.count} reviews</strong></li>
                 </ul>
               </div>
               <div className="aboutside__card aboutside__card--accent">
@@ -98,8 +100,8 @@ export default function About() {
                 <h3>Our promise</h3>
                 <p>
                   If the final bill does not match the quote we gave you — barring tolls and parking
-                  billed at actuals — you pay the quote. In thirteen years we have never needed to
-                  invoke that clause, and that is rather the point.
+                  billed at actuals — you pay the quote. In {yearsActive} years we have never needed
+                  to invoke that clause, and that is rather the point.
                 </p>
               </div>
             </aside>
@@ -111,16 +113,16 @@ export default function About() {
 
       <section className="section section--tint">
         <div className="container">
-          <SectionHead eyebrow="Our journey" title="Thirteen Years, One Road at a Time" />
+          <SectionHead eyebrow="Our journey" title={`${yearsActive} Years, One Road at a Time`} />
           <ol className="timeline timeline--milestones">
-            {milestones.map((m) => (
-              <li className="timeline__item" key={m.year}>
+            {milestones.map((m, i) => (
+              <Reveal as="li" className="timeline__item" variant="left" delay={stagger(i, 90)} key={m.year}>
                 <span className="timeline__day">{m.year}</span>
                 <div>
                   <h3 className="timeline__title">{m.title}</h3>
                   <p className="timeline__text">{m.text}</p>
                 </div>
-              </li>
+              </Reveal>
             ))}
           </ol>
         </div>
@@ -134,19 +136,19 @@ export default function About() {
             text="Six commitments that have not changed since the first Indica."
           />
           <div className="grid grid--3">
-            {whyUs.map((w) => (
-              <article className="wcard" key={w.title}>
+            {whyUs.map((w, i) => (
+              <Reveal as="article" className="wcard" variant="up" delay={stagger(i, 70)} key={w.title}>
                 <span className="wcard__icon"><Icon name={w.icon} size={22} /></span>
                 <h3 className="wcard__title">{w.title}</h3>
                 <p className="wcard__text">{w.text}</p>
-              </article>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       <Testimonials />
-      <CtaBand title="Travel with a team that answers the phone" text="Thirteen years, 25,000 trips and a fixed price every single time." />
+      <CtaBand title="Travel with a team that answers the phone" text={`${yearsActive} years on Delhi roads, and a fixed price every single time.`} />
     </>
   )
 }

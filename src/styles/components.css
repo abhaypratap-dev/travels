@@ -1,0 +1,572 @@
+/* ═══════════════════════════════════════════════════════════════
+   Components added for the vehicle landing pages, the trust strip
+   and the navigation dropdown. Motion for these lives in motion.css;
+   this file is structure and colour only.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Trust strip ────────────────────────────────────────────────
+   Sits directly under the hero. The first thing a visitor sees after
+   the promise is the proof: a real Google rating, a real review count
+   and the things that remove risk from booking.                     */
+
+.trustbar {
+  background: var(--ink);
+  color: #d9cfc5;
+  padding-block: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+.trustbar__inner {
+  display: flex; align-items: center; gap: 28px;
+  flex-wrap: wrap; justify-content: center;
+}
+.trustbar__item {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: .88rem; font-weight: 500; white-space: nowrap;
+}
+.trustbar__item .icon { color: var(--gold); }
+.trustbar__item strong { color: #fff; font-weight: 600; }
+.trustbar__sep { width: 1px; height: 22px; background: rgba(255, 255, 255, .16); }
+.trustbar a { color: inherit; }
+.trustbar a:hover { color: var(--gold); }
+
+/* ── Google review badge ────────────────────────────────────────
+   The single strongest trust signal a local business has. Given real
+   visual weight rather than buried in a footer.                      */
+
+.gbadge {
+  display: inline-flex; align-items: center; gap: 14px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+}
+.gbadge:hover { color: var(--ink); }
+.gbadge__mark {
+  width: 42px; height: 42px; flex: none;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--sand-deep);
+  font-family: var(--font-display); font-weight: 700; font-size: 1.3rem;
+  color: #4285f4;
+}
+.gbadge__body { display: flex; flex-direction: column; line-height: 1.3; }
+.gbadge__score {
+  font-family: var(--font-display); font-size: 1.35rem;
+  font-weight: 700; color: var(--ink);
+}
+.gbadge__stars { display: inline-flex; gap: 2px; color: #f4b400; }
+.gbadge__meta { font-size: .8rem; color: var(--muted); }
+
+/* Dark-background variant, used inside the hero. */
+.gbadge--dark {
+  background: rgba(255, 255, 255, .07);
+  border-color: rgba(255, 255, 255, .18);
+  color: #f0e8df;
+  backdrop-filter: blur(8px);
+}
+.gbadge--dark:hover { color: #fff; border-color: rgba(232, 185, 63, .5); }
+.gbadge--dark .gbadge__mark { background: rgba(255, 255, 255, .12); color: #fff; }
+.gbadge--dark .gbadge__score { color: #fff; }
+.gbadge--dark .gbadge__meta { color: #c3b8ad; }
+
+/* ── Navigation dropdown ────────────────────────────────────────
+   Hover-opened on pointer devices, click-opened on touch. The panel is
+   in the DOM at all times so its links are crawlable.                */
+
+.nav__item { position: relative; }
+.nav__trigger {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 9px 14px; border-radius: 9px;
+  color: var(--ink-soft); font-weight: 500; font-size: .93rem;
+  font-family: inherit;
+}
+.nav__trigger:hover, .nav__item.is-open .nav__trigger { color: var(--maroon); }
+.nav__trigger .icon { transition: transform .3s var(--ease-out-back); }
+.nav__item.is-open .nav__trigger .icon { transform: rotate(90deg); }
+
+.nav__panel {
+  position: absolute; top: calc(100% + 10px); left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  min-width: 236px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 8px;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .26s var(--ease-out-soft), transform .26s var(--ease-out-soft), visibility .26s;
+  z-index: 110;
+}
+.nav__item.is-open .nav__panel,
+.nav__item:focus-within .nav__panel {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+@media (hover: hover) {
+  .nav__item:hover .nav__panel {
+    opacity: 1; visibility: visible; pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+.nav__panel a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 13px; border-radius: 9px;
+  color: var(--ink-soft); font-size: .9rem; font-weight: 500;
+  transition: background-color .2s var(--ease), color .2s var(--ease), transform .24s var(--ease-out-soft);
+}
+.nav__panel a:hover { background: var(--gold-soft); color: var(--maroon); transform: translateX(3px); }
+.nav__panel a.is-active { background: var(--gold-soft); color: var(--maroon); font-weight: 600; }
+.nav__panel .icon { color: var(--maroon); opacity: .75; }
+
+/* Nested links inside the mobile drawer. */
+.drawer__sub { padding: 2px 0 8px 14px; display: flex; flex-direction: column; }
+.drawer__sub a {
+  padding: 11px 12px; border-radius: 9px;
+  color: var(--ink-soft); font-size: .92rem;
+  border-left: 2px solid var(--line);
+}
+.drawer__sub a.is-active { color: var(--maroon); border-left-color: var(--gold); font-weight: 600; }
+
+/* ── Vehicle-type landing page ──────────────────────────────────── */
+
+.vthero {
+  position: relative; overflow: hidden;
+  background: var(--ink); color: #e9e0d6;
+  padding-block: clamp(46px, 7vw, 84px);
+}
+.vthero__bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(900px 540px at 82% 0%, rgba(232, 185, 63, .2), transparent 64%),
+    radial-gradient(700px 480px at 4% 100%, rgba(138, 28, 43, .5), transparent 68%),
+    linear-gradient(158deg, #241c1a, #3d2023 52%, #5f1e27);
+}
+.vthero .container { position: relative; z-index: 1; }
+.vthero__grid {
+  display: grid; grid-template-columns: 1.1fr .9fr;
+  gap: 48px; align-items: center;
+}
+.vthero__badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(232, 185, 63, .15);
+  border: 1px solid rgba(232, 185, 63, .42);
+  color: var(--gold);
+  padding: 6px 15px; border-radius: var(--radius-pill);
+  font-size: .8rem; font-weight: 600; margin-bottom: 18px;
+}
+.vthero__title {
+  color: #fff; font-size: clamp(1.9rem, 4.4vw, 3.1rem);
+  line-height: 1.1; margin-bottom: 16px;
+}
+.vthero__accent {
+  display: block;
+  background: linear-gradient(100deg, var(--gold), #f7dc94);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  font-size: .78em;
+}
+.vthero__text { color: #d3c8bd; font-size: 1.04rem; max-width: 54ch; margin-bottom: 26px; }
+.vthero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.vtspecs {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  backdrop-filter: blur(10px);
+}
+.vtspec { display: flex; flex-direction: column; gap: 3px; }
+.vtspec__label {
+  font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--gold); font-weight: 700;
+}
+.vtspec__value { color: #fff; font-size: .96rem; font-weight: 500; line-height: 1.4; }
+.vtspec--wide { grid-column: 1 / -1; }
+
+/* Rate cards on the vehicle pages. */
+.vt-rates { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+.vt-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 26px 24px;
+  display: flex; flex-direction: column; gap: 9px;
+}
+.vt-card__label {
+  font-size: .74rem; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--maroon); font-weight: 700;
+}
+.vt-card__value {
+  font-family: var(--font-display); font-size: 1.7rem;
+  color: var(--ink); font-weight: 700; line-height: 1.15;
+}
+.vt-card__value small { font-size: .55em; color: var(--muted); font-weight: 500; }
+.vt-card__note { font-size: .88rem; color: var(--muted); }
+
+/* Two-column "included / not included" panel. */
+.vt-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.vt-panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 28px 26px;
+  background: #fff;
+}
+.vt-panel--muted { background: var(--sand); }
+.vt-panel h3 {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 1.12rem; margin-bottom: 16px;
+}
+.vt-panel ul { display: flex; flex-direction: column; gap: 11px; }
+.vt-panel li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: .94rem; color: var(--ink-soft); line-height: 1.55;
+}
+.vt-panel li .icon { flex: none; margin-top: 4px; }
+.vt-panel--ok li .icon { color: var(--green); }
+.vt-panel--extra li .icon { color: var(--gold-dark); }
+
+/* Route list. */
+.vt-routes { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.vt-route {
+  display: flex; align-items: flex-start; gap: 13px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 17px 19px;
+  transition: transform .35s var(--ease-out-soft), border-color .3s var(--ease), box-shadow .35s var(--ease);
+}
+@media (hover: hover) {
+  .vt-route:hover { transform: translateX(4px); border-color: var(--gold); box-shadow: var(--shadow-sm); }
+}
+.vt-route__icon {
+  width: 36px; height: 36px; flex: none;
+  display: grid; place-items: center; border-radius: 10px;
+  background: var(--gold-soft); color: var(--maroon);
+}
+.vt-route__to { font-weight: 600; color: var(--ink); font-size: .96rem; display: block; }
+.vt-route__note { font-size: .84rem; color: var(--muted); }
+
+/* Use-case list. */
+.vt-uses { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 12px; }
+.vt-use {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 15px 18px;
+  background: var(--gold-soft);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: .95rem; color: var(--ink-soft);
+}
+.vt-use .icon { color: var(--maroon); flex: none; margin-top: 3px; }
+
+/* Cross-links between the four vehicle pages. */
+.vt-cross { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+.vt-crosslink {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 22px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: #fff;
+  transition: transform .35s var(--ease-out-soft), border-color .3s var(--ease), box-shadow .35s var(--ease);
+}
+.vt-crosslink:hover { transform: translateY(-4px); border-color: var(--gold); box-shadow: var(--shadow); }
+.vt-crosslink__icon {
+  width: 42px; height: 42px; display: grid; place-items: center;
+  border-radius: 12px; background: var(--sand-deep); color: var(--maroon);
+  margin-bottom: 4px;
+}
+.vt-crosslink strong { font-family: var(--font-display); color: var(--ink); font-size: 1.05rem; }
+.vt-crosslink span { font-size: .86rem; color: var(--muted); }
+.vt-crosslink em { font-style: normal; color: var(--maroon); font-weight: 600; font-size: .86rem; }
+
+/* ── Home: how-it-works steps ───────────────────────────────────── */
+.howto { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 22px; position: relative; }
+.howto__step { text-align: center; padding: 0 10px; }
+.howto__num {
+  width: 58px; height: 58px; margin: 0 auto 16px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--maroon), var(--maroon-dark));
+  color: var(--gold);
+  font-family: var(--font-display); font-size: 1.3rem; font-weight: 700;
+  box-shadow: 0 6px 18px rgba(138, 28, 43, .24);
+}
+.howto__title { font-size: 1.06rem; margin-bottom: 7px; }
+.howto__text { font-size: .92rem; color: var(--muted); }
+
+/* ── Area tags ──────────────────────────────────────────────────── */
+.arealink {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--sand-deep);
+  color: var(--ink-soft);
+  padding: 7px 15px; border-radius: var(--radius-pill);
+  font-size: .84rem; white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease);
+}
+.arealink:hover { background: var(--gold-soft); color: var(--maroon); border-color: var(--gold); }
+.trustbar .arealink {
+  background: rgba(255, 255, 255, .08);
+  color: #d9cfc5;
+  border-color: rgba(255, 255, 255, .1);
+}
+.trustbar .arealink:hover { background: rgba(232, 185, 63, .18); color: var(--gold); }
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .vthero__grid { grid-template-columns: 1fr; gap: 34px; }
+  .nav__panel { display: none; }
+}
+
+@media (max-width: 640px) {
+  .vtspecs { grid-template-columns: 1fr; padding: 20px; }
+  .trustbar__inner { gap: 16px; }
+  .trustbar__sep { display: none; }
+  .gbadge { padding: 12px 16px; gap: 11px; }
+}
+
+/* ── Footer additions ───────────────────────────────────────────── */
+.footer__title--gap { margin-top: 26px; }
+
+.footer__rating {
+  display: inline-flex; align-items: center; gap: 12px;
+  margin: 18px 0 4px;
+  padding: 11px 17px;
+  background: rgba(255, 255, 255, .07);
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: var(--radius);
+  color: inherit;
+  transition: border-color .3s var(--ease), background-color .3s var(--ease);
+}
+.footer__rating:hover { border-color: var(--gold); background: rgba(232, 185, 63, .12); color: inherit; }
+.footer__rating-score {
+  font-family: var(--font-display); font-size: 1.55rem;
+  font-weight: 700; color: var(--gold); line-height: 1;
+}
+.footer__rating-stars { display: flex; gap: 2px; color: #f4b400; margin-bottom: 2px; }
+.footer__rating small { font-size: .78rem; opacity: .8; }
+.footer__list--contact address { font-style: normal; line-height: 1.55; }
+
+/* ── Page hero parallax blob ────────────────────────────────────── */
+.pagehero__blob {
+  position: absolute; right: -90px; top: -110px;
+  width: 420px; height: 420px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 185, 63, .22), transparent 68%);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* ── CTA band glow ──────────────────────────────────────────────── */
+.ctaband { position: relative; overflow: hidden; }
+.ctaband__glow {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(660px 340px at 88% 12%, rgba(232, 185, 63, .22), transparent 66%);
+}
+.ctaband__inner { position: relative; z-index: 1; }
+
+/* ── Two-column split with a form on one side ───────────────────── */
+.split--form { align-items: start; }
+
+/* ── Vehicle-type hero aside ────────────────────────────────────── */
+.vthero__aside { position: relative; }
+
+/* Breadcrumbs sitting on a dark hero. */
+.vthero .crumbs { margin-bottom: 20px; }
+.vthero .crumbs a { color: #cdbfb2; }
+.vthero .crumbs a:hover { color: var(--gold); }
+.vthero .crumbs span { color: var(--gold); }
+
+/* ═══════════════════════════════════════════════════════════════
+   Detail pages — one per vehicle and one per tour package.
+   ═══════════════════════════════════════════════════════════════ */
+
+.vdhero {
+  position: relative; overflow: hidden;
+  background: var(--ink); color: #e9e0d6;
+  padding-block: clamp(34px, 5vw, 60px) clamp(46px, 7vw, 76px);
+}
+.vdhero__bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(880px 520px at 78% 4%, rgba(232, 185, 63, .19), transparent 64%),
+    radial-gradient(680px 460px at 2% 96%, rgba(138, 28, 43, .48), transparent 68%),
+    linear-gradient(160deg, #221a18, #3a1f22 54%, #5c1d26);
+}
+.vdhero .container { position: relative; z-index: 1; }
+.vdhero .crumbs { margin-bottom: 22px; }
+.vdhero .crumbs a { color: #cdbfb2; }
+.vdhero .crumbs a:hover { color: var(--gold); }
+.vdhero .crumbs span { color: var(--gold); }
+
+.vdhero__grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 46px; align-items: center;
+}
+.vdhero__title {
+  color: #fff; font-size: clamp(1.8rem, 4vw, 2.9rem);
+  line-height: 1.12; margin-bottom: 10px;
+}
+.vdhero__tagline {
+  color: var(--gold); font-size: 1rem; font-weight: 600;
+  margin-bottom: 16px;
+}
+.vdhero__text { color: #d3c8bd; font-size: 1.02rem; max-width: 52ch; margin-bottom: 24px; }
+
+.vdhero__price {
+  display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap;
+  padding: 16px 0 4px;
+  margin-bottom: 24px;
+  border-top: 1px solid rgba(255, 255, 255, .16);
+  border-bottom: 1px solid rgba(255, 255, 255, .16);
+}
+.vdhero__rate {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+  font-weight: 700; color: var(--gold); line-height: 1.1;
+}
+.vdhero__rate small { font-size: .46em; color: #c3b8ad; font-weight: 500; margin-left: 2px; }
+.vdhero__rate--alt { color: #fff; font-size: clamp(1.4rem, 2.8vw, 1.85rem); }
+.vdhero__sep { width: 1px; align-self: stretch; background: rgba(255, 255, 255, .2); }
+.vdhero__pricenote { font-size: .86rem; color: #b8ada2; }
+
+.vdhero__media { margin: 0; }
+.vdhero__media img {
+  width: 100%; height: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, .16);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .38);
+  background: rgba(255, 255, 255, .04);
+}
+.vdhero__media figcaption {
+  margin-top: 11px; text-align: center;
+  font-size: .84rem; color: #b8ada2;
+}
+
+/* ── Spec strip ─────────────────────────────────────────────────
+   Six facts in a row, each its own tile. Reads faster than a table
+   and survives being wrapped to two or three columns on a phone.   */
+
+.vdspecs {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+  gap: 14px;
+}
+.vdspecs--wide { grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); }
+.vdspec {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 20px 20px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: transform .35s var(--ease-out-soft), border-color .3s var(--ease), box-shadow .35s var(--ease);
+}
+@media (hover: hover) {
+  .vdspec:hover { transform: translateY(-3px); border-color: var(--gold); box-shadow: var(--shadow-sm); }
+}
+.vdspec__icon {
+  width: 36px; height: 36px; margin-bottom: 6px;
+  display: grid; place-items: center; border-radius: 10px;
+  background: var(--gold-soft); color: var(--maroon);
+}
+.vdspec__label {
+  font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); font-weight: 700;
+}
+.vdspec__value { font-size: .96rem; color: var(--ink); font-weight: 600; line-height: 1.4; }
+
+/* ── Prose checklists ───────────────────────────────────────────── */
+.prose__list { display: flex; flex-direction: column; gap: 9px; margin: 14px 0 22px; }
+.prose__list li {
+  display: flex; align-items: flex-start; gap: 10px;
+  color: var(--ink-soft); font-size: .96rem; line-height: 1.55;
+}
+.prose__list .icon { color: var(--green); flex: none; margin-top: 5px; }
+
+/* ── Recommended vehicle panel on a package page ────────────────── */
+.pkgvehicle {
+  display: grid; grid-template-columns: minmax(0, 320px) 1fr;
+  gap: 28px; align-items: center;
+  margin-top: 34px; padding: 24px;
+  background: var(--sand);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+.pkgvehicle img { width: 100%; height: auto; border-radius: var(--radius); }
+.pkgvehicle__label {
+  font-size: .74rem; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--maroon); font-weight: 700; margin-bottom: 6px;
+}
+.pkgvehicle__title { font-size: 1.25rem; margin-bottom: 8px; }
+.pkgvehicle__text { color: var(--muted); font-size: .95rem; margin-bottom: 16px; }
+
+/* ── Vehicle card media, now that real artwork exists ───────────── */
+.vcard__media img { width: 100%; height: 100%; object-fit: cover; }
+
+@media (max-width: 960px) {
+  .vdhero__grid { grid-template-columns: 1fr; gap: 32px; }
+  .vdhero__media { order: -1; }
+  .pkgvehicle { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .vdspecs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .vdspec { padding: 16px 14px; }
+  .vdhero__price { gap: 12px; }
+  .vdhero__sep { display: none; }
+}
+
+/* ── Package listing card ───────────────────────────────────────
+   The card carries the artwork now that each itinerary has its own
+   page; the day-by-day detail moved there rather than living in an
+   accordion behind the same URL.                                   */
+
+.pkg { overflow: hidden; }
+.pkg__media {
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--sand-deep);
+  border-bottom: 1px solid var(--line);
+}
+.pkg__media img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .8s var(--ease-out-soft);
+}
+@media (hover: hover) {
+  .pkg:hover .pkg__media img { transform: scale(1.05); }
+}
+.pkg__title a { color: inherit; }
+.pkg__title a:hover { color: var(--maroon); }
+
+/* Vehicle card title is a link now; keep it looking like a heading. */
+.vcard__title a { color: inherit; }
+.vcard__title a:hover { color: var(--maroon); }
+.vcard__media { display: block; }
+
+/* ── Fleet grouped by category ──────────────────────────────────── */
+.fleetgroup { margin-bottom: 12px; }
+.fleetgroup__head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+  margin: 44px 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.fleetgroup__title { font-size: 1.4rem; }
+.fleetgroup__link { font-size: .9rem; font-weight: 600; white-space: nowrap; }
+
+/* Package card artwork on the homepage grid. */
+.pcard { overflow: hidden; }
+.pcard__media {
+  display: block; aspect-ratio: 16 / 9;
+  overflow: hidden; background: var(--sand-deep);
+  margin: -1px -1px 0;
+}
+.pcard__media img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .8s var(--ease-out-soft);
+}
+@media (hover: hover) { .pcard:hover .pcard__media img { transform: scale(1.05); } }
+.pcard__title a { color: inherit; }
+.pcard__title a:hover { color: var(--maroon); }

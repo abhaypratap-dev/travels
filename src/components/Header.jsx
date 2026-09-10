@@ -6,9 +6,13 @@ import { site, nav, whatsappLink } from '../data/site'
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [openMenu, setOpenMenu] = useState(null)
   const { pathname } = useLocation()
 
-  useEffect(() => setOpen(false), [pathname])
+  useEffect(() => {
+    setOpen(false)
+    setOpenMenu(null)
+  }, [pathname])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -22,6 +26,22 @@ export default function Header() {
     return () => { document.body.style.overflow = '' }
   }, [open])
 
+  // Escape closes whichever layer is on top — the dropdown first, then the
+  // drawer — which is what a keyboard user expects from a nested menu.
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key !== 'Escape') return
+      if (openMenu) setOpenMenu(null)
+      else if (open) setOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open, openMenu])
+
+  /** True when the current route is one of a dropdown's children. */
+  const groupActive = (item) =>
+    item.children?.some((c) => c.to === pathname) || pathname === item.to
+
   return (
     <>
       <div className="topbar">
@@ -30,6 +50,9 @@ export default function Header() {
             <Icon name="clock" size={14} /> {site.hours}
           </span>
           <div className="topbar__right">
+            <a className="topbar__item topbar__item--hide-sm" href={site.mapLink} target="_blank" rel="noopener noreferrer">
+              <Icon name="pin" size={14} /> Rangpuri, New Delhi
+            </a>
             <a className="topbar__item" href={`tel:${site.phoneRaw}`}>
               <Icon name="phone" size={14} /> {site.phone}
             </a>
@@ -54,17 +77,48 @@ export default function Header() {
 
           <nav className="nav" aria-label="Primary">
             <ul className="nav__list">
-              {nav.map((item) => (
-                <li key={item.to}>
-                  <NavLink
-                    to={item.to}
-                    end={item.to === '/'}
-                    className={({ isActive }) => `nav__link${isActive ? ' is-active' : ''}`}
+              {nav.map((item) =>
+                item.children ? (
+                  <li
+                    className={`nav__item${openMenu === item.label ? ' is-open' : ''}`}
+                    key={item.label}
+                    onMouseLeave={() => setOpenMenu(null)}
                   >
-                    {item.label}
-                  </NavLink>
-                </li>
-              ))}
+                    <button
+                      className={`nav__trigger${groupActive(item) ? ' is-active' : ''}`}
+                      aria-expanded={openMenu === item.label}
+                      aria-haspopup="true"
+                      onClick={() => setOpenMenu(openMenu === item.label ? null : item.label)}
+                    >
+                      {item.label} <Icon name="chevron" size={13} />
+                    </button>
+                    {/* Rendered at all times, hidden with opacity/visibility
+                        rather than `display: none`, so these links stay in the
+                        prerendered HTML for crawlers to follow. */}
+                    <div className="nav__panel">
+                      {item.children.map((child) => (
+                        <NavLink
+                          key={child.to}
+                          to={child.to}
+                          className={({ isActive }) => (isActive ? 'is-active' : '')}
+                        >
+                          <Icon name="arrow" size={13} /> {child.label}
+                        </NavLink>
+                      ))}
+                    </div>
+                  </li>
+                ) : (
+                  <li key={item.to}>
+                    <NavLink
+                      to={item.to}
+                      end={item.to === '/'}
+                      className={({ isActive }) => `nav__link${isActive ? ' is-active' : ''}`}
+                    >
+                      {item.label}
+                    </NavLink>
+                  </li>
+                )
+              )}
             </ul>
           </nav>
 
@@ -98,7 +152,7 @@ export default function Header() {
         <nav aria-label="Mobile">
           <ul className="drawer__list">
             {nav.map((item) => (
-              <li key={item.to}>
+              <li key={item.label}>
                 <NavLink
                   to={item.to}
                   end={item.to === '/'}
@@ -107,6 +161,21 @@ export default function Header() {
                   {item.label}
                   <Icon name="chevron" size={16} />
                 </NavLink>
+                {item.children && (
+                  <div className="drawer__sub">
+                    {item.children
+                      .filter((c) => c.to !== item.to)
+                      .map((child) => (
+                        <NavLink
+                          key={child.to}
+                          to={child.to}
+                          className={({ isActive }) => (isActive ? 'is-active' : '')}
+                        >
+                          {child.label}
+                        </NavLink>
+                      ))}
+                  </div>
+                )}
               </li>
             ))}
           </ul>

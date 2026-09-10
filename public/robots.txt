@@ -1,7 +1,7 @@
+# Development placeholder. The real robots.txt is generated at build time by
+# scripts/prerender.js from src/data/site.js and overwrites this file in dist/.
 User-agent: *
 Allow: /
-
 Disallow: /404.html
 
-# Replace the domain below with your live domain before deploying.
-Sitemap: https://www.shekhawattoursandtravels.com/sitemap.xml
+Sitemap: https://www.shekhawattoursandtravels.in/sitemap.xml

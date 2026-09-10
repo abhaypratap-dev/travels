@@ -6,14 +6,31 @@
     <meta name="theme-color" content="#8a1c2b" />
     <meta name="format-detection" content="telephone=yes" />
 
+    <!--
+      Marks the document as JavaScript-capable before the first paint.
+
+      Every "hidden until revealed" rule in motion.css is scoped to `html.js`.
+      With scripting off — or blocked, or still loading — those rules never
+      match, so the prerendered content is fully visible and fully indexable.
+      Inline and synchronous on purpose: deferring it would let one frame of
+      un-hidden content paint before the animations took over.
+    -->
+    <script>document.documentElement.className += ' js'</script>
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/icon-96.png" />
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Performance: warm up third-party origins used by the site -->
+    <!-- Performance: warm up the font origins before the CSS asks for them. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="dns-prefetch" href="https://www.google.com" />
+    <link rel="dns-prefetch" href="https://wa.me" />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+    />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
@@ -26,10 +43,10 @@
       Keep the delimiter comments intact.
     -->
     <!--fallback-seo-start-->
-    <title>Shekhawat Tours and Travels — Car Rental &amp; Bus Hire in Delhi NCR</title>
+    <title>Shekhawat Tours and Travels — Taxi, Tempo Traveller &amp; Bus Hire in Delhi</title>
     <meta
       name="description"
-      content="Book cars, tempo travellers, mini buses and luxury coaches on rent with experienced drivers in Delhi NCR. Outstation taxi, IGI airport transfer, wedding car hire and Rajasthan tour packages at fixed rates. Available 24×7."
+      content="Taxi service in Rangpuri, New Delhi. Book 4 seater cars, 7 seater SUVs, tempo travellers and mini buses on rent with experienced drivers. IGI airport transfers, outstation trips and tour packages at fixed rates. Open 24×7 — call +91 79824 71997."
     />
     <!--fallback-seo-end-->
 
@@ -43,11 +60,15 @@
          its own, and a second one would compete with it in the document
          outline that crawlers build. -->
     <noscript>
-      <div style="padding:24px;font-family:system-ui,sans-serif;text-align:center">
+      <div style="padding:24px;font-family:system-ui,sans-serif;text-align:center;line-height:1.6">
         <p style="font-size:1.5rem;font-weight:700">Shekhawat Tours and Travels</p>
         <p>
-          Car rental, tempo traveller and bus hire across Delhi NCR, Rajasthan and all India.
-          Call <a href="tel:+917982471997">+91 79824 71997</a> to book.
+          Taxi service in Rangpuri, New Delhi. 4 seater cars, 7 seater SUVs, tempo travellers
+          and mini buses on rent with driver, across Delhi NCR and all India.
+        </p>
+        <p>
+          Call <a href="tel:+917982471997">+91 79824 71997</a> to book &middot;
+          Open 24&times;7, all days.
         </p>
       </div>
     </noscript>

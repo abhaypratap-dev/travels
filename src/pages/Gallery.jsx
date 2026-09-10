@@ -3,7 +3,8 @@ import Seo from '../components/Seo'
 import Icon from '../components/Icon'
 import { SectionHead } from '../components/Faq'
 import { PageHero, CtaBand } from '../components/Common'
-import { site } from '../data/site'
+import { Reveal, stagger } from '../components/Motion'
+import { site, yearsActive } from '../data/site'
 import { galleryItems } from '../data/content'
 
 const categories = ['All', 'Destinations', 'Fleet', 'Occasions']
@@ -27,8 +28,8 @@ export default function Gallery() {
   return (
     <>
       <Seo
-        title="Gallery — Our Fleet, Rajasthan Destinations & Client Events"
-        description="Photo gallery of Shekhawat Tours and Travels: our cars, tempo travellers and buses, the Rajasthan destinations we drive to, and the weddings and corporate groups we have served."
+        title="Photo Gallery — Our Fleet & Trips"
+        description="Photo gallery of Shekhawat Tours and Travels — our cars, tempo travellers and buses, the places we drive to, and the events we have served."
         path="/gallery"
         keywords="Rajasthan travel photos, tempo traveller photos, wedding car decoration, Jaisalmer desert photos, Shekhawat travels gallery"
         schema={gallerySchema}
@@ -37,8 +38,8 @@ export default function Gallery() {
 
       <PageHero
         eyebrow="From the road"
-        title="Gallery"
-        text="Our vehicles, the places we drive to, and the occasions we have been part of across thirteen years."
+        title="Photo Gallery — Our Fleet & Trips"
+        text={`Our vehicles, the places we drive to, and the occasions we have been part of across ${yearsActive} years.`}
         crumbs={[{ name: 'Gallery', path: '/gallery' }]}
       />
 
@@ -58,8 +59,14 @@ export default function Gallery() {
           </div>
 
           <div className="gallery">
-            {visible.map((g) => (
-              <figure className={`gitem tone-${g.tone}`} key={g.title}>
+            {visible.map((g, i) => (
+              <Reveal
+                as="figure"
+                className={`gitem tone-${g.tone}`}
+                variant="scale"
+                delay={stagger(i, 45)}
+                key={g.title}
+              >
                 {g.src ? (
                   <img src={g.src} alt={g.title} loading="lazy" width="600" height="400" />
                 ) : (
@@ -71,14 +78,14 @@ export default function Gallery() {
                   <strong>{g.title}</strong>
                   <small>{g.category}</small>
                 </figcaption>
-              </figure>
+              </Reveal>
             ))}
           </div>
 
           <p className="gallery__note">
             <Icon name="camera" size={16} />
-            Drop your own photographs into <code>/public/images</code> and add a <code>src</code> to each
-            entry in <code>src/data/content.js</code> to replace these placeholders.
+            Photographs from recent trips are added here regularly. Planning something similar?{' '}
+            <a href={`tel:${site.phoneRaw}`}>Call {site.owner.name}</a> and we will build the route around it.
           </p>
         </div>
       </section>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Hatchback illustration">
+  <title>Hatchback</title>
+  <defs>
+    <linearGradient id="sky-hatchback" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#173f45"/>
+      <stop offset="1" stop-color="#256069"/>
+    </linearGradient>
+    <radialGradient id="glow-hatchback" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e8b93f" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#e8b93f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body-hatchback" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf6e8"/>
+      <stop offset="1" stop-color="#e6d9c2"/>
+    </linearGradient>
+    <linearGradient id="glass-hatchback" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#173f45" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#256069" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#sky-hatchback)"/>
+  <circle cx="622" cy="140" r="190" fill="url(#glow-hatchback)"/>
+  <circle cx="622" cy="140" r="46" fill="#e8b93f" opacity="0.9"/>
+  <rect y="372" width="800" height="128" fill="#0f2a2f"/>
+  <rect y="372" width="800" height="3" fill="#e8b93f" opacity="0.5"/>
+  
+  <g opacity="0.35">
+    <rect x="40" y="418" width="72" height="7" rx="3.5" fill="#e8b93f"/>
+    <rect x="172" y="418" width="72" height="7" rx="3.5" fill="#e8b93f"/>
+    <rect x="304" y="418" width="72" height="7" rx="3.5" fill="#e8b93f"/>
+    <rect x="436" y="418" width="72" height="7" rx="3.5" fill="#e8b93f"/>
+    <rect x="568" y="418" width="72" height="7" rx="3.5" fill="#e8b93f"/>
+    <rect x="700" y="418" width="72" height="7" rx="3.5" fill="#e8b93f"/>
+  </g>
+  
+  <g>
+    <ellipse cx="285" cy="384" rx="229" ry="13" fill="#000" opacity="0.28"/>
+    <path d="M70 372
+    L70 320 Q70 306 86 306
+    L484 306 Q500 306 500 320
+    L500 372 Z" fill="url(#body-hatchback)"/>
+    <path d="M148 306
+    L178 244 Q186 236 200 236
+    L444 236 Q458 236 466 244
+    L474 306 Z" fill="url(#body-hatchback)"/>
+    <g><rect x="190" y="248" width="82" height="56" rx="5" fill="url(#glass-hatchback)"/>
+      <rect x="282" y="248" width="66" height="56" rx="5" fill="url(#glass-hatchback)"/></g>
+    <rect x="74" y="322" width="16" height="11" rx="4" fill="#e8b93f"/>
+    <rect x="482" y="322" width="14" height="11" rx="4" fill="#e05a4a"/>
+    <rect x="80" y="360" width="410" height="4" rx="2" fill="#000" opacity="0.16"/>
+    
+    <circle cx="175" cy="372" r="30" fill="#20191a"/>
+    <circle cx="175" cy="372" r="15.600000000000001" fill="#8e8378"/>
+    <circle cx="175" cy="372" r="6.6" fill="#3a3330"/>
+    <circle cx="415" cy="372" r="30" fill="#20191a"/>
+    <circle cx="415" cy="372" r="15.600000000000001" fill="#8e8378"/>
+    <circle cx="415" cy="372" r="6.6" fill="#3a3330"/>
+  </g>
+</svg>

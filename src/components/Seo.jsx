@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async'
-import { site, fullAddress } from '../data/site'
+import { site, fullAddress, yearsActive } from '../data/site'
 
 /**
  * Per-page SEO head. Emits title, description, canonical, robots,
@@ -18,13 +18,34 @@ export default function Seo({
 }) {
   // Root keeps its trailing slash so the canonical matches the sitemap's <loc>.
   const canonical = `${site.url}${path === '/' ? '/' : path}`
+  /**
+   * Brand suffix, but only when it fits.
+   *
+   * Google renders roughly 65 characters of a title before truncating on
+   * width. Appending the brand unconditionally pushed the longer vehicle and
+   * itinerary pages past that, and the half that got cut was the half that
+   * distinguishes them. So the suffix is added when the result stays inside
+   * the budget and dropped when it would not — the page's own name always
+   * wins over the brand.
+   */
+  const TITLE_BUDGET = 65
+  const suffixed = `${title} | ${site.shortName}`
   const fullTitle =
-    path === '/' ? title : `${title} | ${site.name}`
-  const ogImage = image.startsWith('http') ? image : `${site.url}${image}`
+    path === '/' ? title : suffixed.length <= TITLE_BUDGET ? suffixed : title
+  /**
+   * Open Graph needs a raster image. Facebook, WhatsApp, LinkedIn and X all
+   * decline to render an SVG `og:image`, so a page whose on-page artwork is
+   * `/images/vehicle-suv.svg` shares with a pre-rendered JPEG twin at
+   * `/images/og/vehicle-suv.jpg`. `scripts/generate-images.mjs` documents how
+   * those are produced; on-page display keeps the sharp, tiny SVG.
+   */
+  const rasterised = image.replace(/^\/images\/(.+)\.svg$/, '/images/og/$1.jpg')
+  const ogImage = rasterised.startsWith('http') ? rasterised : `${site.url}${rasterised}`
 
   const breadcrumbSchema = breadcrumbs && {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
+    '@id': `${canonical}#breadcrumb`,
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: site.url },
       ...breadcrumbs.map((b, i) => ({
@@ -36,7 +57,26 @@ export default function Seo({
     ],
   }
 
-  const schemas = [schema, breadcrumbSchema].filter(Boolean).flat()
+  /**
+   * A WebPage node on every route, tied back to the organisation and the
+   * website. Without it each page's JSON-LD is a set of orphan islands;
+   * with it, Google can resolve one entity graph for the whole site.
+   */
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${canonical}#webpage`,
+    url: canonical,
+    name: fullTitle,
+    description,
+    isPartOf: { '@id': `${site.url}/#website` },
+    about: { '@id': `${site.url}/#organization` },
+    primaryImageOfPage: { '@type': 'ImageObject', url: ogImage },
+    inLanguage: 'en-IN',
+    ...(breadcrumbs ? { breadcrumb: { '@id': `${canonical}#breadcrumb` } } : {}),
+  }
+
+  const schemas = [webPageSchema, schema, breadcrumbSchema].filter(Boolean).flat()
 
   return (
     <Helmet prioritizeSeoTags>
@@ -49,6 +89,10 @@ export default function Seo({
         name="robots"
         content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
       />
+      <meta
+        name="googlebot"
+        content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'}
+      />
 
       {/* Open Graph */}
       <meta property="og:type" content={type} />
@@ -59,6 +103,7 @@ export default function Seo({
       <meta property="og:image" content={ogImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={`${site.name} — ${site.tagline}`} />
       <meta property="og:locale" content="en_IN" />
 
       {/* Twitter */}
@@ -66,15 +111,15 @@ export default function Seo({
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image:alt" content={`${site.name} — ${site.tagline}`} />
 
       {/* Local / geo signals */}
       <meta name="geo.region" content={site.geoRegion} />
-      <meta name="geo.placename" content={site.address.locality} />
+      <meta name="geo.placename" content={`${site.address.area}, ${site.address.locality}`} />
       <meta name="geo.position" content={`${site.geo.lat};${site.geo.lng}`} />
       <meta name="ICBM" content={`${site.geo.lat}, ${site.geo.lng}`} />
       <meta name="author" content={site.name} />
       <meta name="publisher" content={site.name} />
-      <meta name="contact" content={site.email} />
       <meta name="coverage" content="India" />
       <meta name="distribution" content="global" />
       <meta name="rating" content="general" />
@@ -88,17 +133,36 @@ export default function Seo({
   )
 }
 
-/** Organisation-level schema, rendered once on every page from App. */
+/** Only profiles that actually exist — a `sameAs` pointing at a 404 hurts. */
+const liveProfiles = Object.values(site.social).filter(Boolean)
+
+/**
+ * Organisation-level schema, rendered once on every page from App.
+ *
+ * Typed as both TaxiService and TravelAgency: the Google Business Profile
+ * category is "Taxi service in New Delhi", and matching that category is what
+ * ties this markup to the local listing. TravelAgency is kept alongside it
+ * because the tour packages are genuinely a second line of business.
+ */
 export const organizationSchema = {
   '@context': 'https://schema.org',
-  '@type': ['TravelAgency', 'LocalBusiness'],
+  '@type': ['TaxiService', 'TravelAgency', 'LocalBusiness'],
   '@id': `${site.url}/#organization`,
   name: site.name,
   legalName: site.legalName,
+  alternateName: site.legalName,
   url: site.url,
-  logo: `${site.url}/images/logo.png`,
-  image: `${site.url}/images/og-cover.jpg`,
+  logo: {
+    '@type': 'ImageObject',
+    '@id': `${site.url}/#logo`,
+    url: `${site.url}/images/logo.png`,
+    width: 512,
+    height: 512,
+    caption: site.name,
+  },
+  image: [`${site.url}/images/og-cover.jpg`, `${site.url}/images/logo.png`],
   description: site.description,
+  slogan: site.tagline,
   telephone: site.phoneRaw,
   email: site.email,
   founder: {
@@ -107,6 +171,7 @@ export const organizationSchema = {
     jobTitle: site.owner.role,
     telephone: site.owner.phoneRaw,
     email: site.owner.email,
+    worksFor: { '@id': `${site.url}/#organization` },
   },
   employee: {
     '@type': 'Person',
@@ -114,12 +179,13 @@ export const organizationSchema = {
     jobTitle: site.owner.role,
   },
   foundingDate: site.founded,
+  knowsLanguage: ['en-IN', 'hi-IN'],
   priceRange: '₹₹',
   currenciesAccepted: 'INR',
   paymentAccepted: 'Cash, UPI, Credit Card, Debit Card, Bank Transfer',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: site.address.street,
+    streetAddress: `${site.address.street}, ${site.address.area}`,
     addressLocality: site.address.locality,
     addressRegion: site.address.region,
     postalCode: site.address.postalCode,
@@ -130,14 +196,29 @@ export const organizationSchema = {
     latitude: site.geo.lat,
     longitude: site.geo.lng,
   },
+  /** 60 km covers Delhi NCR end to end; outstation work is in `areaServed`. */
+  areaServed: site.serviceAreas.map((a) => ({ '@type': 'City', name: a })),
+  serviceArea: {
+    '@type': 'GeoCircle',
+    geoMidpoint: {
+      '@type': 'GeoCoordinates',
+      latitude: site.geo.lat,
+      longitude: site.geo.lng,
+    },
+    geoRadius: '60000',
+  },
   openingHoursSpecification: {
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
     opens: '00:00',
     closes: '23:59',
   },
-  areaServed: site.serviceAreas.map((a) => ({ '@type': 'City', name: a })),
-  sameAs: Object.values(site.social),
+  sameAs: liveProfiles,
+  /**
+   * These figures mirror the Google Business Profile exactly. If the profile
+   * moves, update `site.rating` — never inflate them. A rating in structured
+   * data that a visitor can disprove in one click invites a manual action.
+   */
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: site.rating.value,
@@ -155,6 +236,12 @@ export const organizationSchema = {
       contactType: 'Reservations',
       areaServed: 'IN',
       availableLanguage: ['en', 'hi'],
+      hoursAvailable: {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        opens: '00:00',
+        closes: '23:59',
+      },
     },
     {
       '@type': 'ContactPoint',
@@ -164,6 +251,22 @@ export const organizationSchema = {
       availableLanguage: ['en', 'hi'],
     },
   ],
+  /** Surfaces the four commercial pages as a catalogue Google can read. */
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Vehicles available for rent with driver',
+    itemListElement: [
+      { name: '4 Seater Car Rental', url: `${site.url}/4-seater-car-rental` },
+      { name: 'SUV 7 Seater on Rent', url: `${site.url}/7-seater-suv-on-rent` },
+      { name: 'Tempo Traveller on Rent', url: `${site.url}/tempo-traveller-on-rent` },
+      { name: 'Mini Bus on Rent', url: `${site.url}/mini-bus-on-rent` },
+    ].map((item) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: item.name, url: item.url },
+      priceCurrency: 'INR',
+      availability: 'https://schema.org/InStock',
+    })),
+  },
 }
 
 export const websiteSchema = {
@@ -172,9 +275,11 @@ export const websiteSchema = {
   '@id': `${site.url}/#website`,
   url: site.url,
   name: site.name,
+  alternateName: site.shortName,
   description: site.description,
   publisher: { '@id': `${site.url}/#organization` },
   inLanguage: 'en-IN',
 }
 
 export const addressLine = fullAddress
+export const yearsInBusiness = yearsActive

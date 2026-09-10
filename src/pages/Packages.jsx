@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import Icon from '../components/Icon'
 import Faq, { SectionHead, faqSchema } from '../components/Faq'
 import { PageHero, CtaBand } from '../components/Common'
+import { Reveal, stagger } from '../components/Motion'
 import { site, whatsappLink } from '../data/site'
 import { packages } from '../data/packages'
 
@@ -30,55 +31,64 @@ const packageFaqs = [
 ]
 
 export default function Packages() {
-  const [openSlug, setOpenSlug] = useState(packages[0].slug)
-
-  const tourSchema = packages.map((p) => ({
+  /**
+   * A single ItemList pointing at the individual package pages, rather than a
+   * full TouristTrip per package repeated here. The day-by-day itinerary and
+   * its schema now live on each package's own page, and duplicating them on
+   * the listing would put the same content behind two URLs.
+   */
+  const listSchema = {
     '@context': 'https://schema.org',
-    '@type': 'TouristTrip',
-    name: p.title,
-    description: p.summary,
-    touristType: 'Leisure',
-    provider: { '@type': 'TravelAgency', name: site.name, url: site.url },
-    itinerary: {
-      '@type': 'ItemList',
-      numberOfItems: p.itinerary.length,
-      itemListElement: p.itinerary.map((d, i) => ({
-        '@type': 'ListItem',
-        position: i + 1,
-        item: { '@type': 'TouristAttraction', name: d.title, description: d.detail },
-      })),
-    },
-    offers: {
-      '@type': 'Offer',
-      price: p.price,
-      priceCurrency: 'INR',
-      availability: 'https://schema.org/InStock',
-    },
-  }))
+    '@type': 'ItemList',
+    name: 'Tour packages from Delhi and Rajasthan',
+    numberOfItems: packages.length,
+    itemListElement: packages.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `${site.url}/tour-packages/${p.slug}`,
+      name: p.shortTitle,
+    })),
+  }
 
   return (
     <>
       <Seo
-        title="Rajasthan Tour Packages — Golden Triangle, Desert Circuit & Heritage Trails"
-        description="Customisable Rajasthan tour packages with car and driver: Golden Triangle (Delhi–Agra–Jaipur), 10-day Royal Rajasthan, Shekhawati haveli trail, Khatu Shyam & Salasar darshan and the Thar desert circuit. Fixed pricing, flexible itineraries."
+        title="Tour Packages from Delhi & Rajasthan"
+        description="Tour packages from Delhi with car and driver — Golden Triangle, Royal Rajasthan, Shekhawati haveli trail and Khatu Shyam darshan. Fixed pricing."
         path="/tour-packages"
         keywords="Rajasthan tour package, golden triangle tour, Jaisalmer desert tour, Shekhawati haveli tour, Khatu Shyam Salasar package, Jaipur sightseeing package, Rajasthan tour with car and driver"
-        schema={[...tourSchema, faqSchema(packageFaqs)]}
+        schema={[listSchema, faqSchema(packageFaqs)]}
         breadcrumbs={[{ name: 'Tour Packages', path: '/tour-packages' }]}
       />
 
       <PageHero
         eyebrow="Itineraries we drive every week"
-        title="Rajasthan Tour Packages"
-        text="Routes refined over thirteen years on these roads — paced so you spend your time at the forts, not stuck in the car. Every package is fully customisable."
+        title="Tour Packages from Delhi & Rajasthan"
+        text="Routes refined over years on these roads — paced so you spend your time at the forts, not stuck in the car. Every package is fully customisable."
         crumbs={[{ name: 'Tour Packages', path: '/tour-packages' }]}
       />
 
       <section className="section">
         <div className="container">
           <div className="pkglist">
-            {packages.map((p) => (
-              <article className={`pkg${openSlug === p.slug ? ' is-open' : ''}`} key={p.slug}>
+            {packages.map((p, i) => (
+              <Reveal
+                as="article"
+                className="pkg"
+                variant="up"
+                delay={stagger(i, 70)}
+                key={p.slug}
+              >
+                <Link className="pkg__media" to={`/tour-packages/${p.slug}`} tabIndex={-1} aria-hidden="true">
+                  <img
+                    src={p.image}
+                    alt={`${p.shortTitle} — ${p.duration} tour package from ${p.from}`}
+                    loading="lazy"
+                    width="800"
+                    height="500"
+                  />
+                </Link>
+
                 <div className="pkg__head">
                   <div className="pkg__headmain">
                     <div className="pkg__meta">
@@ -86,7 +96,9 @@ export default function Packages() {
                       <span className="pkg__chip"><Icon name="clock" size={14} /> {p.duration}</span>
                       <span className="pkg__chip"><Icon name="pin" size={14} /> From {p.from}</span>
                     </div>
-                    <h2 className="pkg__title">{p.title}</h2>
+                    <h2 className="pkg__title">
+                      <Link to={`/tour-packages/${p.slug}`}>{p.title}</Link>
+                    </h2>
                     <p className="pkg__summary">{p.summary}</p>
                     <ul className="pkg__highlights">
                       {p.highlights.map((h) => (
@@ -101,48 +113,23 @@ export default function Packages() {
                       <strong>₹{p.price.toLocaleString('en-IN')}</strong>
                       <small>{p.priceNote}</small>
                     </span>
+                    <Link className="btn btn--primary btn--block" to={`/tour-packages/${p.slug}`}>
+                      Full itinerary &amp; details <Icon name="arrow" size={16} />
+                    </Link>
                     <a
-                      className="btn btn--primary btn--block"
+                      className="btn btn--outline btn--block"
                       href={whatsappLink(`Hi, I am interested in the "${p.title}" (${p.duration}) package. Please share the full quote.`)}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <Icon name="whatsapp" size={16} /> Enquire on WhatsApp
                     </a>
-                    <a className="btn btn--outline btn--block" href={`tel:${site.phoneRaw}`}>
+                    <a className="btn btn--ghost btn--block" href={`tel:${site.phoneRaw}`}>
                       <Icon name="phone" size={16} /> Call to customise
                     </a>
-                    <button
-                      className="pkg__toggle"
-                      onClick={() => setOpenSlug(openSlug === p.slug ? '' : p.slug)}
-                      aria-expanded={openSlug === p.slug}
-                      aria-controls={`itin-${p.slug}`}
-                    >
-                      {openSlug === p.slug ? 'Hide' : 'View'} day-by-day itinerary
-                      <Icon name="chevron" size={16} className="pkg__chev" />
-                    </button>
                   </aside>
                 </div>
-
-                <div className="pkg__itin" id={`itin-${p.slug}`} hidden={openSlug !== p.slug}>
-                  <h3 className="pkg__itintitle">Day-by-day itinerary</h3>
-                  <ol className="timeline">
-                    {p.itinerary.map((d) => (
-                      <li className="timeline__item" key={d.day}>
-                        <span className="timeline__day">Day {d.day}</span>
-                        <div>
-                          <h4 className="timeline__title">{d.title}</h4>
-                          <p className="timeline__text">{d.detail}</p>
-                        </div>
-                      </li>
-                    ))}
-                  </ol>
-                  <p className="pkg__note">
-                    <Icon name="check" size={14} /> Vehicle, fuel, driver, tolls and permits included ·
-                    hotels and entry fees arranged on request at cost price.
-                  </p>
-                </div>
-              </article>
+              </Reveal>
             ))}
           </div>
         </div>

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import Icon from '../components/Icon'
 import { site, nav } from '../data/site'
+import { vehicleTypes } from '../data/vehicleTypes'
 
 export default function NotFound() {
   return (
@@ -18,11 +19,17 @@ export default function NotFound() {
           <h1 className="notfound__title">This road leads nowhere</h1>
           <p className="notfound__text">
             The page you were looking for has moved or never existed. Here is the way back —
-            or call us on <a href={`tel:${site.phoneRaw}`}>{site.phone}</a> and we will sort it out.
+            or call {site.owner.name} on <a href={`tel:${site.phoneRaw}`}>{site.phone}</a> and we
+            will sort it out.
           </p>
+          {/* Vehicle pages first: someone landing on a dead URL from a search
+              result was almost certainly looking for one of these. */}
           <div className="notfound__links">
+            {vehicleTypes.map((v) => (
+              <Link className="chip" to={`/${v.slug}`} key={v.slug}>{v.navLabel}</Link>
+            ))}
             {nav.map((n) => (
-              <Link className="chip" to={n.to} key={n.to}>{n.label}</Link>
+              <Link className="chip" to={n.to} key={n.label}>{n.label}</Link>
             ))}
           </div>
           <Link className="btn btn--primary btn--lg" to="/">

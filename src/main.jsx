@@ -4,6 +4,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import App from './App'
 import './styles/global.css'
+import './styles/components.css'
+import './styles/motion.css'
 
 const tree = (
   <React.StrictMode>

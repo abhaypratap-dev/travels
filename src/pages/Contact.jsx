@@ -2,8 +2,8 @@ import Seo from '../components/Seo'
 import Icon from '../components/Icon'
 import BookingForm from '../components/BookingForm'
 import Faq, { faqSchema } from '../components/Faq'
-import { PageHero } from '../components/Common'
-import { site, whatsappLink, fullAddress } from '../data/site'
+import { PageHero, GoogleBadge } from '../components/Common'
+import { site, whatsappLink, fullAddress, shortAddress } from '../data/site'
 
 const contactFaqs = [
   {
@@ -25,7 +25,7 @@ export default function Contact() {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
     name: `Contact ${site.name}`,
-    description: `Contact details, office address and booking enquiry form for ${site.name}, ${site.address.locality}, Rajasthan.`,
+    description: `Contact details, office address and booking enquiry form for ${site.name} — a taxi service in ${site.address.area}, ${site.address.locality}.`,
     mainEntity: {
       '@type': 'TravelAgency',
       name: site.name,
@@ -54,16 +54,16 @@ export default function Contact() {
     <>
       <Seo
         title="Contact Us — Book a Car or Bus 24×7"
-        description={`Call ${site.owner.name} on ${site.phone} or WhatsApp us to book a car, tempo traveller or bus. Office at ${fullAddress}. Booking desk open 24×7, all days including holidays.`}
+        description={`Call ${site.owner.name} on ${site.phone} or WhatsApp to book a car, tempo traveller or bus. Office in ${shortAddress}. Booking desk open 24×7.`}
         path="/contact"
-        keywords="contact Shekhawat Tours and Travels, taxi booking number Delhi, car rental Rangpuri New Delhi, bus hire enquiry Delhi NCR, Rupesh Singh Shekhawat"
+        keywords="contact Shekhawat Tours and Travels, taxi booking number Delhi, car rental Rangpuri New Delhi, bus hire enquiry Delhi NCR, Rupesh Singh"
         schema={[contactSchema, faqSchema(contactFaqs)]}
         breadcrumbs={[{ name: 'Contact', path: '/contact' }]}
       />
 
       <PageHero
         eyebrow="We pick up, day or night"
-        title="Contact Us"
+        title="Contact Us — Taxi Booking in New Delhi"
         text="Call, WhatsApp, email or drop by the office. However you reach us, you get a fixed quote — not a callback promise."
         crumbs={[{ name: 'Contact', path: '/contact' }]}
       />
@@ -111,7 +111,7 @@ export default function Contact() {
                   <li><span>Walk-in hours</span><strong>7:00 AM – 10:00 PM</strong></li>
                   <li><span>Languages</span><strong>Hindi, English</strong></li>
                   <li><span>Payment</span><strong>Cash, UPI, Card, NEFT</strong></li>
-                  <li><span>GSTIN</span><strong>{site.gstin}</strong></li>
+                  <li><span>GST</span><strong>{site.gstin || 'Registered — invoice on request'}</strong></li>
                 </ul>
               </div>
 
@@ -126,14 +126,26 @@ export default function Contact() {
                 </a>
               </div>
 
+              {/* Only the Google Business Profile is linked, because it is the
+                  only channel that is actually live. Adding placeholder social
+                  links would send visitors — and `sameAs` crawlers — to 404s. */}
               <div className="aboutside__card">
-                <h3>Follow Us</h3>
-                <div className="footer__social footer__social--dark">
-                  <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook">FB</a>
-                  <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>
-                  <a href={site.social.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube">YT</a>
-                  <a href={site.social.twitter} target="_blank" rel="noopener noreferrer" aria-label="X">X</a>
-                </div>
+                <h3>Find Us on Google</h3>
+                <p className="muted">
+                  Our listing carries {site.rating.count} reviews, directions from wherever you
+                  are, and photos of the office. If we have served you before, a review there
+                  genuinely helps.
+                </p>
+                <GoogleBadge />
+                <a
+                  className="btn btn--outline btn--block"
+                  href={site.mapLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ marginTop: 12 }}
+                >
+                  <Icon name="pin" size={16} /> Get Directions
+                </a>
               </div>
             </aside>
           </div>

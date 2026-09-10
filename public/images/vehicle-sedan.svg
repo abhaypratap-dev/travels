@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Sedan illustration">
+  <title>Sedan</title>
+  <defs>
+    <linearGradient id="sky-sedan" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26304f"/>
+      <stop offset="1" stop-color="#3d4a73"/>
+    </linearGradient>
+    <radialGradient id="glow-sedan" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#f6d98a" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#f6d98a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body-sedan" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf6e8"/>
+      <stop offset="1" stop-color="#e6d9c2"/>
+    </linearGradient>
+    <linearGradient id="glass-sedan" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#26304f" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#3d4a73" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#sky-sedan)"/>
+  <circle cx="622" cy="140" r="190" fill="url(#glow-sedan)"/>
+  <circle cx="622" cy="140" r="46" fill="#f6d98a" opacity="0.9"/>
+  <rect y="372" width="800" height="128" fill="#1a2136"/>
+  <rect y="372" width="800" height="3" fill="#f6d98a" opacity="0.5"/>
+  
+  <g opacity="0.35">
+    <rect x="40" y="418" width="72" height="7" rx="3.5" fill="#f6d98a"/>
+    <rect x="172" y="418" width="72" height="7" rx="3.5" fill="#f6d98a"/>
+    <rect x="304" y="418" width="72" height="7" rx="3.5" fill="#f6d98a"/>
+    <rect x="436" y="418" width="72" height="7" rx="3.5" fill="#f6d98a"/>
+    <rect x="568" y="418" width="72" height="7" rx="3.5" fill="#f6d98a"/>
+    <rect x="700" y="418" width="72" height="7" rx="3.5" fill="#f6d98a"/>
+  </g>
+  
+  <g>
+    <ellipse cx="330" cy="384" rx="274" ry="13" fill="#000" opacity="0.28"/>
+    <path d="M70 372
+    L70 324 Q70 310 86 310
+    L574 310 Q590 310 590 324
+    L590 372 Z" fill="url(#body-sedan)"/>
+    <path d="M180 310
+    L214 250 Q222 242 236 242
+    L442 242 Q456 242 464 250
+    L494 310 Z" fill="url(#body-sedan)"/>
+    <g><rect x="222" y="254" width="84" height="54" rx="5" fill="url(#glass-sedan)"/>
+      <rect x="316" y="254" width="76" height="54" rx="5" fill="url(#glass-sedan)"/></g>
+    <rect x="74" y="326" width="16" height="11" rx="4" fill="#e8b93f"/>
+    <rect x="572" y="326" width="14" height="11" rx="4" fill="#e05a4a"/>
+    <rect x="80" y="360" width="500" height="4" rx="2" fill="#000" opacity="0.16"/>
+    
+    <circle cx="190" cy="372" r="31" fill="#20191a"/>
+    <circle cx="190" cy="372" r="16.12" fill="#8e8378"/>
+    <circle cx="190" cy="372" r="6.82" fill="#3a3330"/>
+    <circle cx="470" cy="372" r="31" fill="#20191a"/>
+    <circle cx="470" cy="372" r="16.12" fill="#8e8378"/>
+    <circle cx="470" cy="372" r="6.82" fill="#3a3330"/>
+  </g>
+</svg>

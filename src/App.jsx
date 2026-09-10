@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import { ScrollToTop, FloatingActions } from './components/Common'
+import { RevealObserver, ScrollProgress, PageTransition } from './components/Motion'
 import { organizationSchema, websiteSchema } from './components/Seo'
 
 import Home from './pages/Home'
@@ -13,7 +14,14 @@ import Packages from './pages/Packages'
 import Services from './pages/Services'
 import Gallery from './pages/Gallery'
 import Contact from './pages/Contact'
+import VehicleType from './pages/VehicleType'
+import VehicleDetail from './pages/VehicleDetail'
+import PackageDetail from './pages/PackageDetail'
 import NotFound from './pages/NotFound'
+
+import { vehicleTypes } from './data/vehicleTypes'
+import { fleet } from './data/fleet'
+import { packages } from './data/packages'
 
 export default function App() {
   return (
@@ -25,20 +33,53 @@ export default function App() {
       </Helmet>
 
       <ScrollToTop />
+      <RevealObserver />
+      <ScrollProgress />
+
       <a className="skiplink" href="#main">Skip to main content</a>
       <Header />
 
       <main id="main">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/fleet" element={<Fleet />} />
-          <Route path="/tour-packages" element={<Packages />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <PageTransition>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/fleet" element={<Fleet />} />
+
+            {/* Vehicle category landing pages — one prerendered route each. */}
+            {vehicleTypes.map((type) => (
+              <Route
+                key={type.slug}
+                path={`/${type.slug}`}
+                element={<VehicleType type={type} />}
+              />
+            ))}
+
+            {/* One page per vehicle, below the category pages. */}
+            {fleet.map((v) => (
+              <Route
+                key={v.slug}
+                path={`/fleet/${v.slug}`}
+                element={<VehicleDetail vehicle={v} />}
+              />
+            ))}
+
+            <Route path="/tour-packages" element={<Packages />} />
+
+            {/* One page per itinerary. */}
+            {packages.map((p) => (
+              <Route
+                key={p.slug}
+                path={`/tour-packages/${p.slug}`}
+                element={<PackageDetail pkg={p} />}
+              />
+            ))}
+            <Route path="/services" element={<Services />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </PageTransition>
       </main>
 
       <Footer />

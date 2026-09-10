@@ -1,42 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  This file is a fallback. `npm run build` regenerates it into dist/sitemap.xml
-  with current lastmod dates from the route table in src/data/site.js.
+  Development placeholder. The real sitemap is generated at build time by
+  scripts/prerender.js from the route table in src/data/site.js, with current
+  lastmod dates, and overwrites this file in dist/.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://www.shekhawattoursandtravels.com/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://www.shekhawattoursandtravels.com/fleet</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://www.shekhawattoursandtravels.com/tour-packages</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://www.shekhawattoursandtravels.com/services</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.shekhawattoursandtravels.com/about</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.shekhawattoursandtravels.com/contact</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.shekhawattoursandtravels.com/gallery</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
+  <url><loc>https://www.shekhawattoursandtravels.in/</loc></url>
 </urlset>

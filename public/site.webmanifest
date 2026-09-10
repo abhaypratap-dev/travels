@@ -1,15 +1,26 @@
 {
   "name": "Shekhawat Tours and Travels",
   "short_name": "Shekhawat Travels",
-  "description": "Car rental, tempo traveller and bus hire across Rajasthan and all India.",
-  "start_url": "/",
+  "description": "Taxi service in Rangpuri, New Delhi. 4 seater cars, 7 seater SUVs, tempo travellers and mini buses on rent with driver.",
+  "start_url": "/?utm_source=pwa",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#ffffff",
   "theme_color": "#8a1c2b",
   "lang": "en-IN",
+  "dir": "ltr",
+  "categories": ["travel", "business"],
   "icons": [
     { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
-    { "src": "/images/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/images/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "/images/icon-96.png", "sizes": "96x96", "type": "image/png" },
+    { "src": "/images/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/images/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/images/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Tempo Traveller on Rent", "url": "/tempo-traveller-on-rent" },
+    { "name": "Mini Bus on Rent", "url": "/mini-bus-on-rent" },
+    { "name": "Contact Us", "url": "/contact" }
   ]
 }
