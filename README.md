@@ -154,6 +154,28 @@ final visible state.
 
 ---
 
+## Hosting config
+
+`vercel.json` is validated against Vercel's schema on every deploy, and the
+schema rejects any property it does not define — including the `"//"` key
+commonly used to fake a JSON comment. So the reasoning behind each rule lives
+here instead of in the file:
+
+| Rule | Why |
+| --- | --- |
+| Apex → `www` 301 redirect | Serving both hosts splits link equity and can surface duplicates in the index. The canonical tags say `www`, so the redirect has to agree. |
+| `/assets/*` cached one year, immutable | Filenames are content-hashed, so they can never go stale. |
+| `/images/*` cached one day, one week at the CDN | Brand artwork is unhashed, so it revalidates rather than being pinned forever. |
+| `sitemap.xml` / `robots.txt` cached one hour | Crawlers should always see the current route table. |
+| HSTS, `nosniff`, frame and referrer policy | Baseline hardening; nothing here is user-authenticated, but they cost nothing. |
+
+`public/_redirects` carries the Netlify equivalent and *can* take comments, so
+its reasoning stays inline there. Note it deliberately does not include an SPA
+fallback — answering unknown URLs with the homepage under a 200 reads as a soft
+404 to a search engine.
+
+---
+
 ## Before launch
 
 - [ ] Point the domain at the deployment and confirm the apex → `www` redirect.

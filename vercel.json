@@ -6,43 +6,68 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "//": "One canonical host. Serving the site on both the apex and www splits link equity and can surface duplicates in the index; the canonical tags say www, so the redirect must agree.",
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "shekhawattoursandtravels.in" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "shekhawattoursandtravels.in"
+        }
+      ],
       "destination": "https://www.shekhawattoursandtravels.in/$1",
       "permanent": true
     }
   ],
   "headers": [
     {
-      "//": "Hashed filenames — safe to cache forever.",
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
-      "//": "Brand images are unhashed, so they get a day of browser cache and a week at the CDN with revalidation.",
       "source": "/images/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400"
+        }
       ]
     },
     {
-      "//": "Crawlers should always see the current route table.",
       "source": "/(sitemap.xml|robots.txt)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=3600" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=3600"
+        }
       ]
     },
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "geolocation=(), microphone=(), camera=(), interest-cohort=()" },
-        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        }
       ]
     }
   ]
