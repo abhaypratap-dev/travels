@@ -1,8 +1,11 @@
 /**
  * Fleet catalogue.
- * `image` is optional — drop a photo in /public/images and set the path
- * (e.g. '/images/innova-crysta.jpg'). Cards fall back to a styled
- * illustration when no photo is supplied, so the site never looks broken.
+ *
+ * `image` points at a 1200×800 photograph in /public/images/fleet, with a
+ * 600×400 `-sm` twin beside it for card grids. Today these show the *model*
+ * — freely licensed photos credited in src/data/photos.js — so to use a
+ * photograph of our own vehicle, overwrite both files at the same path.
+ * `shortName` is the label on compact cards, where the full name wraps.
  */
 
 export const fleetCategories = [
@@ -29,7 +32,8 @@ export const fleet = [
     ratePerDay: 2200,
     minKm: 250,
     driverAllowance: 300,
-    image: '/images/vehicle-sedan.svg',
+    image: '/images/fleet/maruti-suzuki-swift-dzire.jpg',
+    shortName: 'Dzire',
         parentType: '4-seater-car-rental',
         tagline: 'The default airport car in Delhi',
         detail:
@@ -76,7 +80,8 @@ export const fleet = [
     ratePerDay: 2600,
     minKm: 250,
     driverAllowance: 300,
-    image: '/images/vehicle-sedan.svg',
+    image: '/images/fleet/honda-amaze.jpg',
+    shortName: 'Honda Amaze',
         parentType: '4-seater-car-rental',
         tagline: 'The quiet one, and an automatic',
         detail:
@@ -122,7 +127,8 @@ export const fleet = [
     ratePerDay: 1900,
     minKm: 250,
     driverAllowance: 300,
-    image: '/images/vehicle-hatchback.svg',
+    image: '/images/fleet/maruti-suzuki-swift.jpg',
+    shortName: 'Swift',
         parentType: '4-seater-car-rental',
         tagline: 'Our most affordable car with a driver',
         detail:
@@ -169,7 +175,8 @@ export const fleet = [
     ratePerDay: 4200,
     minKm: 250,
     driverAllowance: 400,
-    image: '/images/vehicle-suv.svg',
+    image: '/images/fleet/toyota-innova-crysta.jpg',
+    shortName: 'Innova Crysta',
         parentType: '7-seater-suv-on-rent',
         tagline: 'The gold standard for Indian highway travel',
         detail:
@@ -216,7 +223,8 @@ export const fleet = [
     ratePerDay: 3200,
     minKm: 250,
     driverAllowance: 350,
-    image: '/images/vehicle-suv.svg',
+    image: '/images/fleet/maruti-suzuki-ertiga.jpg',
+    shortName: 'Ertiga',
         parentType: '7-seater-suv-on-rent',
         tagline: 'Seven seats without the Innova budget',
         detail:
@@ -262,7 +270,8 @@ export const fleet = [
     ratePerDay: 4500,
     minKm: 250,
     driverAllowance: 400,
-    image: '/images/vehicle-suv.svg',
+    image: '/images/fleet/mahindra-scorpio-n.jpg',
+    shortName: 'Scorpio-N',
         parentType: '7-seater-suv-on-rent',
         tagline: 'For hill roads and rough approaches',
         detail:
@@ -308,7 +317,8 @@ export const fleet = [
     ratePerDay: 8500,
     minKm: 250,
     driverAllowance: 600,
-    image: '/images/vehicle-suv.svg',
+    image: '/images/fleet/toyota-fortuner.jpg',
+    shortName: 'Fortuner',
         parentType: '7-seater-suv-on-rent',
         tagline: 'When arrival is part of the occasion',
         detail:
@@ -355,7 +365,8 @@ export const fleet = [
     ratePerDay: 16000,
     minKm: 200,
     driverAllowance: 800,
-    image: '/images/vehicle-luxury.svg',
+    image: '/images/fleet/mercedes-benz-e-class.jpg',
+    shortName: 'Mercedes E-Class',
         parentType: '4-seater-car-rental',
         tagline: 'Our flagship chauffeur-driven saloon',
         detail:
@@ -402,7 +413,8 @@ export const fleet = [
     ratePerDay: 6500,
     minKm: 250,
     driverAllowance: 500,
-    image: '/images/vehicle-tempo.svg',
+    image: '/images/fleet/force-tempo-traveller-12.jpg',
+    shortName: 'Tempo Traveller',
         parentType: 'tempo-traveller-on-rent',
         tagline: 'The most-booked group vehicle in our fleet',
         detail:
@@ -449,7 +461,8 @@ export const fleet = [
     ratePerDay: 7800,
     minKm: 250,
     driverAllowance: 500,
-    image: '/images/vehicle-tempo.svg',
+    image: '/images/fleet/force-tempo-traveller-17.jpg',
+    shortName: 'Tempo Traveller 17',
         parentType: 'tempo-traveller-on-rent',
         tagline: 'Five more seats and a bigger luggage bay',
         detail:
@@ -495,7 +508,8 @@ export const fleet = [
     ratePerDay: 10500,
     minKm: 250,
     driverAllowance: 600,
-    image: '/images/vehicle-tempo.svg',
+    image: '/images/fleet/luxury-tempo-traveller-maharaja.jpg',
+    shortName: 'Maharaja Traveller',
         parentType: 'tempo-traveller-on-rent',
         tagline: 'Nine recliner sofa seats and a centre table',
         detail:
@@ -542,7 +556,8 @@ export const fleet = [
     ratePerDay: 11000,
     minKm: 250,
     driverAllowance: 600,
-    image: '/images/vehicle-bus.svg',
+    image: '/images/fleet/mini-bus-21-seater.jpg',
+    shortName: 'Mini Bus',
         parentType: 'mini-bus-on-rent',
         tagline: 'Our most-requested bus size',
         detail:
@@ -589,7 +604,8 @@ export const fleet = [
     ratePerDay: 14500,
     minKm: 250,
     driverAllowance: 700,
-    image: '/images/vehicle-bus.svg',
+    image: '/images/fleet/mini-bus-32-seater.jpg',
+    shortName: 'Mini Bus 32',
         parentType: 'mini-bus-on-rent',
         tagline: 'A full department, or a full wedding party',
         detail:
@@ -635,7 +651,8 @@ export const fleet = [
     ratePerDay: 26000,
     minKm: 300,
     driverAllowance: 900,
-    image: '/images/vehicle-coach.svg',
+    image: '/images/fleet/volvo-luxury-coach-45.jpg',
+    shortName: 'Volvo Coach',
         parentType: 'mini-bus-on-rent',
         tagline: 'Air-suspension comfort for the long haul',
         detail:
@@ -682,7 +699,8 @@ export const fleet = [
     ratePerDay: 9000,
     minKm: 250,
     driverAllowance: 600,
-    image: '/images/vehicle-bus.svg',
+    image: '/images/fleet/traveller-non-ac-26.jpg',
+    shortName: 'Deluxe Bus 26',
         parentType: 'mini-bus-on-rent',
         tagline: 'Well kept, no frills, sensibly priced',
         detail:

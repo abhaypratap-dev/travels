@@ -8,6 +8,7 @@ import { Reveal, stagger } from '../components/Motion'
 import { site, whatsappLink } from '../data/site'
 import { packages } from '../data/packages'
 import { fleet } from '../data/fleet'
+import { responsive } from '../data/photos'
 
 /**
  * One page per tour package — /tour-packages/golden-triangle-delhi-agra-jaipur
@@ -94,7 +95,7 @@ export default function PackageDetail({ pkg: p }) {
 
       {/* ── Hero ──────────────────────────────────────────────── */}
       <section className="vdhero">
-        <div className="vdhero__bg" aria-hidden="true" />
+        <img className="vdhero__bg" src={p.heroBg} alt="" width="2000" height="640" decoding="async" />
         <div className="container">
           <nav className="crumbs" aria-label="Breadcrumb">
             <ol>
@@ -137,10 +138,11 @@ export default function PackageDetail({ pkg: p }) {
 
             <figure className="vdhero__media" data-reveal="scale">
               <img
-                src={p.image}
-                alt={`${p.title} — ${p.duration} tour package with car and driver`}
-                width="800"
-                height="500"
+                {...responsive(p.image)}
+                sizes="(max-width: 960px) 100vw, 560px"
+                alt={`${p.place} — ${p.title}, ${p.duration} tour package with car and driver`}
+                width="600"
+                height="400"
                 loading="eager"
                 fetchpriority="high"
               />
@@ -256,11 +258,13 @@ export default function PackageDetail({ pkg: p }) {
           {suggested && (
             <Reveal className="pkgvehicle" variant="up" delay={140}>
               <img
-                src={suggested.image}
+                {...responsive(suggested.image)}
+                sizes="(max-width: 960px) 100vw, 320px"
                 alt={`${suggested.name} — recommended vehicle for the ${p.title} tour`}
-                width="800"
-                height="500"
+                width="600"
+                height="400"
                 loading="lazy"
+                decoding="async"
               />
               <div>
                 <p className="pkgvehicle__label">Recommended vehicle</p>
@@ -293,10 +297,22 @@ export default function PackageDetail({ pkg: p }) {
             {others.map((o, i) => (
               <Reveal variant="up" delay={stagger(i)} key={o.slug}>
                 <Link className="vt-crosslink" to={`/tour-packages/${o.slug}`}>
-                  <span className="vt-crosslink__icon"><Icon name="road" size={22} /></span>
-                  <strong>{o.shortTitle}</strong>
-                  <span>{o.duration} · from {o.from}</span>
-                  <em>From ₹{o.price.toLocaleString('en-IN')} →</em>
+                  <span className="vt-crosslink__img">
+                    <img
+                      {...responsive(o.image)}
+                      sizes="(max-width: 720px) 100vw, 380px"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      width="600"
+                      height="400"
+                    />
+                  </span>
+                  <span className="vt-crosslink__body">
+                    <strong>{o.shortTitle}</strong>
+                    <span>{o.duration} · {o.route}</span>
+                    <em>From ₹{o.price.toLocaleString('en-IN')} →</em>
+                  </span>
                 </Link>
               </Reveal>
             ))}
@@ -308,7 +324,7 @@ export default function PackageDetail({ pkg: p }) {
       </section>
 
       <CtaBand
-        title={`Book the ${p.shortTitle} tour`}
+        title={`Book the ${p.shortTitle}`}
         text={`Send us your dates and group size. ${site.owner.name} will confirm the route and a fixed, all-inclusive quote.`}
       />
     </>

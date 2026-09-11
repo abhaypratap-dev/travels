@@ -1,161 +1,132 @@
 import { Link } from 'react-router-dom'
 import Icon from './Icon'
-import { site, nav, yearsActive, fullAddress } from '../data/site'
-import { services } from '../data/services'
-import { fleet } from '../data/fleet'
-import { packages } from '../data/packages'
+import Logo from './Logo'
+import { Email, Stars } from './Common'
+import { site, fullAddress } from '../data/site'
 import { vehicleTypes } from '../data/vehicleTypes'
+import { packages } from '../data/packages'
+
+const quickLinks = [
+  { label: 'Home', to: '/' },
+  { label: 'Our Fleet', to: '/fleet' },
+  { label: 'Tour Packages', to: '/tour-packages' },
+  { label: 'Services', to: '/services' },
+  { label: 'About Us', to: '/about' },
+  { label: 'Gallery', to: '/gallery' },
+  { label: 'Contact', to: '/contact' },
+]
 
 export default function Footer() {
   const year = new Date().getFullYear()
+  // Only profiles that are actually live — an icon pointing at a 404 costs
+  // more trust than no icon at all.
   const liveSocial = Object.entries(site.social).filter(([, url]) => url)
 
-  // Flatten the nav — dropdown children belong in the footer as their own
-  // links, since this is the site's main internal-linking surface.
-  const quickLinks = nav.filter((n) => !n.children)
-
-  // The vehicles people search for by name, rather than the whole catalogue —
-  // a footer listing all fifteen dilutes rather than helps.
-  const popularVehicles = [
-    'toyota-innova-crysta',
-    'force-tempo-traveller-12',
-    'mini-bus-21-seater',
-    'maruti-suzuki-swift-dzire',
-    'toyota-fortuner',
-  ].map((slug) => fleet.find((v) => v.slug === slug)).filter(Boolean)
+  // The footer is the site's main internal-linking surface, so the services
+  // column goes straight to the four commercial category pages.
+  const serviceLinks = [
+    ...vehicleTypes.map((t) => ({ label: t.h1.replace(/ in Delhi$/, ''), to: `/${t.slug}` })),
+    { label: 'Airport Transfers', to: '/services#airport-railway-transfer' },
+  ]
 
   return (
     <footer className="footer">
       <div className="container footer__grid">
-        <div className="footer__col footer__col--brand">
-          <Link to="/" className="brand brand--footer">
-            <span className="brand__mark" aria-hidden="true">
-              <Icon name="fleet" size={24} />
-            </span>
-            <span className="brand__text">
-              <strong>Shekhawat</strong>
-              <small>Tours &amp; Travels</small>
-            </span>
+        <div className="footer__brand">
+          <Link to="/" className="brand brand--light">
+            <Logo light />
           </Link>
           <p className="footer__about">
-            A taxi service in Rangpuri, New Delhi, run by {site.owner.name} since {site.founded}.
-            Cars, SUVs, tempo travellers, mini buses and luxury coaches on rent with experienced
-            drivers — across Delhi NCR and all India.
+            A family-run taxi and tour operator in Rangpuri, New Delhi, since {site.founded}. Cars,
+            SUVs, tempo travellers and coaches with experienced drivers — across Delhi NCR,
+            Rajasthan and all India.
           </p>
-
-          <a
-            className="footer__rating"
-            href={site.reviewsLink}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a className="footer__rating" href={site.reviewsLink} target="_blank" rel="noopener noreferrer">
             <span className="footer__rating-score">{site.rating.value}</span>
             <span>
-              <span className="footer__rating-stars" aria-hidden="true">
-                {Array.from({ length: 5 }).map((_, i) => <Icon key={i} name="star" size={13} />)}
-              </span>
+              <Stars size={13} />
               <small>{site.rating.count} Google reviews</small>
             </span>
           </a>
+        </div>
 
+        <nav className="footer__col" aria-label="Quick links">
+          <h3 className="footer__title">Quick Links</h3>
+          <ul className="footer__list">
+            {quickLinks.map((l) => (
+              <li key={l.to}><Link to={l.to}>{l.label}</Link></li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="footer__col">
+          <h3 className="footer__title">Our Services</h3>
+          <ul className="footer__list">
+            {serviceLinks.map((l) => (
+              <li key={l.to}><Link to={l.to}>{l.label}</Link></li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="footer__col">
+          <h3 className="footer__title">Popular Destinations</h3>
+          <ul className="footer__list">
+            {packages.map((p) => (
+              <li key={p.slug}><Link to={`/tour-packages/${p.slug}`}>{p.destination}</Link></li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="footer__col">
+          <h3 className="footer__title">Contact Us</h3>
+          <ul className="footer__list footer__contact">
+            <li>
+              <Icon name="phone" size={15} />
+              <a href={`tel:${site.phoneRaw}`}>{site.phone}</a>
+            </li>
+            <li>
+              <Icon name="mail" size={15} />
+              <a href={`mailto:${site.email}`}><Email address={site.email} /></a>
+            </li>
+            <li>
+              <Icon name="pin" size={15} />
+              <a href={site.mapLink} target="_blank" rel="noopener noreferrer">
+                <address style={{ fontStyle: 'normal' }}>{fullAddress}</address>
+              </a>
+            </li>
+            <li>
+              <Icon name="clock" size={15} />
+              <span>Open 24×7 · Walk-in {site.walkInHours}</span>
+            </li>
+          </ul>
           {liveSocial.length > 0 && (
             <div className="footer__social">
               {liveSocial.map(([key, url]) => (
-                <a key={key} href={url} target="_blank" rel="noopener noreferrer" aria-label={key}>
-                  {key === 'google' ? 'G' : key.slice(0, 2).toUpperCase()}
+                <a
+                  key={key}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${site.name} on ${key.charAt(0).toUpperCase()}${key.slice(1)}`}
+                >
+                  <Icon name={key} size={16} />
                 </a>
               ))}
             </div>
           )}
         </div>
-
-        <div className="footer__col">
-          <h3 className="footer__title">Vehicles on Rent</h3>
-          <ul className="footer__list">
-            {vehicleTypes.map((v) => (
-              <li key={v.slug}><Link to={`/${v.slug}`}>{v.h1}</Link></li>
-            ))}
-            <li><Link to="/fleet">View the full fleet</Link></li>
-          </ul>
-        </div>
-
-        <div className="footer__col">
-          <h3 className="footer__title">Popular Vehicles</h3>
-          <ul className="footer__list">
-            {popularVehicles.map((v) => (
-              <li key={v.slug}><Link to={`/fleet/${v.slug}`}>{v.name}</Link></li>
-            ))}
-          </ul>
-
-          <h3 className="footer__title footer__title--gap">Tour Packages</h3>
-          <ul className="footer__list">
-            {packages.slice(0, 4).map((p) => (
-              <li key={p.slug}><Link to={`/tour-packages/${p.slug}`}>{p.shortTitle}</Link></li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="footer__col">
-          <h3 className="footer__title">Quick Links</h3>
-          <ul className="footer__list">
-            {quickLinks.map((n) => (
-              <li key={n.to}><Link to={n.to}>{n.label}</Link></li>
-            ))}
-          </ul>
-
-          <h3 className="footer__title footer__title--gap">Our Services</h3>
-          <ul className="footer__list">
-            {services.slice(0, 4).map((s) => (
-              <li key={s.slug}><Link to="/services">{s.title}</Link></li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="footer__col">
-          <h3 className="footer__title">Get in Touch</h3>
-          <ul className="footer__list footer__list--contact">
-            <li>
-              <Icon name="user" size={16} />
-              <span>
-                <strong className="footer__owner">{site.owner.name}</strong><br />
-                {site.owner.role}
-              </span>
-            </li>
-            <li>
-              <Icon name="pin" size={16} />
-              <address>{fullAddress}</address>
-            </li>
-            <li>
-              <Icon name="phone" size={16} />
-              <a href={`tel:${site.phoneRaw}`}>{site.phone}</a>
-            </li>
-            <li>
-              <Icon name="mail" size={16} />
-              <a href={`mailto:${site.email}`}>{site.email}</a>
-            </li>
-            <li>
-              <Icon name="clock" size={16} />
-              <span>{site.hours}<br />Walk-in: {site.walkInHours}</span>
-            </li>
-          </ul>
-        </div>
       </div>
 
-      <div className="footer__areas container">
-        <h3 className="footer__title">Cities We Serve</h3>
-        <p className="footer__tags">
-          {site.serviceAreas.map((a) => (
-            <span className="tag" key={a}>Taxi service in {a}</span>
-          ))}
-        </p>
+      <div className="container footer__areas">
+        <p><strong>Taxi service in</strong> {site.serviceAreas.join(' · ')}</p>
       </div>
 
       <div className="footer__bar">
         <div className="container footer__bar-inner">
           <p>© {year} {site.name}. All rights reserved.</p>
-          <p className="footer__legal">
-            {site.gstin ? `GSTIN: ${site.gstin} · ` : 'GST registered — tax invoice on request · '}
-            {yearsActive} years on the road, still answering the phone ourselves.
+          <p>
+            {site.gstin ? `GSTIN ${site.gstin}` : 'GST registered — tax invoice on request'} ·{' '}
+            <Link to="/image-credits">Image credits</Link>
           </p>
         </div>
       </div>

@@ -11,24 +11,26 @@ export default function Seo({
   path = '/',
   keywords,
   image = '/images/og-cover.jpg',
+  imageAlt,
   type = 'website',
   noindex = false,
   schema,
   breadcrumbs,
+  article,
 }) {
   // Root keeps its trailing slash so the canonical matches the sitemap's <loc>.
   const canonical = `${site.url}${path === '/' ? '/' : path}`
   /**
    * Brand suffix, but only when it fits.
    *
-   * Google renders roughly 65 characters of a title before truncating on
-   * width. Appending the brand unconditionally pushed the longer vehicle and
-   * itinerary pages past that, and the half that got cut was the half that
+   * Titles are held to 60 characters, inside the width Google renders before
+   * truncating. Appending the brand unconditionally pushed the longer vehicle
+   * and itinerary pages past that, and the half that got cut was the half that
    * distinguishes them. So the suffix is added when the result stays inside
    * the budget and dropped when it would not — the page's own name always
-   * wins over the brand.
+   * wins over the brand. The prerender audit fails the build past 60.
    */
-  const TITLE_BUDGET = 65
+  const TITLE_BUDGET = 60
   const suffixed = `${title} | ${site.shortName}`
   const fullTitle =
     path === '/' ? title : suffixed.length <= TITLE_BUDGET ? suffixed : title
@@ -41,6 +43,9 @@ export default function Seo({
    */
   const rasterised = image.replace(/^\/images\/(.+)\.svg$/, '/images/og/$1.jpg')
   const ogImage = rasterised.startsWith('http') ? rasterised : `${site.url}${rasterised}`
+  // Page photographs are 3:2 at 1200×800; the default share card is 1200×630.
+  const [ogWidth, ogHeight] = /\/images\/(fleet|places|blog)\//.test(rasterised) ? [1200, 800] : [1200, 630]
+  const ogAlt = imageAlt || `${site.name} — ${site.tagline}`
 
   const breadcrumbSchema = breadcrumbs && {
     '@context': 'https://schema.org',
@@ -101,17 +106,19 @@ export default function Seo({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonical} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content={`${site.name} — ${site.tagline}`} />
+      <meta property="og:image:width" content={String(ogWidth)} />
+      <meta property="og:image:height" content={String(ogHeight)} />
+      <meta property="og:image:alt" content={ogAlt} />
       <meta property="og:locale" content="en_IN" />
+      {article?.published && <meta property="article:published_time" content={article.published} />}
+      {article?.modified && <meta property="article:modified_time" content={article.modified} />}
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
-      <meta name="twitter:image:alt" content={`${site.name} — ${site.tagline}`} />
+      <meta name="twitter:image:alt" content={ogAlt} />
 
       {/* Local / geo signals */}
       <meta name="geo.region" content={site.geoRegion} />

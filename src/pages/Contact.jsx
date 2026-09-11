@@ -2,7 +2,7 @@ import Seo from '../components/Seo'
 import Icon from '../components/Icon'
 import BookingForm from '../components/BookingForm'
 import Faq, { faqSchema } from '../components/Faq'
-import { PageHero, GoogleBadge } from '../components/Common'
+import { PageHero, GoogleBadge, Email } from '../components/Common'
 import { site, whatsappLink, fullAddress, shortAddress } from '../data/site'
 
 const contactFaqs = [
@@ -66,6 +66,7 @@ export default function Contact() {
         title="Contact Us — Taxi Booking in New Delhi"
         text="Call, WhatsApp, email or drop by the office. However you reach us, you get a fixed quote — not a callback promise."
         crumbs={[{ name: 'Contact', path: '/contact' }]}
+        bg="/images/hero/bg-india-gate.jpg"
       />
 
       <section className="section">
@@ -85,7 +86,7 @@ export default function Contact() {
             />
             <ContactCard
               icon="mail" title="Email"
-              lines={[site.email, site.altEmail]}
+              lines={[<Email address={site.email} />, <Email address={site.altEmail} />]}
               href={`mailto:${site.email}`}
               cta="Send email"
             />
@@ -98,7 +99,7 @@ export default function Contact() {
           </div>
 
           <div className="contact__main">
-            <div className="contact__form">
+            <div className="contact__form" id="enquire">
               <BookingForm title="Send Us a Booking Enquiry" />
             </div>
 
@@ -182,7 +183,7 @@ function ContactCard({ icon, title, lines, href, cta, external }) {
     >
       <span className="ccard__icon"><Icon name={icon} size={22} /></span>
       <h3 className="ccard__title">{title}</h3>
-      {lines.map((l) => <p className="ccard__line" key={l}>{l}</p>)}
+      {lines.map((l, i) => <p className="ccard__line" key={i}>{l}</p>)}
       <span className="ccard__cta">{cta} <Icon name="arrow" size={14} /></span>
     </a>
   )

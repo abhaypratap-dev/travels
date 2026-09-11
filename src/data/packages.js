@@ -1,8 +1,20 @@
+/**
+ * Tour itineraries. One entry = one prerendered page under /tour-packages/.
+ *
+ * `image` is the card photograph (with a `-sm` twin), `heroBg` the wide
+ * header behind the detail page, `place` the caption on the card photo,
+ * `route` the one-line itinerary under the title and `destination` the
+ * label this package gets in the footer's destination list.
+ */
 export const packages = [
   {
     slug: 'golden-triangle-delhi-agra-jaipur',
     shortTitle: 'Golden Triangle Tour',
-    image: '/images/scene-city.svg',
+    image: '/images/places/taj-mahal.jpg',
+    heroBg: '/images/hero/bg-amber.jpg',
+    place: 'Taj Mahal',
+    route: 'Delhi – Agra – Jaipur',
+    destination: 'Agra & the Taj Mahal',
     tone: 'maroon',
     vehicle: 'Toyota Innova Crysta or Maruti Ertiga',
     vehicleSlug: 'toyota-innova-crysta',
@@ -68,7 +80,11 @@ export const packages = [
   {
     slug: 'royal-rajasthan-grand-tour',
     shortTitle: 'Royal Rajasthan Tour',
-    image: '/images/scene-fort.svg',
+    image: '/images/places/jodhpur-blue-city.jpg',
+    heroBg: '/images/hero/bg-jodhpur.jpg',
+    place: 'Jodhpur, the Blue City',
+    route: 'Jaipur – Jodhpur – Jaisalmer – Udaipur',
+    destination: 'Jodhpur & Udaipur',
     tone: 'amber',
     vehicle: 'Toyota Innova Crysta or a 12-seat tempo traveller for larger groups',
     vehicleSlug: 'toyota-innova-crysta',
@@ -139,7 +155,11 @@ export const packages = [
   {
     slug: 'shekhawati-haveli-heritage-trail',
     shortTitle: 'Shekhawati Haveli Trail',
-    image: '/images/scene-haveli.svg',
+    image: '/images/places/mandawa-haveli.jpg',
+    heroBg: '/images/hero/bg-haveli.jpg',
+    place: 'Mandawa',
+    route: 'Nawalgarh – Mandawa – Fatehpur',
+    destination: 'Shekhawati havelis',
     tone: 'rose',
     vehicle: 'Maruti Ertiga or Toyota Innova Crysta',
     vehicleSlug: 'maruti-suzuki-ertiga',
@@ -203,7 +223,11 @@ export const packages = [
   {
     slug: 'khatu-shyam-salasar-balaji-darshan',
     shortTitle: 'Khatu Shyam & Salasar Darshan',
-    image: '/images/scene-temple.svg',
+    image: '/images/places/khatu-shyam-temple.jpg',
+    heroBg: '/images/hero/bg-jaisalmer.jpg',
+    place: 'Khatu Shyam Ji',
+    route: 'Khatu – Salasar – Jhunjhunu',
+    destination: 'Khatu Shyam Ji',
     tone: 'saffron',
     vehicle: 'Maruti Ertiga, Innova Crysta or a 12-seat tempo traveller',
     vehicleSlug: 'force-tempo-traveller-12',
@@ -266,7 +290,11 @@ export const packages = [
   {
     slug: 'jaipur-one-day-city-tour',
     shortTitle: 'Jaipur One Day Tour',
-    image: '/images/scene-lake.svg',
+    image: '/images/places/hawa-mahal.jpg',
+    heroBg: '/images/hero/bg-hawa-mahal.jpg',
+    place: 'Hawa Mahal',
+    route: 'Amber Fort – City Palace – Hawa Mahal',
+    destination: 'Jaipur',
     tone: 'blue',
     vehicle: 'Maruti Suzuki Dzire or Ertiga',
     vehicleSlug: 'maruti-suzuki-swift-dzire',
@@ -328,7 +356,11 @@ export const packages = [
   {
     slug: 'rajasthan-desert-circuit',
     shortTitle: 'Rajasthan Desert Circuit',
-    image: '/images/scene-dunes.svg',
+    image: '/images/places/sam-sand-dunes.jpg',
+    heroBg: '/images/hero/bg-dunes.jpg',
+    place: 'Sam Sand Dunes',
+    route: 'Bikaner – Jaisalmer – Jodhpur',
+    destination: 'Jaisalmer & the Thar',
     tone: 'sand',
     vehicle: 'Toyota Innova Crysta or Mahindra Scorpio-N',
     vehicleSlug: 'mahindra-scorpio-n',

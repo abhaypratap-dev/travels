@@ -131,14 +131,20 @@ for (const { route, html } of pages) {
     try { JSON.parse(json) } catch { problems.push(`${route} — JSON-LD block ${i} does not parse`) }
   })
 
-  const titleLength = (head.match(/<title[^>]*>([^<]*)<\/title>/) || [, ''])[1].length
-  // Google truncates on rendered width, not character count; ~65 characters
-  // of mixed-case Latin is where the cut usually lands.
-  if (titleLength > 65) console.log(`  ⚠ ${route} — title is ${titleLength} chars, likely truncated in results`)
+  // Lengths are measured on the decoded text a searcher sees, not the escaped
+  // HTML — `&amp;` is one character on the results page, not five.
+  const decode = (s) => s.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+
+  // Held to 60 characters, inside the width Google renders before truncating.
+  const titleText = decode((head.match(/<title[^>]*>([^<]*)<\/title>/) || [, ''])[1])
+  if (titleText.length > 60) problems.push(`${route} — title is ${titleText.length} chars (limit 60): ${titleText}`)
 
   // Snippets get cut near 160. Anything past that is written for nobody.
-  const descLength = (head.match(/name="description"[^>]*content="([^"]*)"/) || [, ''])[1].length
-  if (descLength > 165) console.log(`  ⚠ ${route} — description is ${descLength} chars, snippet cuts near 160`)
+  const descText = decode((head.match(/name="description"[^>]*content="([^"]*)"/) || [, ''])[1])
+  if (descText.length > 160) problems.push(`${route} — description is ${descText.length} chars (limit 160)`)
+  if (!/\b(call|book|whatsapp|quote|enquire|contact|plan|read|ask|get|see|compare|find|check)\b/i.test(descText)) {
+    console.log(`  ⚠ ${route} — description has no call to action`)
+  }
 }
 
 if (problems.length) {
@@ -146,7 +152,7 @@ if (problems.length) {
   problems.forEach((p) => console.error(`   · ${p}`))
   process.exit(1)
 }
-console.log(`  ✓ ${pages.length} pages pass title / description / canonical / og:image / JSON-LD / single-H1`)
+console.log(`  ✓ ${pages.length} pages pass title ≤60 / description ≤160 / canonical / og:image / JSON-LD / single-H1`)
 
 /* ── sitemap.xml ──────────────────────────────────────────────────────── */
 
@@ -172,14 +178,17 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${routes
   .map(
+    // `image` and `lastmod` come from the route table when a page has its own
+    // photograph or a real edit date (blog posts); otherwise the share card
+    // and the build date.
     (r) => `  <url>
     <loc>${xml(site.url + (r.path === '/' ? '/' : r.path))}</loc>
-    <lastmod>${today}</lastmod>
+    <lastmod>${r.lastmod || today}</lastmod>
     <changefreq>${r.changefreq}</changefreq>
     <priority>${r.priority.toFixed(1)}</priority>
     <image:image>
-      <image:loc>${xml(OG)}</image:loc>
-      <image:title>${xml(`${site.name} — ${site.tagline}`)}</image:title>
+      <image:loc>${xml(r.image ? site.url + r.image : OG)}</image:loc>
+      <image:title>${xml(r.imageTitle || `${site.name} — ${site.tagline}`)}</image:title>
     </image:image>
   </url>`
   )

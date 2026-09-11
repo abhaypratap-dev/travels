@@ -17,11 +17,18 @@ import Contact from './pages/Contact'
 import VehicleType from './pages/VehicleType'
 import VehicleDetail from './pages/VehicleDetail'
 import PackageDetail from './pages/PackageDetail'
+import ServicePage from './pages/ServicePage'
+import FaqPage from './pages/FaqPage'
+import BlogIndex from './pages/BlogIndex'
+import BlogPost from './pages/BlogPost'
+import Credits from './pages/Credits'
 import NotFound from './pages/NotFound'
 
 import { vehicleTypes } from './data/vehicleTypes'
 import { fleet } from './data/fleet'
 import { packages } from './data/packages'
+import { servicePages } from './data/servicePages'
+import { posts } from './data/blog'
 
 export default function App() {
   return (
@@ -75,8 +82,22 @@ export default function App() {
               />
             ))}
             <Route path="/services" element={<Services />} />
+
+            {/* Dedicated service landing pages — IGI airport, outstation,
+                corporate travel and the Delhi NCR destinations hub. */}
+            {servicePages.map((sp) => (
+              <Route key={sp.slug} path={`/${sp.slug}`} element={<ServicePage page={sp} />} />
+            ))}
+
+            <Route path="/faq" element={<FaqPage />} />
+            <Route path="/blog" element={<BlogIndex />} />
+            {posts.map((p) => (
+              <Route key={p.slug} path={`/blog/${p.slug}`} element={<BlogPost post={p} />} />
+            ))}
+
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/image-credits" element={<Credits />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </PageTransition>

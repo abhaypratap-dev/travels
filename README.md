@@ -18,7 +18,7 @@ npm run preview  # serve the built dist/ locally
 ```
 
 `npm run build` runs three stages in order, and the third **fails the build** if
-any of the 32 pages ships without a title, meta description, canonical,
+any of the 33 pages ships without a title, meta description, canonical,
 JSON-LD that parses, exactly one `<h1>`, or an `og:image` that is both raster
 and present on disk. It also refuses to emit a sitemap containing an unescaped
 XML entity.
@@ -55,6 +55,8 @@ src/data/packages.js        6 tour itineraries: day-by-day plan, inclusions,
                             FAQs. One entry = one page under /tour-packages/.
 src/data/services.js        Service descriptions.
 src/data/content.js         Testimonials, site FAQs, milestones, gallery.
+src/data/photos.js          Attribution for every photograph (rendered on
+                            /image-credits) and the responsive-image helper.
 
 src/components/Seo.jsx      Per-page head tags plus the organisation and website
                             schema graph.
@@ -64,15 +66,16 @@ src/pages/VehicleType.jsx   Template for the 4 category pages.
 src/pages/VehicleDetail.jsx Template for the 15 per-vehicle pages.
 src/pages/PackageDetail.jsx Template for the 6 per-package pages.
 src/styles/motion.css       The animation layer.
-scripts/generate-images.mjs Regenerates the illustration set into public/images.
+scripts/generate-images.mjs The old flat-illustration set. No page uses it any
+                            more; kept only until those files are deleted.
 scripts/prerender.js        Static prerender, sitemap, robots.txt, SEO audit.
 ```
 
-### The 32 routes
+### The 33 routes
 
 | Group | Count | Pattern |
 | --- | --- | --- |
-| Core pages | 7 | `/`, `/about`, `/fleet`, `/tour-packages`, `/services`, `/gallery`, `/contact` |
+| Core pages | 8 | `/`, `/about`, `/fleet`, `/tour-packages`, `/services`, `/gallery`, `/contact`, `/image-credits` |
 | Vehicle categories | 4 | `/4-seater-car-rental`, `/7-seater-suv-on-rent`, `/tempo-traveller-on-rent`, `/mini-bus-on-rent` |
 | Individual vehicles | 15 | `/fleet/<slug>` — one per entry in `fleet.js` |
 | Individual packages | 6 | `/tour-packages/<slug>` — one per entry in `packages.js` |
@@ -90,20 +93,37 @@ service-area list.
 
 ### Images
 
-The artwork in `public/images` is generated flat illustration, not photography.
-The business has no photo library yet, and a page of empty grey boxes reads as
-broken — these are on-brand, distinct per vehicle body type and destination, and
-weigh two to four kilobytes each.
+Every photograph is a freely licensed image from Wikimedia Commons, cropped and
+compressed for the web:
 
-**They are meant to be replaced.** Drop a real photograph into `public/images`
-and point the `image` field in `src/data/fleet.js`, `packages.js` or the `src`
-field in `content.js` at it. Nothing else changes — the layouts, alt text and
-schema all read from those fields.
+| Folder | Size | Used for |
+| --- | --- | --- |
+| `public/images/fleet/<slug>.jpg` | 1200×800, plus a 600×400 `-sm` twin | One per vehicle in `fleet.js` |
+| `public/images/places/*.jpg` | 1200×800, plus `-sm` | Tour packages, gallery |
+| `public/images/hero/*.jpg` | 2000–2400 wide | Homepage hero, page headers, booking banner |
 
-`node scripts/generate-images.mjs` regenerates the illustration set. The header
-of that file documents how the `public/images/og/*.jpg` Open Graph rasters are
-produced, and why they exist: no social scraper renders an SVG `og:image`, so
-`Seo.jsx` rewrites `/images/x.svg` to `/images/og/x.jpg` for the share card.
+Cards request the `-sm` file through `srcset` and only step up to the 1200px
+one on high-density screens; `responsive()` in `src/data/photos.js` builds that.
+
+**The vehicle photos show the model, not our vehicle.** The fleet sections say
+so, and promise current photos of the actual vehicle on WhatsApp before a
+booking is confirmed. The licences (mostly CC BY-SA) require attribution, which
+is `/image-credits`, linked from every footer. Some photos had number plates or
+another operator's markings blurred; `photos.js` records which.
+
+**To use your own photograph:** overwrite the file *and* its `-sm` twin at the
+same path (keep 3:2), then delete that entry from `photoCredits` in
+`src/data/photos.js`. Nothing else changes — layouts, alt text and schema all
+read from the data files.
+
+The homepage hero is two photographs composited — Amber Fort with the Innova
+Crysta cut out of its own photo and placed in front — and both are credited.
+`public/images/og-cover.jpg` (the default share card) is built from it.
+
+The flat SVG illustrations (`vehicle-*.svg`, `scene-*.svg`, `og/*.jpg`) and
+`logo.svg` from the previous design are no longer referenced by any page.
+`Seo.jsx` still rewrites an SVG `og:image` to its `og/*.jpg` twin, in case one
+is ever used again.
 
 ---
 
@@ -187,7 +207,7 @@ fallback — answering unknown URLs with the homepage under a 200 reads as a sof
       strings are skipped; `sameAs` pointing at a 404 is a negative signal.
 - [ ] Swap the illustrative testimonials for real Google reviews, then flip
       `testimonialsAreVerified`.
-- [ ] Replace the generated illustrations with real photographs of the actual
+- [ ] Replace the licensed model photos with photographs of the actual
       vehicles — see **Images** above. This is the single biggest remaining
       credibility win; everything else on the page is already true.
 - [ ] Submit `sitemap.xml` in Google Search Console and Bing Webmaster Tools.

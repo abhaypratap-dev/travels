@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import Icon from './Icon'
+import Logo from './Logo'
 import { site, nav, whatsappLink } from '../data/site'
+
+/** A target with a hash jumps within a page, so it is never "the current page". */
+const isJump = (to) => to.includes('#')
 
 export default function Header() {
   const [open, setOpen] = useState(false)
@@ -44,35 +48,12 @@ export default function Header() {
 
   return (
     <>
-      <div className="topbar">
-        <div className="container topbar__inner">
-          <span className="topbar__item">
-            <Icon name="clock" size={14} /> {site.hours}
-          </span>
-          <div className="topbar__right">
-            <a className="topbar__item topbar__item--hide-sm" href={site.mapLink} target="_blank" rel="noopener noreferrer">
-              <Icon name="pin" size={14} /> Rangpuri, New Delhi
-            </a>
-            <a className="topbar__item" href={`tel:${site.phoneRaw}`}>
-              <Icon name="phone" size={14} /> {site.phone}
-            </a>
-            <a className="topbar__item topbar__item--hide-sm" href={`mailto:${site.email}`}>
-              <Icon name="mail" size={14} /> {site.email}
-            </a>
-          </div>
-        </div>
-      </div>
-
       <header className={`header${scrolled ? ' header--scrolled' : ''}`}>
         <div className="container header__inner">
-          <Link to="/" className="brand" aria-label={`${site.name} — home`}>
-            <span className="brand__mark" aria-hidden="true">
-              <Icon name="fleet" size={24} />
-            </span>
-            <span className="brand__text">
-              <strong>Shekhawat</strong>
-              <small>Tours &amp; Travels</small>
-            </span>
+          {/* No aria-label: the visible wordmark is the accessible name, and a
+              label that differs from it ("and" vs "&") fails label-in-name. */}
+          <Link to="/" className="brand">
+            <Logo />
           </Link>
 
           <nav className="nav" aria-label="Primary">
@@ -90,7 +71,7 @@ export default function Header() {
                       aria-haspopup="true"
                       onClick={() => setOpenMenu(openMenu === item.label ? null : item.label)}
                     >
-                      {item.label} <Icon name="chevron" size={13} />
+                      {item.label} <Icon name="chevron-down" size={14} />
                     </button>
                     {/* Rendered at all times, hidden with opacity/visibility
                         rather than `display: none`, so these links stay in the
@@ -100,22 +81,29 @@ export default function Header() {
                         <NavLink
                           key={child.to}
                           to={child.to}
-                          className={({ isActive }) => (isActive ? 'is-active' : '')}
+                          end
+                          className={({ isActive }) =>
+                            [child.to === item.to && 'nav__panel-all', isActive && 'is-active'].filter(Boolean).join(' ')
+                          }
                         >
-                          <Icon name="arrow" size={13} /> {child.label}
+                          <Icon name="arrow-r" size={14} /> {child.label}
                         </NavLink>
                       ))}
                     </div>
                   </li>
                 ) : (
                   <li key={item.to}>
-                    <NavLink
-                      to={item.to}
-                      end={item.to === '/'}
-                      className={({ isActive }) => `nav__link${isActive ? ' is-active' : ''}`}
-                    >
-                      {item.label}
-                    </NavLink>
+                    {isJump(item.to) ? (
+                      <Link className="nav__link" to={item.to}>{item.label}</Link>
+                    ) : (
+                      <NavLink
+                        to={item.to}
+                        end={item.to === '/'}
+                        className={({ isActive }) => `nav__link${isActive ? ' is-active' : ''}`}
+                      >
+                        {item.label}
+                      </NavLink>
+                    )}
                   </li>
                 )
               )}
@@ -123,16 +111,17 @@ export default function Header() {
           </nav>
 
           <div className="header__cta">
-            <a className="btn btn--ghost btn--sm" href={`tel:${site.phoneRaw}`}>
-              <Icon name="phone" size={16} /> Call Now
+            <a className="header__phone" href={`tel:${site.phoneRaw}`} aria-label={`Call ${site.phone}`}>
+              <Icon name="phone" size={16} />
+              <span>{site.phone}</span>
             </a>
             <a
-              className="btn btn--primary btn--sm"
+              className="btn btn--wa btn--sm"
               href={whatsappLink('Hi, I would like to book a vehicle.')}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Icon name="whatsapp" size={16} /> Book Now
+              <Icon name="whatsapp" size={17} /> WhatsApp
             </a>
           </div>
 
@@ -153,14 +142,23 @@ export default function Header() {
           <ul className="drawer__list">
             {nav.map((item) => (
               <li key={item.label}>
-                <NavLink
-                  to={item.to}
-                  end={item.to === '/'}
-                  className={({ isActive }) => `drawer__link${isActive ? ' is-active' : ''}`}
-                >
-                  {item.label}
-                  <Icon name="chevron" size={16} />
-                </NavLink>
+                {isJump(item.to) ? (
+                  // Same-page jumps do not change the pathname, so the effect
+                  // that closes the drawer on navigation never fires for them.
+                  <Link className="drawer__link" to={item.to} onClick={() => setOpen(false)}>
+                    {item.label}
+                    <Icon name="chevron" size={16} />
+                  </Link>
+                ) : (
+                  <NavLink
+                    to={item.to}
+                    end={item.to === '/'}
+                    className={({ isActive }) => `drawer__link${isActive ? ' is-active' : ''}`}
+                  >
+                    {item.label}
+                    <Icon name="chevron" size={16} />
+                  </NavLink>
+                )}
                 {item.children && (
                   <div className="drawer__sub">
                     {item.children
@@ -185,7 +183,7 @@ export default function Header() {
             <Icon name="phone" size={18} /> {site.phone}
           </a>
           <a
-            className="btn btn--primary btn--block"
+            className="btn btn--wa btn--block"
             href={whatsappLink('Hi, I would like to book a vehicle.')}
             target="_blank"
             rel="noopener noreferrer"

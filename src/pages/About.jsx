@@ -2,7 +2,7 @@ import Seo from '../components/Seo'
 import Icon from '../components/Icon'
 import Testimonials from '../components/Testimonials'
 import { SectionHead } from '../components/Faq'
-import { PageHero, CtaBand, Stats, GoogleBadge } from '../components/Common'
+import { PageHero, CtaBand, StatBar } from '../components/Common'
 import { Reveal, stagger } from '../components/Motion'
 import { site, yearsActive, fullAddress } from '../data/site'
 import { whyUs, milestones } from '../data/content'
@@ -38,6 +38,7 @@ export default function About() {
         title="About Shekhawat Tours and Travels"
         text="A family business with Shekhawati roots, run out of New Delhi, that grew from two cars into a sixty-vehicle fleet — without ever outsourcing a booking or hiding a charge."
         crumbs={[{ name: 'About', path: '/about' }]}
+        bg="/images/hero/bg-haveli.jpg"
       />
 
       <section className="section">
@@ -107,7 +108,7 @@ export default function About() {
             </aside>
           </div>
 
-          <Stats />
+          <StatBar inline />
         </div>
       </section>
 

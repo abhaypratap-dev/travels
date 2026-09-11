@@ -1,13 +1,28 @@
 import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Icon from './Icon'
-import { Reveal, CountUp, stagger, Marquee, useParallax } from './Motion'
+import { Reveal, CountUp, stagger } from './Motion'
 import { site, whatsappLink } from '../data/site'
 
-/** Resets scroll position on route change. */
+/**
+ * Scroll handling on navigation: to the top for a new page, or to the target
+ * section when the link carries a hash (the "Reviews" item in the nav).
+ */
 export function ScrollToTop() {
-  const { pathname } = useLocation()
-  useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }) }, [pathname])
+  const { pathname, hash } = useLocation()
+
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo({ top: 0, behavior: 'instant' })
+      return
+    }
+    // One beat for a freshly navigated page to render the target section.
+    const timer = window.setTimeout(() => {
+      document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView({ block: 'start' })
+    }, 60)
+    return () => window.clearTimeout(timer)
+  }, [pathname, hash])
+
   return null
 }
 
@@ -36,6 +51,21 @@ export function FloatingActions() {
   )
 }
 
+/** An email address that wraps at the @ in a narrow column, rather than mid-word. */
+export function Email({ address }) {
+  const at = address.indexOf('@')
+  return <>{address.slice(0, at)}<wbr />{address.slice(at)}</>
+}
+
+/** Five gold stars. Decorative — the rating itself is always written out beside them. */
+export function Stars({ size = 14 }) {
+  return (
+    <span className="stars" aria-hidden="true">
+      {Array.from({ length: 5 }, (_, i) => <Icon key={i} name="star" size={size} />)}
+    </span>
+  )
+}
+
 /**
  * Google Business Profile rating, linked to the real listing.
  *
@@ -44,79 +74,54 @@ export function FloatingActions() {
  * JSON-LD, and a rating in structured data that a visitor can disprove in one
  * click is a manual-action risk, not a trust win.
  */
-export function GoogleBadge({ dark = false }) {
+export function GoogleBadge() {
   return (
-    <a
-      className={`gbadge${dark ? ' gbadge--dark' : ''}`}
-      href={site.reviewsLink}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <span className="gbadge__mark" aria-hidden="true">G</span>
+    <a className="gbadge" href={site.reviewsLink} target="_blank" rel="noopener noreferrer">
+      <span className="gbadge__mark" aria-hidden="true"><Icon name="google" size={20} /></span>
       <span className="gbadge__body">
         <span className="gbadge__score">
           {site.rating.value}
-          <span className="gbadge__stars" aria-hidden="true">
-            {Array.from({ length: 5 }).map((_, i) => <Icon key={i} name="star" size={13} />)}
-          </span>
+          <Stars size={13} />
         </span>
-        <span className="gbadge__meta">
-          {site.rating.count} Google reviews · Read them all
-        </span>
+        <span className="gbadge__meta">{site.rating.count} Google reviews · Read them all</span>
       </span>
     </a>
   )
 }
 
 /**
- * The reassurance strip under the hero. Placed immediately after the promise
- * because that is the moment the visitor is deciding whether to believe it.
+ * Headline figures. Each value counts up when it scrolls into view, but the
+ * final number is what renders on the server — so the prerendered HTML a
+ * crawler reads already carries the real figure, animation or not.
+ *
+ * `inline` drops the band background for use inside a page section.
  */
-export function TrustBar() {
-  const items = [
-    { icon: 'star', text: <><strong>{site.rating.value}★</strong> from {site.rating.count} Google reviews</> },
-    { icon: 'shield', text: <>Police-verified drivers</> },
-    { icon: 'rupee', text: <>Fixed fare, <strong>no surge pricing</strong></> },
-    { icon: 'clock', text: <>Booking desk open <strong>24×7</strong></> },
-    { icon: 'pin', text: <>3 km from <strong>IGI Airport T3</strong></> },
-  ]
-
+export function StatBar({ inline = false }) {
+  const Tag = inline ? 'div' : 'section'
   return (
-    <section className="trustbar" aria-label="Why travellers book with us">
-      <div className="container trustbar__inner">
-        {items.map((item, i) => (
-          <span className="trustbar__item" key={i}>
-            <Icon name={item.icon} size={16} /> {item.text}
-          </span>
+    <Tag className={`statbar${inline ? ' statbar--inline' : ''}`} aria-label={`${site.shortName} in numbers`}>
+      <div className={inline ? 'statbar__grid' : 'container statbar__grid'}>
+        {site.stats.map((stat, i) => (
+          <Reveal className="statbar__item" variant="up" delay={stagger(i, 90)} key={stat.label}>
+            <span className="statbar__icon"><Icon name={stat.icon} size={26} /></span>
+            <span>
+              <strong className="statbar__value">
+                <CountUp value={stat.value} decimals={stat.decimals || 0} suffix={stat.suffix} />
+              </strong>
+              <span className="statbar__label">{stat.label}</span>
+            </span>
+          </Reveal>
         ))}
       </div>
-    </section>
+    </Tag>
   )
 }
 
-/** Scrolling strip of service areas. Doubles as internal-linking surface. */
-export function AreaMarquee() {
-  const items = site.serviceAreas.map((area) => (
-    <Link className="arealink" to="/contact" key={area}>
-      <Icon name="pin" size={12} /> Taxi service in {area}
-    </Link>
-  ))
-  return (
-    <section className="trustbar" aria-label="Cities we serve">
-      <div className="container">
-        <Marquee items={items} speed={58} />
-      </div>
-    </section>
-  )
-}
-
-/** Page header used on every inner page. */
-export function PageHero({ eyebrow, title, text, crumbs = [] }) {
-  const blobRef = useParallax(0.09)
-
+/** Photo-backed header used on every inner page. */
+export function PageHero({ eyebrow, title, text, crumbs = [], bg = '/images/hero/bg-jaisalmer.jpg' }) {
   return (
     <section className="pagehero">
-      <span className="pagehero__blob" ref={blobRef} aria-hidden="true" />
+      <img className="pagehero__bg" src={bg} alt="" width="2000" height="640" fetchpriority="high" decoding="async" />
       <div className="container">
         <nav className="crumbs" aria-label="Breadcrumb">
           <ol>
@@ -136,48 +141,39 @@ export function PageHero({ eyebrow, title, text, crumbs = [] }) {
   )
 }
 
-/** Full-width conversion band. */
+/** Full-width conversion band over the Jaipur-at-dusk photograph. */
 export function CtaBand({
-  title = 'Ready to book your vehicle?',
-  text = 'Tell us your route and dates. We reply with a fixed, all-inclusive quote — usually within 15 minutes.',
+  title = 'Plan Your Next Journey',
+  text = 'Tell us where you’re going. We’ll arrange the right vehicle and send a fixed quote — usually within 15 minutes.',
 }) {
   return (
     <section className="ctaband">
-      <div className="ctaband__glow" aria-hidden="true" />
+      <img
+        className="ctaband__bg"
+        src="/images/hero/nahargarh-band.jpg"
+        alt=""
+        width="2000"
+        height="640"
+        loading="lazy"
+        decoding="async"
+      />
       <div className="container ctaband__inner">
         <Reveal variant="left">
           <h2 className="ctaband__title">{title}</h2>
           <p className="ctaband__text">{text}</p>
         </Reveal>
         <Reveal className="ctaband__actions" variant="right" delay={110}>
-          <a className="btn btn--light btn--lg" href={`tel:${site.phoneRaw}`}>
-            <Icon name="phone" size={18} /> {site.phone}
+          <Link className="btn btn--primary" to="/contact#enquire">
+            Get a Free Quote <Icon name="arrow-r" size={18} />
+          </Link>
+          <a className="btn btn--outline-light" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+            <span className="btn__wa"><Icon name="whatsapp" size={15} /></span> WhatsApp Us
           </a>
-          <a className="btn btn--outline-light btn--lg" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
-            <Icon name="whatsapp" size={18} /> WhatsApp Us
+          <a className="btn btn--outline-light" href={`tel:${site.phoneRaw}`}>
+            <Icon name="phone" size={17} /> Call Now
           </a>
         </Reveal>
       </div>
     </section>
-  )
-}
-
-/**
- * Headline figures. Each value counts up when it scrolls into view, but the
- * final number is what renders on the server — so the prerendered HTML a
- * crawler reads already carries the real figure, animation or not.
- */
-export function Stats() {
-  return (
-    <div className="stats">
-      {site.stats.map((stat, i) => (
-        <Reveal className="stats__item" variant="up" delay={stagger(i, 90)} key={stat.label}>
-          <span className="stats__value">
-            <CountUp value={stat.value} decimals={stat.decimals || 0} suffix={stat.suffix} />
-          </span>
-          <span className="stats__label">{stat.label}</span>
-        </Reveal>
-      ))}
-    </div>
   )
 }

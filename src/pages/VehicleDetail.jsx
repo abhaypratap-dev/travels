@@ -9,6 +9,7 @@ import { Reveal, stagger } from '../components/Motion'
 import { site, whatsappLink, shortAddress } from '../data/site'
 import { fleet } from '../data/fleet'
 import { vehicleTypes, getVehicleType } from '../data/vehicleTypes'
+import { responsive } from '../data/photos'
 
 /**
  * One page per vehicle — /fleet/toyota-innova-crysta and its fourteen siblings.
@@ -106,7 +107,7 @@ export default function VehicleDetail({ vehicle: v }) {
 
       {/* ── Hero ──────────────────────────────────────────────── */}
       <section className="vdhero">
-        <div className="vdhero__bg" aria-hidden="true" />
+        <img className="vdhero__bg" src="/images/hero/bg-jaisalmer.jpg" alt="" width="2000" height="640" decoding="async" />
         <div className="container">
           <nav className="crumbs" aria-label="Breadcrumb">
             <ol>
@@ -151,16 +152,17 @@ export default function VehicleDetail({ vehicle: v }) {
 
             <figure className="vdhero__media" data-reveal="scale">
               <img
-                src={v.image}
+                {...responsive(v.image)}
+                sizes="(max-width: 960px) 100vw, 560px"
                 alt={`${v.name} — ${v.seats} seater ${v.ac ? 'AC' : 'non-AC'} ${v.category} on rent with driver in Delhi`}
-                width="800"
-                height="500"
+                width="600"
+                height="400"
                 /* Above the fold on this route, so it loads eagerly and gets
                    fetch priority — this image is the LCP element. */
                 loading="eager"
                 fetchpriority="high"
               />
-              <figcaption>{v.name} · {v.seats} seats · {v.fuel}</figcaption>
+              <figcaption>{v.name} · {v.seats} seats · {v.fuel} — photo shows the model</figcaption>
             </figure>
           </div>
         </div>

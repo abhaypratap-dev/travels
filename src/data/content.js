@@ -1,3 +1,5 @@
+import { site, yearsActive } from './site.js'
+
 /**
  * ⚠️ REVIEW SCHEMA GATE
  *
@@ -135,26 +137,38 @@ export const whyUs = [
   },
   {
     icon: 'star',
-    title: '13 Years, 25,000+ Trips',
-    text: 'Operating since 2012 with a 4.8-star average across a thousand-plus reviews. Most of our work now comes from repeat customers and referrals.',
+    title: `${yearsActive} Years, 25,000+ Trips`,
+    // Read from `site.rating`, never typed in: this must match the Google
+    // Business Profile, and a hand-written figure here had drifted from it.
+    text: `Operating since ${site.founded} with a ${site.rating.value}-star Google rating. Most of our work now comes from repeat customers and referrals.`,
   },
 ]
 
+/**
+ * Gallery. Freely licensed photographs of the places we drive to and the
+ * vehicle models we run, credited on /image-credits — not yet pictures from
+ * our own trips, and the gallery page says so. Add the business's own
+ * photographs here as they come in.
+ */
 export const galleryItems = [
-  { title: 'Amber Fort, Jaipur', category: 'Destinations', tone: 'amber', src: '/images/scene-fort.svg' },
-  { title: 'Sam Sand Dunes, Jaisalmer', category: 'Destinations', tone: 'sand', src: '/images/scene-dunes.svg' },
-  { title: 'Lake Pichola, Udaipur', category: 'Destinations', tone: 'blue', src: '/images/scene-lake.svg' },
-  { title: 'Painted Havelis, Mandawa', category: 'Destinations', tone: 'rose', src: '/images/scene-haveli.svg' },
-  { title: 'Khatu Shyam Ji Temple', category: 'Destinations', tone: 'saffron', src: '/images/scene-temple.svg' },
-  { title: 'India Gate, New Delhi', category: 'Destinations', tone: 'maroon', src: '/images/scene-city.svg' },
-  { title: 'Toyota Innova Crysta', category: 'Fleet', tone: 'forest', src: '/images/vehicle-suv.svg' },
-  { title: 'Luxury Tempo Traveller', category: 'Fleet', tone: 'plum', src: '/images/vehicle-tempo.svg' },
-  { title: '32-Seater Mini Bus', category: 'Fleet', tone: 'rose', src: '/images/vehicle-bus.svg' },
-  { title: 'Volvo 45-Seater Coach', category: 'Fleet', tone: 'slate', src: '/images/vehicle-coach.svg' },
-  { title: 'Mercedes-Benz E-Class', category: 'Fleet', tone: 'gold', src: '/images/vehicle-luxury.svg' },
-  { title: 'Maruti Suzuki Dzire', category: 'Fleet', tone: 'indigo', src: '/images/vehicle-sedan.svg' },
-  { title: 'Wedding Car Decoration', category: 'Occasions', tone: 'rose', src: '/images/scene-wedding.svg' },
-  { title: 'Corporate Group Transfer', category: 'Occasions', tone: 'slate', src: '/images/scene-corporate.svg' },
+  { title: 'Amber Fort, Jaipur', category: 'Destinations', src: '/images/places/amber-fort-hill.jpg' },
+  { title: 'Taj Mahal, Agra', category: 'Destinations', src: '/images/places/taj-mahal.jpg' },
+  { title: 'Sam Sand Dunes, Jaisalmer', category: 'Destinations', src: '/images/places/sam-sand-dunes.jpg' },
+  { title: 'Lake Pichola, Udaipur', category: 'Destinations', src: '/images/places/lake-pichola.jpg' },
+  { title: 'The Blue City, Jodhpur', category: 'Destinations', src: '/images/places/jodhpur-blue-city.jpg' },
+  { title: 'Painted Havelis, Mandawa', category: 'Destinations', src: '/images/places/mandawa-painted-gate.jpg' },
+  { title: 'Hawa Mahal, Jaipur', category: 'Destinations', src: '/images/places/hawa-mahal.jpg' },
+  { title: 'Jaisalmer Fort', category: 'Destinations', src: '/images/places/jaisalmer-fort.jpg' },
+  { title: 'Khatu Shyam Ji Temple', category: 'Destinations', src: '/images/places/khatu-shyam-temple.jpg' },
+  { title: 'India Gate, New Delhi', category: 'Destinations', src: '/images/places/india-gate.jpg' },
+  { title: 'Toyota Innova Crysta', category: 'Fleet', src: '/images/fleet/toyota-innova-crysta.jpg' },
+  { title: 'Force Tempo Traveller', category: 'Fleet', src: '/images/fleet/force-tempo-traveller-12.jpg' },
+  { title: 'Luxury Tempo Traveller', category: 'Fleet', src: '/images/fleet/luxury-tempo-traveller-maharaja.jpg' },
+  { title: '21-Seater Mini Bus', category: 'Fleet', src: '/images/fleet/mini-bus-21-seater.jpg' },
+  { title: 'Volvo 45-Seater Coach', category: 'Fleet', src: '/images/fleet/volvo-luxury-coach-45.jpg' },
+  { title: 'Mercedes-Benz E-Class', category: 'Fleet', src: '/images/fleet/mercedes-benz-e-class.jpg' },
+  { title: 'Toyota Fortuner', category: 'Fleet', src: '/images/fleet/toyota-fortuner.jpg' },
+  { title: 'Maruti Suzuki Dzire', category: 'Fleet', src: '/images/fleet/maruti-suzuki-swift-dzire.jpg' },
 ]
 
 export const milestones = [

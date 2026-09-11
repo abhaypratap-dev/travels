@@ -1,256 +1,184 @@
 import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import Icon from '../components/Icon'
-import BookingForm from '../components/BookingForm'
+import QuoteWidget from '../components/QuoteWidget'
 import VehicleCard from '../components/VehicleCard'
-import Testimonials, { reviewSchema } from '../components/Testimonials'
-import Faq, { SectionHead, faqSchema } from '../components/Faq'
-import { CtaBand, Stats, TrustBar, AreaMarquee, GoogleBadge } from '../components/Common'
-import { Reveal, stagger, useSpotlight } from '../components/Motion'
-import { site, whatsappLink, yearsActive, shortAddress } from '../data/site'
+import PackageCard from '../components/PackageCard'
+import { ReviewCarousel, reviewSchema } from '../components/Testimonials'
+import { SectionHead } from '../components/Faq'
+import { CtaBand, StatBar, GoogleBadge, Stars } from '../components/Common'
+import { Reveal, stagger } from '../components/Motion'
+import { site, yearsActive, shortAddress } from '../data/site'
 import { fleet } from '../data/fleet'
-import { services } from '../data/services'
 import { packages } from '../data/packages'
-import { vehicleTypes } from '../data/vehicleTypes'
-import { faqs, whyUs } from '../data/content'
+import { faqs } from '../data/content'
+import { responsive } from '../data/photos'
 
-const featured = [
+/** The homepage fleet strip, smallest vehicle to largest. */
+const featuredVehicles = [
   'maruti-suzuki-swift-dzire',
   'toyota-innova-crysta',
   'force-tempo-traveller-12',
   'mini-bus-21-seater',
   'toyota-fortuner',
   'volvo-luxury-coach-45',
-]
+].map((slug) => fleet.find((v) => v.slug === slug)).filter(Boolean)
 
-const howItWorks = [
-  { title: 'Tell us the trip', text: 'Route, dates, how many people. One WhatsApp message is enough — no forms, no account, no app to install.' },
-  { title: 'Get a fixed quote', text: 'We recommend the right vehicle and send an all-inclusive rate in writing, usually inside fifteen minutes.' },
-  { title: 'Confirm when ready', text: 'No advance needed on most routes. Cancel free up to 24 hours before departure, no questions asked.' },
-  { title: 'Driver reaches early', text: 'You get the driver’s name, number and vehicle registration the night before. He arrives ahead of time.' },
+const featuredPackages = [
+  'golden-triangle-delhi-agra-jaipur',
+  'royal-rajasthan-grand-tour',
+  'shekhawati-haveli-heritage-trail',
+  'rajasthan-desert-circuit',
+].map((slug) => packages.find((p) => p.slug === slug)).filter(Boolean)
+
+const reasons = [
+  'Fixed pricing — no hidden charges',
+  'Well-trained, police-verified drivers',
+  'Clean, comfortable, fully insured vehicles',
+  '24×7 customer support',
 ]
 
 export default function Home() {
-  const spotlightRef = useSpotlight()
-  const featuredVehicles = featured.map((s) => fleet.find((v) => v.slug === s)).filter(Boolean)
-
   return (
     <>
       <Seo
         title="Taxi Service in New Delhi — Car, Tempo Traveller & Bus Hire"
-        description="Taxi service in Rangpuri, New Delhi, 3 km from IGI Airport. Cars, 7 seater SUVs, tempo travellers and mini buses on rent with driver. Open 24×7."
+        description="Taxi service near IGI Airport, Rangpuri, New Delhi. Cars, SUVs, tempo travellers and buses on rent with driver, open 24×7. Call or WhatsApp for a fixed quote."
         path="/"
-        keywords="taxi service New Delhi, car rental Rangpuri, cab service Mahipalpur, tempo traveller on rent Delhi, mini bus hire Delhi NCR, 7 seater SUV on rent, IGI airport taxi Delhi, outstation cab booking Delhi, wedding car rental Delhi, Shekhawat Tours and Travels"
-        schema={[faqSchema(faqs), reviewSchema].filter(Boolean)}
+        keywords="taxi service near IGI airport, taxi service New Delhi, car rental Rangpuri, cab service Mahipalpur, tempo traveller on rent Delhi, mini bus hire Delhi NCR, 7 seater SUV on rent, IGI airport taxi Delhi, outstation cab booking Delhi, Rajasthan tour packages, Shekhawat Tours and Travels"
+        schema={[reviewSchema].filter(Boolean)}
       />
 
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="hero">
-        <div className="hero__bg" aria-hidden="true" />
-        {/* Three slow-drifting light pools. They read as warmth and movement
-            without ever demanding attention — the whole point is that a
-            visitor feels the page is alive without noticing why. */}
-        <div className="hero__orbs" aria-hidden="true">
-          <span className="hero__orb hero__orb--1" />
-          <span className="hero__orb hero__orb--2" />
-          <span className="hero__orb hero__orb--3" />
-        </div>
-        <div className="hero__sweep" aria-hidden="true" />
+        <picture className="hero__media">
+          {/* A taller crop for phones, where the wide frame would shrink the
+              fort to a sliver behind the quote form. */}
+          <source media="(max-width: 720px)" srcSet="/images/hero/amber-fort-dusk-mobile.jpg" />
+          <img
+            src="/images/hero/amber-fort-dusk.jpg"
+            alt="A white Toyota Innova Crysta in front of Amber Fort, Jaipur, at dusk"
+            width="2400"
+            height="1000"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </picture>
+        <div className="hero__shade" aria-hidden="true" />
 
         <div className="container hero__inner">
           <div className="hero__copy hero__stage">
-            <p className="hero__eyebrow">
-              <Icon name="star" size={14} /> {site.rating.value}/5 from {site.rating.count} Google
-              reviews · Serving Delhi since {site.founded}
-            </p>
-
+            <p className="hero__eyebrow">Your journey. Our road.</p>
             <h1 className="hero__title">
-              Taxi, Tempo Traveller &amp; Bus Hire{' '}<br />
-              <span className="hero__accent">in New Delhi &amp; Across India</span>
+              Explore Rajasthan <br />with Comfort &amp; Trust
             </h1>
-
-            <p className="hero__text">
-              From a Dzire for the 4 AM airport run to a 45-seat coach for the whole wedding
-              party — well-kept vehicles, experienced local drivers and a fixed price agreed
-              before you leave. Our office is in Rangpuri, three kilometres from IGI Terminal 3.
+            <p className="hero__lines">
+              <span>Premium Cars</span>
+              <span>Tempo Travellers</span>
+              <span>Buses</span>
+              <span>Tour Packages</span>
             </p>
-
-            <ul className="hero__points">
-              <li><Icon name="check" size={16} /> Fixed fare quoted in writing</li>
-              <li><Icon name="check" size={16} /> Police-verified drivers</li>
-              <li><Icon name="check" size={16} /> All-India tourist permits</li>
-              <li><Icon name="check" size={16} /> Free cancellation up to 24 hrs</li>
-            </ul>
-
-            <div className="hero__actions">
-              <a
-                className="btn btn--primary btn--lg"
-                href={whatsappLink('Hi, I would like a quote for a trip.')}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon name="whatsapp" size={18} /> Get a Free Quote
-              </a>
-              <a className="btn btn--outline-light btn--lg" href={`tel:${site.phoneRaw}`}>
-                <Icon name="phone" size={18} /> {site.phone}
-              </a>
-            </div>
-
-            <Stats />
+            <p className="hero__values">
+              Safe <i aria-hidden="true">|</i> Reliable <i aria-hidden="true">|</i> Affordable
+            </p>
           </div>
 
-          <div className="hero__form">
-            <BookingForm compact />
-          </div>
-        </div>
-
-        <div className="hero__road" aria-hidden="true" />
-      </section>
-
-      <TrustBar />
-
-      {/* ── The four vehicle categories ──────────────────────
-          These are the pages people actually search for, so they get the
-          first section on the page rather than being buried in the fleet. */}
-      <section className="section" ref={spotlightRef}>
-        <div className="container">
-          <SectionHead
-            eyebrow="Choose your vehicle"
-            title="Cars, SUVs, Tempo Travellers & Mini Buses on Rent"
-            text="Pick by group size. Every category has its own page with real rates, the exact models we run and the routes people take them on."
-          />
-          <div className="vt-cross">
-            {vehicleTypes.map((type, i) => (
-              <Reveal variant="up" delay={stagger(i)} key={type.slug}>
-                <Link className="vt-crosslink" to={`/${type.slug}`}>
-                  <span className="vt-crosslink__icon"><Icon name={type.icon} size={22} /></span>
-                  <strong>{type.h1.replace(' in Delhi', '')}</strong>
-                  <span>{type.seats}</span>
-                  <em>From ₹{type.fromRatePerKm}/km →</em>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
+          <QuoteWidget />
         </div>
       </section>
 
-      {/* ── Services ─────────────────────────────────────────── */}
-      <section className="section section--tint">
-        <div className="container">
-          <SectionHead
-            eyebrow="What we do"
-            title="Travel Services for Every Occasion"
-            text="One operator for the airport pickup, the family holiday, the office shuttle and the wedding baraat."
-          />
-          <div className="grid grid--4">
-            {services.slice(0, 8).map((s, i) => (
-              <Reveal as="article" className="scard" variant="up" delay={stagger(i, 60)} key={s.slug}>
-                <span className="scard__icon"><Icon name={s.icon} size={24} /></span>
-                <h3 className="scard__title">{s.title}</h3>
-                <p className="scard__text">{s.short}</p>
-                <Link className="scard__link" to="/services">
-                  Learn more <Icon name="arrow" size={14} />
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── How it works ─────────────────────────────────────── */}
-      <section className="section">
-        <div className="container">
-          <SectionHead
-            eyebrow="Booking in four steps"
-            title="How Booking Actually Works"
-            text="No app, no account, no deposit held on your card. Just a conversation and a vehicle that turns up."
-          />
-          <div className="howto">
-            {howItWorks.map((step, i) => (
-              <Reveal className="howto__step" variant="up" delay={stagger(i, 110)} key={step.title}>
-                <span className="howto__num">{i + 1}</span>
-                <h3 className="howto__title">{step.title}</h3>
-                <p className="howto__text">{step.text}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <StatBar />
 
       {/* ── Fleet ────────────────────────────────────────────── */}
-      <section className="section section--tint">
+      <section className="section" id="fleet">
         <div className="container">
           <SectionHead
-            eyebrow="Our fleet"
-            title="Cars, Tempo Travellers, Mini Buses & Luxury Coaches"
-            text="Every vehicle is serviced on schedule, cleaned before handover and covered by comprehensive insurance."
+            title="Our Fleet"
+            text="Choose from our well-maintained fleet for a comfortable journey."
+            action={
+              <Link className="btn btn--outline btn--sm btn--pill" to="/fleet">
+                View All Vehicles <Icon name="arrow-r" size={15} />
+              </Link>
+            }
           />
-          <div className="grid grid--3">
+          <div className="fleetrow">
             {featuredVehicles.map((v, i) => (
-              <Reveal variant="up" delay={stagger(i)} key={v.slug}>
-                <VehicleCard vehicle={v} />
+              <Reveal variant="up" delay={stagger(i, 60)} key={v.slug}>
+                <VehicleCard vehicle={v} compact />
               </Reveal>
             ))}
           </div>
-          <Reveal className="section__more" variant="up">
-            <Link className="btn btn--primary btn--lg" to="/fleet">
-              See all {fleet.length} vehicles <Icon name="arrow" size={18} />
-            </Link>
-          </Reveal>
+          <p className="photonote">
+            <Icon name="camera" size={14} /> Photos show each model. We send photos of your actual
+            vehicle on WhatsApp before you confirm.
+          </p>
         </div>
       </section>
 
-      {/* ── Why us ───────────────────────────────────────────── */}
-      <section className="section">
+      {/* ── Tour packages ────────────────────────────────────── */}
+      <section className="section section--tint" id="tours">
         <div className="container">
           <SectionHead
-            eyebrow="Why Shekhawat"
-            title="Why Travellers Keep Coming Back"
-            text={`${yearsActive} years on these roads. Most of our bookings now come from repeat customers and their referrals.`}
+            align="left"
+            title="Popular Tour Packages"
+            text="Discover Rajasthan’s rich heritage, culture and natural beauty."
+            action={
+              <Link className="btn btn--outline btn--sm btn--pill" to="/tour-packages">
+                View All Tours <Icon name="arrow-r" size={15} />
+              </Link>
+            }
           />
-          <div className="grid grid--3">
-            {whyUs.map((w, i) => (
-              <Reveal as="article" className="wcard" variant="up" delay={stagger(i, 70)} key={w.title}>
-                <span className="wcard__icon"><Icon name={w.icon} size={22} /></span>
-                <h3 className="wcard__title">{w.title}</h3>
-                <p className="wcard__text">{w.text}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Packages ─────────────────────────────────────────── */}
-      <section className="section section--tint">
-        <div className="container">
-          <SectionHead
-            eyebrow="Tour packages"
-            title="Popular Tour Packages from Delhi"
-            text="Ready-made itineraries built from years of driving these routes — and happily customised to your dates."
-          />
-          <div className="grid grid--3">
-            {packages.slice(0, 3).map((p, i) => (
-              <Reveal variant="up" delay={stagger(i)} key={p.slug}>
+          <div className="pkgrow">
+            {featuredPackages.map((p, i) => (
+              <Reveal variant="up" delay={stagger(i, 80)} key={p.slug}>
                 <PackageCard pkg={p} />
               </Reveal>
             ))}
           </div>
-          <Reveal className="section__more" variant="up">
-            <Link className="btn btn--outline btn--lg" to="/tour-packages">
-              Browse all packages <Icon name="arrow" size={18} />
+        </div>
+      </section>
+
+      {/* ── Why us + reviews ─────────────────────────────────── */}
+      <section className="section whyrev" id="reviews">
+        <div className="container whyrev__grid">
+          <Reveal className="whyrev__why" variant="left">
+            <h2 className="whyrev__title">Why Choose Shekhawat?</h2>
+            <p className="whyrev__text">
+              We are more than just a travel company — we are your partner in exploring Rajasthan
+              and beyond. {yearsActive} years on these roads, and we still answer the phone ourselves.
+            </p>
+            <ul className="checklist">
+              {reasons.map((r) => (
+                <li key={r}>
+                  <span className="checklist__icon"><Icon name="check" size={14} /></span>
+                  {r}
+                </li>
+              ))}
+            </ul>
+            <Link className="btn btn--primary btn--pill" to="/about">
+              Learn More <Icon name="arrow-r" size={16} />
             </Link>
+          </Reveal>
+
+          <Reveal className="whyrev__reviews" variant="right" delay={100}>
+            <h2 className="whyrev__title">What Our Travellers Say</h2>
+            <div className="ratingline">
+              <Stars size={18} />
+              <strong>{site.rating.value}/5</strong>
+              <small>
+                Based on {site.rating.count} Google reviews ·{' '}
+                <a href={site.reviewsLink} target="_blank" rel="noopener noreferrer">Read them on Google</a>
+              </small>
+            </div>
+            <ReviewCarousel />
           </Reveal>
         </div>
       </section>
 
-      <Testimonials />
-
-      <AreaMarquee />
-
       {/* ── Local SEO copy ───────────────────────────────────── */}
-      <section className="section">
-        <div className="container container--narrow prose">
-          <Reveal variant="up">
+      <section className="section section--tint">
+        <div className="container localseo__grid">
+          <Reveal className="prose" variant="up">
             <h2>Taxi Service in New Delhi — Rangpuri, Mahipalpur &amp; IGI Airport</h2>
             <p>
               {site.name} has been moving travellers out of Delhi since {site.founded}. Our office
@@ -296,53 +224,55 @@ export default function Home() {
             </p>
           </Reveal>
 
-          <Reveal className="section__more" variant="up" delay={120}>
+          <Reveal as="aside" className="localseo__aside" variant="up" delay={120}>
+            <figure className="localseo__photo">
+              <img
+                {...responsive('/images/places/india-gate.jpg')}
+                sizes="(max-width: 960px) 100vw, 440px"
+                alt="India Gate, New Delhi"
+                loading="lazy"
+                decoding="async"
+                width="600"
+                height="400"
+              />
+              <figcaption>
+                <Icon name="pin" size={15} />
+                <span>Our office: {shortAddress} — three kilometres from IGI Airport Terminal 3.</span>
+              </figcaption>
+            </figure>
             <GoogleBadge />
+            <a className="btn btn--outline btn--block" href={site.mapLink} target="_blank" rel="noopener noreferrer">
+              <Icon name="pin" size={16} /> Get directions
+            </a>
           </Reveal>
         </div>
       </section>
 
-      <Faq items={faqs} />
+      {/* ── FAQ teaser ───────────────────────────────────────── */}
+      <section className="section" id="faq">
+        <div className="container container--narrow">
+          <SectionHead
+            eyebrow="Good to know"
+            title="Frequently Asked Questions"
+            text="A few of the questions we hear most. The full list, grouped by topic, lives on our FAQ page."
+          />
+          <div className="faqteaser">
+            {faqs.slice(0, 4).map((f) => (
+              <div className="faqteaser__item" key={f.q}>
+                <h3>{f.q}</h3>
+                <p>{f.a}</p>
+              </div>
+            ))}
+          </div>
+          <div className="section__more">
+            <Link className="btn btn--outline btn--pill" to="/faq">
+              See all FAQs <Icon name="arrow-r" size={16} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <CtaBand />
     </>
-  )
-}
-
-export function PackageCard({ pkg: p }) {
-  return (
-    <article className="pcard">
-      <Link className="pcard__media" to={`/tour-packages/${p.slug}`} tabIndex={-1} aria-hidden="true">
-        <img
-          src={p.image}
-          alt={`${p.shortTitle} — ${p.duration} tour package from ${p.from}`}
-          loading="lazy"
-          width="800"
-          height="500"
-        />
-      </Link>
-      <div className="pcard__top">
-        {p.tag && <span className="pcard__tag">{p.tag}</span>}
-        <span className="pcard__duration"><Icon name="clock" size={14} /> {p.duration}</span>
-      </div>
-      <h3 className="pcard__title">
-        <Link to={`/tour-packages/${p.slug}`}>{p.title}</Link>
-      </h3>
-      <p className="pcard__summary">{p.summary}</p>
-      <ul className="pcard__highlights">
-        {p.highlights.slice(0, 4).map((h) => (
-          <li key={h}><Icon name="check" size={14} /> {h}</li>
-        ))}
-      </ul>
-      <div className="pcard__foot">
-        <span className="pcard__price">
-          <small>Starting</small>
-          <strong>₹{p.price.toLocaleString('en-IN')}</strong>
-          <small>{p.priceNote}</small>
-        </span>
-        <Link className="btn btn--primary btn--sm" to={`/tour-packages/${p.slug}`}>
-          Details <Icon name="arrow" size={14} />
-        </Link>
-      </div>
-    </article>
   )
 }
