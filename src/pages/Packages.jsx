@@ -6,6 +6,7 @@ import { PageHero, CtaBand } from '../components/Common'
 import { Reveal, stagger } from '../components/Motion'
 import { site, whatsappLink } from '../data/site'
 import { packages } from '../data/packages'
+import { responsive } from '../data/photos'
 
 const packageFaqs = [
   {
@@ -66,6 +67,7 @@ export default function Packages() {
         title="Tour Packages from Delhi & Rajasthan"
         text="Routes refined over years on these roads — paced so you spend your time at the forts, not stuck in the car. Every package is fully customisable."
         crumbs={[{ name: 'Tour Packages', path: '/tour-packages' }]}
+        bg="/images/hero/bg-dunes.jpg"
       />
 
       <section className="section">
@@ -81,24 +83,27 @@ export default function Packages() {
               >
                 <Link className="pkg__media" to={`/tour-packages/${p.slug}`} tabIndex={-1} aria-hidden="true">
                   <img
-                    src={p.image}
-                    alt={`${p.shortTitle} — ${p.duration} tour package from ${p.from}`}
+                    {...responsive(p.image)}
+                    sizes="(max-width: 1024px) 100vw, 360px"
+                    alt={`${p.place} — ${p.shortTitle}, ${p.duration} tour package from ${p.from}`}
                     loading="lazy"
-                    width="800"
-                    height="500"
+                    decoding="async"
+                    width="600"
+                    height="400"
                   />
                 </Link>
 
                 <div className="pkg__head">
                   <div className="pkg__headmain">
                     <div className="pkg__meta">
-                      {p.tag && <span className="pcard__tag">{p.tag}</span>}
+                      {p.tag && <span className="pkg__chip pkg__chip--tag">{p.tag}</span>}
                       <span className="pkg__chip"><Icon name="clock" size={14} /> {p.duration}</span>
                       <span className="pkg__chip"><Icon name="pin" size={14} /> From {p.from}</span>
                     </div>
                     <h2 className="pkg__title">
                       <Link to={`/tour-packages/${p.slug}`}>{p.title}</Link>
                     </h2>
+                    <p className="pkg__route">{p.route}</p>
                     <p className="pkg__summary">{p.summary}</p>
                     <ul className="pkg__highlights">
                       {p.highlights.map((h) => (

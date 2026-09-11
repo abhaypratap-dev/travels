@@ -5,10 +5,11 @@ import VehicleCard from '../components/VehicleCard'
 import BookingForm from '../components/BookingForm'
 import Faq, { SectionHead, faqSchema } from '../components/Faq'
 import { CtaBand, GoogleBadge } from '../components/Common'
-import { Reveal, stagger, useSpotlight } from '../components/Motion'
+import { Reveal, stagger } from '../components/Motion'
 import { site, whatsappLink, shortAddress } from '../data/site'
 import { fleet } from '../data/fleet'
 import { vehicleTypes } from '../data/vehicleTypes'
+import { responsive } from '../data/photos'
 
 /**
  * One template, four prerendered routes — /4-seater-car-rental,
@@ -20,7 +21,6 @@ import { vehicleTypes } from '../data/vehicleTypes'
  * FAQ block and its own Service + Product schema.
  */
 export default function VehicleType({ type }) {
-  const spotlightRef = useSpotlight()
   const vehicles = type.fleetSlugs
     .map((slug) => fleet.find((v) => v.slug === slug))
     .filter(Boolean)
@@ -112,11 +112,7 @@ export default function VehicleType({ type }) {
 
       {/* ── Hero ──────────────────────────────────────────────── */}
       <section className="vthero">
-        <div className="vthero__bg" aria-hidden="true" />
-        <div className="hero__orbs" aria-hidden="true">
-          <span className="hero__orb hero__orb--1" />
-          <span className="hero__orb hero__orb--2" />
-        </div>
+        <img className="vthero__bg" src="/images/hero/bg-amber.jpg" alt="" width="2000" height="640" decoding="async" />
 
         <div className="container">
           <nav className="crumbs" aria-label="Breadcrumb">
@@ -134,7 +130,7 @@ export default function VehicleType({ type }) {
               </p>
               <h1 className="vthero__title">
                 {type.heroTitle}{' '}
-                <span className="vthero__accent hero__accent">{type.heroAccent}</span>
+                <span className="vthero__accent">{type.heroAccent}</span>
               </h1>
               <p className="vthero__text">{type.summary}</p>
               <div className="vthero__actions">
@@ -152,8 +148,19 @@ export default function VehicleType({ type }) {
               </div>
             </div>
 
-            <div className="vthero__aside">
-              <dl className="vtspecs" data-reveal="scale">
+            <div className="vtcard" data-reveal="scale">
+              <div className="vtcard__media">
+                <img
+                  {...responsive(type.image)}
+                  sizes="(max-width: 960px) 100vw, 540px"
+                  alt={`${type.navLabel} on rent with driver in Delhi`}
+                  width="600"
+                  height="400"
+                  fetchpriority="high"
+                  decoding="async"
+                />
+              </div>
+              <dl className="vtspecs">
                 <div className="vtspec">
                   <dt className="vtspec__label">Capacity</dt>
                   <dd className="vtspec__value">{type.seats}</dd>
@@ -184,7 +191,6 @@ export default function VehicleType({ type }) {
             </div>
           </div>
         </div>
-        <div className="hero__road" aria-hidden="true" />
       </section>
 
       {/* ── Rate card ─────────────────────────────────────────── */}
@@ -354,7 +360,7 @@ export default function VehicleType({ type }) {
       <Faq items={type.faqs} heading={`${type.navLabel} — Common Questions`} intro={`Everything people ask before booking a ${type.navLabel.toLowerCase()} with us.`} />
 
       {/* ── Cross-links ───────────────────────────────────────── */}
-      <section className="section section--tight" ref={spotlightRef}>
+      <section className="section section--tight">
         <div className="container">
           <Reveal as="div" variant="up">
             <SectionHead
@@ -367,10 +373,22 @@ export default function VehicleType({ type }) {
             {others.map((other, i) => (
               <Reveal variant="up" delay={stagger(i)} key={other.slug}>
                 <Link className="vt-crosslink" to={`/${other.slug}`}>
-                  <span className="vt-crosslink__icon"><Icon name={other.icon} size={22} /></span>
-                  <strong>{other.h1}</strong>
-                  <span>{other.seats}</span>
-                  <em>From ₹{other.fromRatePerKm}/km →</em>
+                  <span className="vt-crosslink__img">
+                    <img
+                      {...responsive(other.image)}
+                      sizes="(max-width: 720px) 100vw, 380px"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      width="600"
+                      height="400"
+                    />
+                  </span>
+                  <span className="vt-crosslink__body">
+                    <strong>{other.h1}</strong>
+                    <span>{other.seats}</span>
+                    <em>From ₹{other.fromRatePerKm}/km →</em>
+                  </span>
                 </Link>
               </Reveal>
             ))}

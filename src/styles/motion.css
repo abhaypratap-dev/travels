@@ -4,8 +4,8 @@
    Design intent: the site should feel like a warm, unhurried place run
    by people who answer the phone. So the motion vocabulary is *settling*
    rather than *popping* — long eases, small distances, nothing that
-   bounces. Colour and light drift the way afternoon sun moves across a
-   sandstone wall: slow enough that you notice calm, not movement.
+   bounces. The photography does the dramatic work; motion only leads
+   the eye from one thing to the next.
 
    Rules this file keeps:
      1. Hidden "before" states apply only under `html.js`, so a page with
@@ -18,7 +18,6 @@
 :root {
   --ease-out-soft: cubic-bezier(.22, 1, .36, 1);
   --ease-out-back: cubic-bezier(.34, 1.4, .64, 1);
-  --ease-in-out-soft: cubic-bezier(.65, 0, .35, 1);
   --reveal-duration: .78s;
   --reveal-delay: 0ms;
 }
@@ -40,11 +39,11 @@
 .js [data-reveal='down']   { transform: translate3d(0, -22px, 0); }
 .js [data-reveal='left']   { transform: translate3d(-32px, 0, 0); }
 .js [data-reveal='right']  { transform: translate3d(32px, 0, 0); }
-.js [data-reveal='scale']  { transform: scale(.94); }
+.js [data-reveal='scale']  { transform: scale(.95); }
 .js [data-reveal='blur']   { transform: translate3d(0, 18px, 0); filter: blur(9px); }
 .js [data-reveal='none']   { transform: none; }
 
-.js [data-reveal].is-revealed {
+.js [data-reveal][data-revealed] {
   opacity: 1;
   transform: none;
   filter: none;
@@ -67,87 +66,12 @@
 .scrollprogress span {
   display: block; height: 100%;
   transform: scaleX(0); transform-origin: 0 50%;
-  background: linear-gradient(90deg, var(--maroon), var(--gold) 60%, #f6d98a);
-  box-shadow: 0 0 12px rgba(232, 185, 63, .5);
-}
-
-/* ── Hero atmosphere ────────────────────────────────────────────
-   Three slow-drifting light pools. Different durations and directions
-   mean the composition never repeats a frame the eye can catch.     */
-
-.hero__orbs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-
-.hero__orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(70px);
-  opacity: .5;
-  animation: orb-drift 26s var(--ease-in-out-soft) infinite alternate;
-}
-.hero__orb--1 {
-  width: 46vw; height: 46vw; max-width: 620px; max-height: 620px;
-  top: -14%; right: -8%;
-  background: radial-gradient(circle, rgba(232, 185, 63, .55), transparent 68%);
-}
-.hero__orb--2 {
-  width: 40vw; height: 40vw; max-width: 520px; max-height: 520px;
-  bottom: -18%; left: -10%;
-  background: radial-gradient(circle, rgba(168, 50, 67, .65), transparent 70%);
-  animation-duration: 34s; animation-direction: alternate-reverse;
-}
-.hero__orb--3 {
-  width: 28vw; height: 28vw; max-width: 360px; max-height: 360px;
-  top: 38%; left: 42%;
-  background: radial-gradient(circle, rgba(255, 138, 76, .34), transparent 72%);
-  animation-duration: 42s;
-}
-
-@keyframes orb-drift {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to   { transform: translate3d(4%, -6%, 0) scale(1.16); }
-}
-
-/* Headlight sweep — one pass of warm light across the hero, on a long
-   loop so it registers subliminally rather than as an effect. */
-.hero__sweep {
-  position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(
-    100deg,
-    transparent 38%,
-    rgba(255, 245, 220, .07) 48%,
-    rgba(255, 245, 220, .14) 51%,
-    rgba(255, 245, 220, .07) 54%,
-    transparent 64%
-  );
-  background-size: 260% 100%;
-  animation: sweep 11s linear infinite;
-}
-@keyframes sweep {
-  from { background-position: 180% 0; }
-  to   { background-position: -80% 0; }
-}
-
-/* Dashed road line running along the base of the hero. */
-.hero__road {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 4px;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(232, 185, 63, .85) 0 34px,
-    transparent 34px 74px
-  );
-  background-size: 74px 100%;
-  animation: road-run 1.5s linear infinite;
-  opacity: .5;
-}
-@keyframes road-run {
-  from { background-position: 0 0; }
-  to   { background-position: -74px 0; }
+  background: linear-gradient(90deg, var(--green-700), var(--gold-500));
 }
 
 /* ── Staged hero entrance ───────────────────────────────────────
    Each element arrives a beat after the last, so the eye is led down
-   the column: badge → headline → promise → proof → action.          */
+   the column: eyebrow → headline → promise → the quote form.        */
 
 .js .hero__stage > * {
   animation: hero-rise .95s var(--ease-out-soft) both;
@@ -158,28 +82,25 @@
 .js .hero__stage > *:nth-child(4) { animation-delay: .38s; }
 .js .hero__stage > *:nth-child(5) { animation-delay: .49s; }
 .js .hero__stage > *:nth-child(6) { animation-delay: .60s; }
-.js .hero__form { animation: hero-rise 1.05s var(--ease-out-soft) .34s both; }
+.js .hero .quote { animation: hero-rise 1.05s var(--ease-out-soft) .42s both; }
 
 @keyframes hero-rise {
   from { opacity: 0; transform: translate3d(0, 26px, 0); }
   to   { opacity: 1; transform: none; }
 }
 
-/* The gold gradient on the headline breathes very slowly, like light
-   shifting on metal. 14s is deliberately below conscious notice. */
-.hero__accent {
-  background-size: 220% 100%;
-  animation: accent-shift 14s var(--ease-in-out-soft) infinite alternate;
-}
-@keyframes accent-shift {
-  from { background-position: 0% 50%; }
-  to   { background-position: 100% 50%; }
+/* The hero photograph settles in with a slow push, the way a car rolls
+   to a stop. Scale only, so it never shifts the layout.             */
+.hero__media img { animation: hero-settle 2.4s var(--ease-out-soft) both; }
+@keyframes hero-settle {
+  from { transform: scale(1.06); }
+  to   { transform: scale(1); }
 }
 
 /* ── Cards ──────────────────────────────────────────────────────
-   Lift, warm the border, and slide a soft sheen across the surface.  */
+   Lift, warm the border, and push the photograph in slightly.        */
 
-.vcard, .scard, .wcard, .pcard, .tcard, .ccard, .aboutside__card, .vt-card {
+.vcard, .pcard, .scard, .wcard, .rcard, .ccard, .aboutside__card, .vt-card, .vt-crosslink {
   transition:
     transform .42s var(--ease-out-soft),
     box-shadow .42s var(--ease-out-soft),
@@ -187,48 +108,25 @@
 }
 
 @media (hover: hover) {
-  .vcard:hover, .scard:hover, .wcard:hover,
-  .pcard:hover, .ccard:hover, .vt-card:hover {
-    transform: translate3d(0, -6px, 0);
+  .vcard:hover, .pcard:hover, .scard:hover, .wcard:hover,
+  .ccard:hover, .vt-card:hover, .vt-crosslink:hover {
+    transform: translate3d(0, -5px, 0);
     box-shadow: var(--shadow-lg);
-    border-color: rgba(232, 185, 63, .55);
+    border-color: rgba(211, 162, 76, .55);
   }
 
-  /* Sheen. `overflow: hidden` on the card keeps it inside the corners. */
-  .scard, .wcard, .vt-card { position: relative; overflow: hidden; }
-  .scard::after, .wcard::after, .vt-card::after {
-    content: '';
-    position: absolute; top: 0; bottom: 0; left: -60%;
-    width: 45%;
-    background: linear-gradient(
-      100deg, transparent, rgba(255, 255, 255, .5), transparent
-    );
-    transform: skewX(-18deg);
-    opacity: 0; pointer-events: none;
-  }
-  .scard:hover::after, .wcard:hover::after, .vt-card:hover::after {
-    animation: sheen .85s var(--ease-out-soft) forwards;
-  }
-  @keyframes sheen {
-    from { left: -60%; opacity: 0; }
-    35%  { opacity: 1; }
-    to   { left: 130%; opacity: 0; }
-  }
+  .vcard__media img, .pcard__media img { transition: transform .8s var(--ease-out-soft); }
+  .vcard:hover .vcard__media img { transform: scale(1.06); }
+  .pcard:hover .pcard__media img { transform: scale(1.06); }
+  .pkg:hover .pkg__media img { transform: scale(1.04); }
 
-  /* Icon tiles tilt and warm on hover. */
+  /* Icon discs tilt on hover. */
   .scard__icon, .wcard__icon, .ccard__icon {
     transition: transform .45s var(--ease-out-back), background-color .3s var(--ease);
   }
   .scard:hover .scard__icon,
   .wcard:hover .wcard__icon,
-  .ccard:hover .ccard__icon { transform: rotate(-7deg) scale(1.12); }
-
-  /* Vehicle photography pushes in slightly under the card lift. */
-  .vcard__media img { transition: transform .8s var(--ease-out-soft); }
-  .vcard:hover .vcard__media img { transform: scale(1.07); }
-
-  .vcard__placeholder { transition: transform .6s var(--ease-out-soft); }
-  .vcard:hover .vcard__placeholder { transform: translate3d(6px, 0, 0) scale(1.06); }
+  .ccard:hover .ccard__icon { transform: rotate(-7deg) scale(1.1); }
 }
 
 /* ── Buttons ────────────────────────────────────────────────────
@@ -240,43 +138,24 @@
 .btn::before {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .26) 50%, transparent 70%);
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .24) 50%, transparent 70%);
   transform: translateX(-100%);
   transition: transform .62s var(--ease-out-soft);
 }
 @media (hover: hover) {
   .btn:hover::before { transform: translateX(100%); }
-  .btn:hover .icon:not(:first-child) { transform: translate3d(3px, 0, 0); }
+  .btn:hover .icon:last-child:not(:first-child) { transform: translate3d(3px, 0, 0); }
 }
 .btn .icon { transition: transform .28s var(--ease-out-back); }
-.btn--primary:hover { box-shadow: 0 8px 24px rgba(138, 28, 43, .3); }
+.btn--primary:hover { box-shadow: 0 10px 24px rgba(15, 74, 57, .28); }
 
-/* ── Navigation ─────────────────────────────────────────────────
-   An underline that grows from the centre — cheaper visually than a
-   background swap and it points at the label rather than boxing it.  */
-
-.nav__link { position: relative; }
-.nav__link::after {
-  content: '';
-  position: absolute; left: 14px; right: 14px; bottom: 4px;
-  height: 2px; border-radius: 2px;
-  background: linear-gradient(90deg, var(--maroon), var(--gold));
-  transform: scaleX(0); transform-origin: 50% 50%;
-  transition: transform .34s var(--ease-out-soft);
-}
-.nav__link:hover::after, .nav__link.is-active::after { transform: scaleX(1); }
-
-.brand__mark { transition: transform .5s var(--ease-out-back), box-shadow .4s var(--ease); }
-.brand:hover .brand__mark {
-  transform: rotate(-8deg) scale(1.07);
-  box-shadow: 0 6px 18px rgba(138, 28, 43, .34);
-}
+.brand__mark { transition: transform .5s var(--ease-out-back); }
+.brand:hover .brand__mark { transform: translate3d(3px, 0, 0); }
 
 /* Header condenses as you scroll — reclaims vertical space on mobile
    without the nav ever leaving. */
-.header { transition: box-shadow .3s var(--ease), background-color .3s var(--ease); }
-.header--scrolled .header__inner { min-height: 62px; }
 .header__inner { transition: min-height .3s var(--ease-out-soft); }
+.header--scrolled .header__inner { min-height: calc(var(--header-h) - 10px); }
 
 /* ── Section headings ───────────────────────────────────────────
    The eyebrow draws its own rule as the section arrives.            */
@@ -285,42 +164,22 @@
 .sechead__eyebrow::after {
   content: '';
   position: absolute; left: 0; bottom: 0; height: 2px; width: 100%;
-  background: linear-gradient(90deg, var(--gold), transparent);
+  background: linear-gradient(90deg, var(--gold-500), transparent);
   transform: scaleX(0); transform-origin: 0 50%;
   transition: transform .8s var(--ease-out-soft) .2s;
 }
-.js [data-reveal].is-revealed .sechead__eyebrow::after,
-.js .sechead[data-reveal].is-revealed .sechead__eyebrow::after { transform: scaleX(1); }
+.sechead--center .sechead__eyebrow::after {
+  background: linear-gradient(90deg, transparent, var(--gold-500), transparent);
+  transform-origin: 50% 50%;
+}
+.js .sechead[data-reveal][data-revealed] .sechead__eyebrow::after { transform: scaleX(1); }
 html:not(.js) .sechead__eyebrow::after { transform: scaleX(1); }
-
-/* ── Marquee ────────────────────────────────────────────────────
-   Two identical groups translating -50% — the seam lands exactly where
-   the duplicate begins, so there is no visible reset.                */
-
-.marquee {
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-}
-.marquee__track {
-  display: flex; width: max-content;
-  animation: marquee-run var(--marquee-duration, 46s) linear infinite;
-}
-.marquee:hover .marquee__track { animation-play-state: paused; }
-.marquee__group { display: flex; gap: 12px; padding-right: 12px; }
-.marquee__group li { flex: none; }
-
-@keyframes marquee-run {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-50%, 0, 0); }
-}
 
 /* ── Floating action button ─────────────────────────────────────
    A slow expanding ring. One pulse every four seconds reads as
    "available"; anything faster reads as "urgent", which is the wrong
    emotion for a booking decision.                                    */
 
-.fab { position: relative; }
 .fab::before {
   content: '';
   position: absolute; inset: 0; border-radius: inherit;
@@ -329,7 +188,7 @@ html:not(.js) .sechead__eyebrow::after { transform: scaleX(1); }
   pointer-events: none;
 }
 @keyframes fab-ring {
-  0%       { transform: scale(1);   opacity: .55; }
+  0%        { transform: scale(1);   opacity: .55; }
   55%, 100% { transform: scale(1.7); opacity: 0; }
 }
 .fab { transition: transform .4s var(--ease-out-back), box-shadow .3s var(--ease); }
@@ -348,105 +207,70 @@ html:not(.js) .sechead__eyebrow::after { transform: scaleX(1); }
 .faq__item.is-open .faq__a { grid-template-rows: 1fr; opacity: 1; }
 .faq__chev { transition: transform .38s var(--ease-out-back); }
 .faq__item.is-open .faq__chev { transform: rotate(90deg); }
-.faq__item { transition: border-color .3s var(--ease), background-color .3s var(--ease); }
 
 /* ── Stat counters ──────────────────────────────────────────────
    `tabular-nums` stops the row from twitching as digits change width.  */
 .countup { font-variant-numeric: tabular-nums; }
 
-/* ── Timeline ───────────────────────────────────────────────────
-   The connecting rule draws downward as the section is revealed.       */
-.timeline--milestones { position: relative; }
-.timeline__item .timeline__day { transition: transform .45s var(--ease-out-back), background-color .3s var(--ease); }
+/* ── Timeline ───────────────────────────────────────────────────── */
+.timeline__item .timeline__day { transition: transform .45s var(--ease-out-back); }
 @media (hover: hover) {
-  .timeline__item:hover .timeline__day { transform: scale(1.09); }
+  .timeline__item:hover .timeline__day { transform: scale(1.08); }
 }
 
 /* ── Form fields ────────────────────────────────────────────────
    A ring that grows rather than a border that snaps.                   */
 .field input, .field select, .field textarea {
-  transition: border-color .25s var(--ease), box-shadow .3s var(--ease-out-soft), background-color .25s var(--ease);
+  transition: border-color .25s var(--ease), box-shadow .3s var(--ease-out-soft);
 }
-.field input:focus, .field select:focus, .field textarea:focus {
-  box-shadow: 0 0 0 4px rgba(232, 185, 63, .22);
-}
-.bookform { transition: box-shadow .5s var(--ease-out-soft); }
 
 /* Success and error notes slide in rather than appear. */
-.bookform__note { animation: note-in .45s var(--ease-out-back) both; }
+.bookform__note, .quote__sent, .quote__error { animation: note-in .45s var(--ease-out-back) both; }
 @keyframes note-in {
-  from { opacity: 0; transform: translate3d(0, -8px, 0) scale(.98); }
+  from { opacity: 0; transform: translate3d(0, -6px, 0); }
   to   { opacity: 1; transform: none; }
 }
 
-/* ── Chips & filters ────────────────────────────────────────────── */
+/* ── Chips ──────────────────────────────────────────────────────── */
 .chip { transition: transform .28s var(--ease-out-back), background-color .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease); }
 .chip:hover { transform: translate3d(0, -2px, 0); }
 .chip.is-active { transform: none; }
 
-/* ── Spotlight surface ──────────────────────────────────────────
-   Driven by --mx/--my written from JS. Falls back to a fixed centre
-   glow when the pointer has never moved or is a touch device.         */
-.spotlight { position: relative; isolation: isolate; }
-.spotlight::before {
-  content: '';
-  position: absolute; inset: 0; z-index: -1;
-  border-radius: inherit;
-  background: radial-gradient(
-    440px circle at var(--mx, 50%) var(--my, 0%),
-    rgba(232, 185, 63, .16), transparent 62%
-  );
-  opacity: 0; transition: opacity .5s var(--ease);
-}
-.spotlight:hover::before { opacity: 1; }
-
-/* ── Vehicle-type page hero ─────────────────────────────────────── */
+/* ── Category-page badge ────────────────────────────────────────── */
 .vthero__badge { animation: badge-in .7s var(--ease-out-back) .1s both; }
 @keyframes badge-in {
-  from { opacity: 0; transform: translate3d(0, -10px, 0) scale(.9); }
+  from { opacity: 0; transform: translate3d(0, -10px, 0) scale(.92); }
   to   { opacity: 1; transform: none; }
 }
 
-/* ── Skeleton shimmer, for any lazily-swapped media ─────────────── */
-.shimmer {
-  background: linear-gradient(100deg, var(--sand-deep) 20%, var(--sand) 40%, var(--sand-deep) 60%);
-  background-size: 240% 100%;
-  animation: shimmer-run 1.6s linear infinite;
-}
-@keyframes shimmer-run {
-  from { background-position: 180% 0; }
-  to   { background-position: -80% 0; }
-}
+/* The price-carrying card on a category page gets a slightly slower
+   reveal than a content card, because it deserves the extra beat.  */
+.js .vtcard[data-reveal] { --reveal-duration: 1s; --reveal-delay: 240ms; }
 
 /* ═══════════════════════════════════════════════════════════════
    Reduced motion.
 
-   Not "slightly less" — off. Anything that moves, drifts, sweeps or
-   loops is removed outright, and every reveal state resolves to its
-   final, visible value. Content parity is absolute.
+   Not "slightly less" — off. Anything that moves, drifts or loops is
+   removed outright, and every reveal state resolves to its final,
+   visible value. Content parity is absolute.
    ═══════════════════════════════════════════════════════════════ */
 
 @media (prefers-reduced-motion: reduce) {
   .js [data-reveal],
-  .js [data-reveal].is-revealed {
+  .js [data-reveal][data-revealed] {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
     transition: none !important;
   }
 
-  .hero__orb, .hero__sweep, .hero__road, .hero__accent,
-  .marquee__track, .fab::before, .shimmer,
-  .js .hero__stage > *, .js .hero__form, .pagefade,
-  .bookform__note {
+  .fab::before, .pagefade, .hero__media img,
+  .js .hero__stage > *, .js .hero .quote,
+  .bookform__note, .quote__sent, .quote__error, .vthero__badge {
     animation: none !important;
   }
 
-  .hero__sweep, .hero__road { display: none; }
-  .hero__orb { opacity: .38; }
-
-  .btn::before, .scard::after, .wcard::after, .vt-card::after { display: none; }
-
+  .btn::before { display: none; }
   .sechead__eyebrow::after { transform: scaleX(1) !important; transition: none !important; }
 
   *, *::before, *::after {
@@ -457,12 +281,6 @@ html:not(.js) .sechead__eyebrow::after { transform: scaleX(1); }
   }
 }
 
-/* ── Vehicle-page spec panel ────────────────────────────────────
-   Outside `.hero__stage`, so it uses the reveal path instead of the
-   staged entrance. Slightly slower than a card, because it is the
-   element carrying the price and deserves the extra beat.           */
-.js .vtspecs[data-reveal] { --reveal-duration: 1s; --reveal-delay: 260ms; }
-
 /* ── Mobile ─────────────────────────────────────────────────────
    Reveal distances shrink on small screens. A 28px rise reads as
    graceful on a desktop column and as a jolt on a 375px viewport,
@@ -472,12 +290,6 @@ html:not(.js) .sechead__eyebrow::after { transform: scaleX(1); }
   .js [data-reveal='left'],
   .js [data-reveal='right'] { transform: translate3d(0, 18px, 0); }
   :root { --reveal-duration: .62s; }
-
-  /* Blur is expensive to composite and the orbs are large relative to a
-     phone screen — halve the count and soften the animation. */
-  .hero__orb--3 { display: none; }
-  .hero__orb { filter: blur(52px); }
-  .hero__sweep { display: none; }
 }
 
 /* Coarse pointers get no hover choreography at all — on touch, `:hover`

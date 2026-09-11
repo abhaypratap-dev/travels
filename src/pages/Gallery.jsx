@@ -1,13 +1,15 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import Icon from '../components/Icon'
 import { SectionHead } from '../components/Faq'
 import { PageHero, CtaBand } from '../components/Common'
 import { Reveal, stagger } from '../components/Motion'
-import { site, yearsActive } from '../data/site'
+import { site } from '../data/site'
 import { galleryItems } from '../data/content'
+import { responsive } from '../data/photos'
 
-const categories = ['All', 'Destinations', 'Fleet', 'Occasions']
+const categories = ['All', ...new Set(galleryItems.map((g) => g.category))]
 
 export default function Gallery() {
   const [filter, setFilter] = useState('All')
@@ -21,26 +23,27 @@ export default function Gallery() {
     '@context': 'https://schema.org',
     '@type': 'ImageGallery',
     name: `${site.name} — Photo Gallery`,
-    description: 'Photographs of our fleet, the destinations we drive to across Rajasthan, and the weddings and corporate events we serve.',
+    description: 'Photographs of the places we drive to across Rajasthan and North India, and of the vehicle models in our fleet.',
     author: { '@type': 'Organization', name: site.name },
   }
 
   return (
     <>
       <Seo
-        title="Photo Gallery — Our Fleet & Trips"
-        description="Photo gallery of Shekhawat Tours and Travels — our cars, tempo travellers and buses, the places we drive to, and the events we have served."
+        title="Photo Gallery — Fleet & Destinations"
+        description="Photos of the places we drive to — Jaipur, Agra, Jaisalmer, Udaipur, Jodhpur and the Shekhawati havelis — and the cars, tempo travellers and coaches we run."
         path="/gallery"
-        keywords="Rajasthan travel photos, tempo traveller photos, wedding car decoration, Jaisalmer desert photos, Shekhawat travels gallery"
+        keywords="Rajasthan travel photos, tempo traveller photos, Jaisalmer desert photos, Amber Fort Jaipur, Shekhawati havelis, Shekhawat travels gallery"
         schema={gallerySchema}
         breadcrumbs={[{ name: 'Gallery', path: '/gallery' }]}
       />
 
       <PageHero
         eyebrow="From the road"
-        title="Photo Gallery — Our Fleet & Trips"
-        text={`Our vehicles, the places we drive to, and the occasions we have been part of across ${yearsActive} years.`}
+        title="Photo Gallery — Fleet & Destinations"
+        text="The places we drive to, and the vehicles we drive there in."
         crumbs={[{ name: 'Gallery', path: '/gallery' }]}
+        bg="/images/hero/bg-pichola.jpg"
       />
 
       <section className="section">
@@ -60,20 +63,16 @@ export default function Gallery() {
 
           <div className="gallery">
             {visible.map((g, i) => (
-              <Reveal
-                as="figure"
-                className={`gitem tone-${g.tone}`}
-                variant="scale"
-                delay={stagger(i, 45)}
-                key={g.title}
-              >
-                {g.src ? (
-                  <img src={g.src} alt={g.title} loading="lazy" width="600" height="400" />
-                ) : (
-                  <span className="gitem__ph" aria-hidden="true">
-                    <Icon name={g.category === 'Fleet' ? 'fleet' : g.category === 'Occasions' ? 'heart' : 'camera'} size={40} />
-                  </span>
-                )}
+              <Reveal as="figure" className="gitem" variant="scale" delay={stagger(i, 45)} key={g.title}>
+                <img
+                  {...responsive(g.src)}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 400px"
+                  alt={g.title}
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="400"
+                />
                 <figcaption className="gitem__cap">
                   <strong>{g.title}</strong>
                   <small>{g.category}</small>
@@ -84,7 +83,8 @@ export default function Gallery() {
 
           <p className="gallery__note">
             <Icon name="camera" size={16} />
-            Photographs from recent trips are added here regularly. Planning something similar?{' '}
+            These are licensed photographs of the places we drive to and the vehicle models we run —
+            see the <Link to="/image-credits">image credits</Link>. Planning a trip to one of them?{' '}
             <a href={`tel:${site.phoneRaw}`}>Call {site.owner.name}</a> and we will build the route around it.
           </p>
         </div>

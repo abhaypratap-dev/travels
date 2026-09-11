@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import Icon from '../components/Icon'
 import Faq, { SectionHead, faqSchema } from '../components/Faq'
@@ -5,6 +6,7 @@ import { PageHero, CtaBand } from '../components/Common'
 import { Reveal, stagger } from '../components/Motion'
 import { site, whatsappLink } from '../data/site'
 import { services } from '../data/services'
+import { servicePages } from '../data/servicePages'
 
 const serviceFaqs = [
   {
@@ -61,6 +63,7 @@ export default function Services() {
         title="Our Travel Services in Delhi NCR"
         text="One operator for the 4 AM airport run, the ten-day family tour, the monthly office shuttle and the wedding baraat — with the same fixed-price promise on all of them."
         crumbs={[{ name: 'Services', path: '/services' }]}
+        bg="/images/hero/bg-jodhpur.jpg"
       />
 
       <section className="section">
@@ -97,8 +100,40 @@ export default function Services() {
                     <a className="btn btn--ghost btn--sm" href={`tel:${site.phoneRaw}`}>
                       <Icon name="phone" size={16} /> {site.phone}
                     </a>
+                    {s.guide && (
+                      <Link className="linkarrow" to={s.guide}>
+                        Full guide &amp; fares <Icon name="arrow-r" size={14} />
+                      </Link>
+                    )}
                   </div>
                 </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Dedicated service pages ─────────────────────────────── */}
+      <section className="section section--tint">
+        <div className="container">
+          <SectionHead
+            eyebrow="In depth"
+            title="Rates, Coverage Areas & FAQs by Service"
+            text="Each of these carries its own fares, coverage map and frequently asked questions."
+          />
+          <div className="vt-cross">
+            {servicePages.map((sp, i) => (
+              <Reveal variant="up" delay={stagger(i)} key={sp.slug}>
+                <Link className="vt-crosslink" to={`/${sp.slug}`}>
+                  <span className="vt-crosslink__img">
+                    <img src={sp.image} alt="" loading="lazy" decoding="async" width="600" height="400" />
+                  </span>
+                  <span className="vt-crosslink__body">
+                    <strong>{sp.navLabel}</strong>
+                    <span>{sp.summary.slice(0, 70)}…</span>
+                    <em>Read more →</em>
+                  </span>
+                </Link>
               </Reveal>
             ))}
           </div>

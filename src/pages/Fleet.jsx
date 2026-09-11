@@ -107,6 +107,7 @@ export default function Fleet() {
         title="Our Fleet — Cars, Tempo Travellers & Buses on Rent"
         text="Hatchbacks to 45-seat luxury coaches — all with experienced drivers, valid all-India permits and rates that are fixed before you travel."
         crumbs={[{ name: 'Our Fleet', path: '/fleet' }]}
+        bg="/images/hero/bg-jaisalmer.jpg"
       />
 
       <section className="section section--tight">
@@ -193,6 +194,12 @@ export default function Fleet() {
               <a href={`tel:${site.phoneRaw}`}>{site.phone}</a> — we may have exactly what you need off-list.
             </p>
           )}
+
+          <p className="photonote">
+            <Icon name="camera" size={14} /> Photos show each model, not the individual vehicle. We send
+            current photos and the registration number on WhatsApp before you confirm.{' '}
+            <Link to="/image-credits">Image credits</Link>
+          </p>
         </div>
       </section>
 

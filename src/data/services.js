@@ -2,6 +2,7 @@ export const services = [
   {
     slug: 'outstation-taxi',
     icon: 'road',
+    guide: '/outstation-taxi-service-delhi',
     title: 'Outstation Taxi Service',
     short: 'One-way and round-trip cabs to any city in India, billed transparently.',
     body:
@@ -16,6 +17,7 @@ export const services = [
   {
     slug: 'airport-railway-transfer',
     icon: 'plane',
+    guide: '/airport-taxi-igi-mahipalpur',
     title: 'Airport & Railway Transfers',
     short: 'Flight-tracked pickups at IGI Delhi, Jaipur and Jodhpur airports.',
     body:
@@ -44,6 +46,7 @@ export const services = [
   {
     slug: 'corporate-car-rental',
     icon: 'briefcase',
+    guide: '/corporate-travel-delhi',
     title: 'Corporate Car Rental',
     short: 'Monthly contracts, employee shuttles and executive chauffeur service.',
     body:
@@ -58,6 +61,7 @@ export const services = [
   {
     slug: 'tempo-traveller-bus-hire',
     icon: 'bus',
+    guide: '/tempo-traveller-on-rent',
     title: 'Tempo Traveller & Bus Hire',
     short: '9 to 45 seaters for groups, tours, schools and pilgrimages.',
     body:

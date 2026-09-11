@@ -9,8 +9,13 @@
 import { fleet } from './fleet.js'
 import { packages } from './packages.js'
 import { vehicleTypes } from './vehicleTypes.js'
+import { servicePages } from './servicePages.js'
+import { posts } from './blog.js'
 
 const FOUNDED = 2012
+
+/** Must match the Google Business Profile exactly — see the README's "Two rules worth keeping". */
+const RATING = { value: '4.9', count: '80' }
 
 export const site = {
   name: 'Shekhawat Tours and Travels',
@@ -103,48 +108,60 @@ export const site = {
     'Pushkar', 'Ajmer',
   ],
 
-  /** Headline numbers. `count` drives the animated counter; `suffix` follows it. */
+  /**
+   * The stat strip under the homepage hero. `value` drives the animated
+   * counter and `suffix` follows it. The rating reads from `RATING`, so the
+   * strip can never drift from the figure in the structured data.
+   */
   stats: [
-    { value: 4.9, suffix: '★', label: 'Google rating', decimals: 1 },
-    { value: 80, suffix: '+', label: 'Google reviews' },
-    { value: 60, suffix: '+', label: 'Vehicles in fleet' },
-    { value: 24, suffix: '×7', label: 'Booking desk open' },
+    { icon: 'shield-o', value: new Date().getFullYear() - FOUNDED, suffix: '+', label: 'Years of experience' },
+    { icon: 'car-o', value: 60, suffix: '+', label: 'Vehicles in our fleet' },
+    { icon: 'users-o', value: 25000, suffix: '+', label: 'Happy travellers' },
+    { icon: 'star', value: Number(RATING.value), suffix: '/5', decimals: 1, label: 'Google rating' },
   ],
 
   /** Verified from the Google Business Profile. Do not inflate these. */
-  rating: { value: '4.9', count: '80' },
+  rating: RATING,
 }
 
 /** Years in operation, computed so the copy never goes stale. */
 export const yearsActive = new Date().getFullYear() - FOUNDED
 
+/**
+ * Primary navigation. Dropdown children are built from the data files, so a
+ * new vehicle category or itinerary appears in the menu on its own — the same
+ * way it appears in the sitemap. A `to` with a hash is an in-page jump.
+ */
 export const nav = [
   { label: 'Home', to: '/' },
-  { label: 'About Us', to: '/about' },
   {
-    label: 'Vehicles',
+    label: 'Fleet',
     to: '/fleet',
     children: [
-      { label: '4 Seater Car', to: '/4-seater-car-rental' },
-      { label: 'SUV 7 Seater', to: '/7-seater-suv-on-rent' },
-      { label: 'Tempo Traveller', to: '/tempo-traveller-on-rent' },
-      { label: 'Mini Bus', to: '/mini-bus-on-rent' },
-      { label: 'Full Fleet', to: '/fleet' },
+      ...vehicleTypes.map((t) => ({ label: t.navLabel, to: `/${t.slug}` })),
+      { label: 'View the full fleet', to: '/fleet' },
     ],
   },
   {
-    label: 'Tour Packages',
+    label: 'Tours',
     to: '/tour-packages',
-    // Built from the itinerary list so a new package appears in the menu on
-    // its own, the same way it appears in the sitemap.
     children: [
       ...packages.map((p) => ({ label: p.shortTitle, to: `/tour-packages/${p.slug}` })),
-      { label: 'All Packages', to: '/tour-packages' },
+      { label: 'All tour packages', to: '/tour-packages' },
     ],
   },
-  { label: 'Services', to: '/services' },
-  { label: 'Gallery', to: '/gallery' },
-  { label: 'Contact Us', to: '/contact' },
+  {
+    label: 'Services',
+    to: '/services',
+    children: [
+      ...servicePages.map((s) => ({ label: s.navLabel, to: `/${s.slug}` })),
+      { label: 'All services', to: '/services' },
+    ],
+  },
+  { label: 'Blog', to: '/blog' },
+  { label: 'About Us', to: '/about' },
+  { label: 'FAQ', to: '/faq' },
+  { label: 'Contact', to: '/contact' },
 ]
 
 /**
@@ -168,12 +185,26 @@ export const routes = [
   { path: '/about', priority: 0.7, changefreq: 'monthly' },
   { path: '/contact', priority: 0.7, changefreq: 'monthly' },
   { path: '/gallery', priority: 0.5, changefreq: 'monthly' },
+  { path: '/faq', priority: 0.6, changefreq: 'monthly' },
+  { path: '/blog', priority: 0.6, changefreq: 'weekly' },
+  { path: '/image-credits', priority: 0.2, changefreq: 'yearly' },
 
   // One page per vehicle — /fleet/toyota-innova-crysta and siblings.
   ...fleet.map((v) => ({ path: `/fleet/${v.slug}`, priority: 0.7, changefreq: 'monthly' })),
 
   // One page per itinerary — /tour-packages/golden-triangle-delhi-agra-jaipur etc.
   ...packages.map((p) => ({ path: `/tour-packages/${p.slug}`, priority: 0.7, changefreq: 'monthly' })),
+
+  // Dedicated service landing pages — IGI airport, outstation, corporate, hub.
+  ...servicePages.map((s) => ({ path: `/${s.slug}`, priority: s.priority ?? 0.9, changefreq: 'weekly' })),
+
+  // One page per blog post, dated from its own publish date rather than the
+  // build date — a real `lastmod` for content that genuinely doesn't change
+  // on every deploy.
+  ...posts.map((p) => ({
+    path: `/blog/${p.slug}`, priority: 0.6, changefreq: 'monthly',
+    lastmod: p.published, image: p.image, imageTitle: p.title,
+  })),
 ]
 
 /** Vehicle-category slugs, re-exported so consumers need one import, not two. */
